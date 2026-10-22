@@ -9,10 +9,10 @@ Prepared 22 October 2026. Each meeting is 30 minutes and follows the `team-touch
 | Time | Who | Track |
 |---|---|---|
 | 11:00 to 11:30 | Lorena Contreras | B Return from leave, then A Structured |
-| 11:30 to 12:00 | Hayden Lovell | C Probation |
+| 11:30 to 12:00 | Hayden Lovell | C Probation (to be confirmed in Employment Hero) |
 | 13:00 to 13:30 | Zac Teal | A Structured |
-| 13:30 to 14:00 | Ricardo "Rick" Alvarado | A Structured |
-| 16:00 to 16:30 | Hayden Peckover | A Structured |
+| 13:30 to 14:00 | Ricardo "Rick" Alvarado | A Structured (confirmed) |
+| 16:00 to 16:30 | Hayden Peckover | A Structured (confirmed) |
 
 ### Tomorrow, Friday 23 October (proposed)
 
@@ -26,7 +26,7 @@ Prepared 22 October 2026. Each meeting is 30 minutes and follows the `team-touch
 Buffer slots tomorrow if a meeting today runs over or needs a second session: Zac, Rick or Hayden Peckover from 14:30 to 16:30.
 
 **Please confirm these assumptions:**
-- Hayden Lovell and Trinity Allan are on probation. If Trinity isn't, change her to Track A.
+- Hayden Lovell is likely on probation. Confirm in Employment Hero and check his training in Go1 before the meeting. Trinity Allan is also assumed to be on probation. If she isn't, change her to Track A.
 - Brea McDonell is the CQU social work placement student. I've assumed "Brianna" in your request means Brea.
 - Lorena gets the full Return from Leave agenda. She's available 11:00 to 12:00, so you could give her the full hour and move Hayden Lovell to 16:00 tomorrow. That would mean Hayden Peckover moves to a tomorrow slot.
 
@@ -41,7 +41,7 @@ Buffer slots tomorrow if a meeting today runs over or needs a second session: Za
 | 5. Role changes and systems | 4 min | What changed, which platform information now goes to, reporting, team meetings |
 | 6. Agreements and next steps | 5 min | Recurring line management cadence, actions, owners and dates |
 
-**Before every meeting (5 min prep):** check Employment Hero (leave, compliance expiries, probation dates), the training register and the person's caseload in the case management system.
+**Before every meeting (5 min prep):** check Employment Hero (leave, compliance expiries, probation dates), Go1 (training completions) and the person's caseload in the case management system.
 
 **After every meeting:** run the notes through the `line-management-summariser` skill to complete the HR 029 record, then `meeting-task-extractor` for dated actions.
 
@@ -79,7 +79,7 @@ Buffer slots tomorrow if a meeting today runs over or needs a second session: Za
 
 **Follow-up checklist**
 - [ ] Employment Hero: return date, leave balance, compliance expiries
-- [ ] Training register: items that fell due during her leave
+- [ ] Go1: training items that fell due during her leave
 - [ ] Confirm platform access is fixed for every system
 - [ ] Send her a one-page list of what goes where across the platforms
 - [ ] Book the recurring line management in the calendar
@@ -96,7 +96,7 @@ Buffer slots tomorrow if a meeting today runs over or needs a second session: Za
 >
 > Now that I'm back from leave, I'd like to catch up properly about how things are going. I've booked us in for 11:30 today.
 >
-> We'll look at how your probation is tracking, what's going well and what support would help. Please have a think about:
+> We'll look at how you're tracking in the role, what's going well and what support would help. Please have a think about:
 > - your highlights and any challenges so far
 > - where you feel confident and where you'd like more support or training
 > - any questions about the role or how things are done
@@ -115,8 +115,9 @@ Buffer slots tomorrow if a meeting today runs over or needs a second session: Za
 6. Confirm the probation end date and the next review date. Explain what successful completion looks like. Agree on fortnightly line management.
 
 **Follow-up checklist**
-- [ ] Employment Hero: probation start and end dates. Check whether a review was due while I was away.
-- [ ] Induction and mandatory training completion
+- [ ] **Before 11:30 today:** Employment Hero. Confirm whether Hayden is on probation, plus the start and end dates. Check whether a review was due while I was away.
+- [ ] If Employment Hero shows no probation, run this as a Track A structured catch-up instead (the agenda still works, just skip block 3 of the probation review)
+- [ ] Go1: induction and mandatory training completion
 - [ ] Record the probation discussion in writing today
 - [ ] Book the probation review meeting before the end date
 
@@ -146,7 +147,7 @@ Buffer slots tomorrow if a meeting today runs over or needs a second session: Za
 
 **Follow-up checklist**
 - [ ] Employment Hero: leave and compliance
-- [ ] Training register
+- [ ] Go1: mandatory training status
 - [ ] Caseload review in the case management system
 - [ ] Book recurring line management
 
@@ -176,7 +177,7 @@ Buffer slots tomorrow if a meeting today runs over or needs a second session: Za
 
 **Follow-up checklist**
 - [ ] Employment Hero: leave and compliance
-- [ ] Training register
+- [ ] Go1: mandatory training status
 - [ ] Caseload review
 - [ ] Book recurring line management
 
@@ -206,7 +207,7 @@ Buffer slots tomorrow if a meeting today runs over or needs a second session: Za
 
 **Follow-up checklist**
 - [ ] Employment Hero: leave and compliance
-- [ ] Training register
+- [ ] Go1: mandatory training status
 - [ ] Caseload review
 - [ ] Book recurring line management
 

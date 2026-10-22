@@ -31,7 +31,7 @@ Every touchpoint uses the same six blocks so records are consistent across the t
 1. **Check-in and wellbeing (5 min).** How are they going personally and professionally? Workload pressure, vicarious trauma, EAP reminder.
 2. **Caseload and client supports (8 min).** Open cases, high-risk clients (HRT referrals, safety plans), anything stuck, RFIs and collateral checks outstanding, case notes up to date.
 3. **HR and compliance (4 min).** Employment Hero records, leave balances, Blue Card and Yellow Card, police check, timesheets. Check in Employment Hero before the meeting. Never assume status.
-4. **Training and development (4 min).** Mandatory training overdue or due, PD interests, practice framework.
+4. **Training and development (4 min).** Mandatory training overdue or due (check Go1 beforehand), PD interests, practice framework.
 5. **Role changes and systems (4 min).** What has changed in the role, which platforms information now goes to, reporting requirements, team meeting schedule.
 6. **Agreements and next steps (5 min).** Set the recurring line management cadence. Confirm actions, owners and dates. For Track C, confirm the next probation review date. For Track D, confirm the next supervision date.
 
@@ -48,7 +48,7 @@ For each person, produce the following.
 
 1. **Invite email.** Warm and brief, with the date and time. Explain the purpose: Larissa is back from leave and wants to reconnect. Give 2 to 3 things to bring or think about. Use Australian spelling and sign off as Larissa.
 2. **Agenda.** The six core blocks with track-specific prompts and the known issues for that person.
-3. **Follow-up checklist.** Items Larissa must check before or after the meeting (Employment Hero, training register, case management system, CQU).
+3. **Follow-up checklist.** Items Larissa must check before or after the meeting (Employment Hero for HR, leave and probation dates; Go1 for training completions; case management system; CQU).
 
 Then produce a **schedule table** for the whole team and a **list of people still to book**.
 
