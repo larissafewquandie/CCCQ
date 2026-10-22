@@ -7,7 +7,7 @@
 :root {
   --bg: #eef1f6; --surface: #ffffff; --ink: #172030; --muted: #536079; --line: #cdd4e0; --focus: #ff9f1c;
   --canvas: #f6f8fb; --wire: #9aa6ba; --ring: #d5ebe8;
-  --gov: #3b4ca6; --role: #17807a; --admin: #7d6146; --mbc: #2d68ad; --sab: #3a8448; --couns: #b9466f; --part: #4f6d61;
+  --gov: #3b4ca6; --role: #17807a; --admin: #7d6146; --mbc: #2d68ad; --sab: #3a8448; --couns: #b9466f; --part: #4f6d61; --cw: #a37612;
   --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
   --body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
 }
@@ -41,7 +41,7 @@ button:hover { border-color: var(--muted); }
 button:focus-visible, .node:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .stopcount { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
-svg.map { width: 100%; height: auto; display: block; aspect-ratio: 1200 / 940; max-width: 100%; background: var(--canvas); }
+svg.map { width: 100%; height: auto; display: block; aspect-ratio: 1200 / 960; max-width: 100%; background: var(--canvas); }
 
 .wire { stroke: var(--wire); stroke-width: 3; fill: none; }
 .wire.ref { stroke-dasharray: 10 8; stroke-width: 3.5; }
@@ -84,7 +84,7 @@ ol.steps li::marker { font-family: var(--display); font-weight: 800; }
   <header>
     <span class="eyebrow">Leadership presentation · CatholicCare CQ DFV services</span>
     <h1>Clinical Team Leader Ecosystem</h1>
-    <p>The Clinical Team Leader is the connection point between three programs, the leadership above them, the people processes that support staff, and the agencies outside. Click any part to zoom in, or press Next to walk the eight stops in presentation order.</p>
+    <p>The Clinical Team Leader is the connection point between four programs, the leadership above them, the people processes that support staff, and the agencies outside. Click any part to zoom in, or press Next to walk the nine stops in presentation order.</p>
   </header>
 
   <section class="board" aria-label="Interactive ecosystem diagram">
@@ -97,83 +97,96 @@ ol.steps li::marker { font-family: var(--display); font-weight: 800; }
         <span class="spacer"></span>
         <button id="recallBtn" type="button" aria-pressed="false">Recall mode</button>
       </div>
-      <svg class="map" id="map" viewBox="0 0 1200 940" role="img" aria-label="Ecosystem diagram with the Clinical Team Leader at the centre">
+      <svg class="map" id="map" viewBox="0 0 1200 960" role="img" aria-label="Ecosystem diagram with the Clinical Team Leader at the centre">
         <!-- wires from centre -->
         <line class="wire" x1="600" y1="450" x2="600" y2="92"/>
-        <line class="wire" x1="600" y1="450" x2="323" y2="290"/>
-        <line class="wire" x1="600" y1="450" x2="877" y2="290"/>
-        <line class="wire" x1="600" y1="450" x2="600" y2="790"/>
-        <line class="wire" x1="600" y1="450" x2="150" y2="700"/>
-        <line class="wire" x1="600" y1="450" x2="1050" y2="700"/>
+        <line class="wire" x1="600" y1="450" x2="300" y2="250"/>
+        <line class="wire" x1="600" y1="450" x2="900" y2="250"/>
+        <line class="wire" x1="600" y1="450" x2="300" y2="690"/>
+        <line class="wire" x1="600" y1="450" x2="900" y2="690"/>
+        <line class="wire" x1="600" y1="450" x2="450" y2="890"/>
+        <line class="wire" x1="600" y1="450" x2="750" y2="890"/>
         <!-- referrals between programs -->
-        <path class="wire ref" d="M420 225 Q 600 130 780 225"/>
-        <path class="wire ref" d="M960 390 Q 930 640 715 780"/>
-        <path class="wire ref" d="M240 390 Q 270 640 485 780"/>
-        <text class="t s ink" x="470" y="186" font-size="13">referrals between programs</text>
+        <path class="wire ref" d="M412 200 Q 600 120 788 200"/>
+        <path class="wire ref" d="M1012 340 Q 1070 470 1012 600"/>
+        <path class="wire ref" d="M788 740 Q 600 820 412 740"/>
+        <path class="wire ref" d="M188 600 Q 130 470 188 340"/>
+        <text class="t s ink" x="480" y="150" font-size="13">referrals between programs</text>
 
-        <!-- 6 Leadership -->
-        <g class="node" data-z="lead" tabindex="0" role="button" aria-label="Stop 6, leadership and governance">
+        <!-- 7 Leadership -->
+        <g class="node" data-z="lead" tabindex="0" role="button" aria-label="Stop 7, leadership and governance">
           <rect class="shape" x="420" y="28" width="360" height="72" rx="36" fill="var(--gov)"/>
           <text class="t" x="600" y="62" font-size="22">Leadership &amp; governance</text>
           <text class="t s" x="600" y="84" font-size="13">Senior leadership · DFV Steering Committee</text>
-          <g class="badge" transform="translate(420,40)"><circle r="16"/><text>6</text></g>
+          <g class="badge" transform="translate(420,40)"><circle r="16"/><text>7</text></g>
         </g>
 
         <!-- 2 MBC -->
         <g class="node" data-z="mbc" tabindex="0" role="button" aria-label="Stop 2, Men's Behaviour Change">
-          <circle class="shape" cx="323" cy="290" r="118" fill="var(--mbc)"/>
-          <text class="t" x="323" y="238" font-size="30">MBC</text>
-          <text class="t s" x="323" y="260" font-size="13">Men’s Behaviour Change</text>
-          <text class="t" x="323" y="294" font-size="16">Rachel · Bree · Zac</text>
-          <text class="t s" x="323" y="324" font-size="13">Rockhampton · Wed &amp; Thu</text>
-          <text class="t s" x="323" y="344" font-size="13">Emerald · fortnightly Tue</text>
-          <g class="badge" transform="translate(240,196)"><circle r="16"/><text>2</text></g>
+          <circle class="shape" cx="300" cy="250" r="118" fill="var(--mbc)"/>
+          <text class="t" x="300" y="198" font-size="30">MBC</text>
+          <text class="t s" x="300" y="220" font-size="13">Men’s Behaviour Change</text>
+          <text class="t" x="300" y="254" font-size="16">Rachel · Bree · Zac</text>
+          <text class="t s" x="300" y="284" font-size="13">Rockhampton · Wed &amp; Thu</text>
+          <text class="t s" x="300" y="304" font-size="13">Emerald · fortnightly Tue</text>
+          <g class="badge" transform="translate(217,156)"><circle r="16"/><text>2</text></g>
         </g>
 
         <!-- 3 Counselling -->
         <g class="node" data-z="couns" tabindex="0" role="button" aria-label="Stop 3, Counselling team">
-          <circle class="shape" cx="877" cy="290" r="118" fill="var(--couns)"/>
-          <text class="t" x="877" y="238" font-size="26">Counselling</text>
-          <text class="t s" x="877" y="260" font-size="13">Counselling team</text>
-          <text class="t" x="877" y="294" font-size="16">Georgia · Candy · Lorena</text>
-          <text class="t s" x="877" y="324" font-size="13">Therapeutic interventions</text>
-          <text class="t s" x="877" y="344" font-size="13">Internal referrals</text>
-          <g class="badge" transform="translate(960,196)"><circle r="16"/><text>3</text></g>
+          <circle class="shape" cx="900" cy="250" r="118" fill="var(--couns)"/>
+          <text class="t" x="900" y="198" font-size="26">Counselling</text>
+          <text class="t s" x="900" y="220" font-size="13">Counselling team</text>
+          <text class="t" x="900" y="254" font-size="16">Georgia · Candy · Lorena</text>
+          <text class="t s" x="900" y="284" font-size="13">Therapeutic interventions</text>
+          <text class="t s" x="900" y="304" font-size="13">Internal referrals</text>
+          <g class="badge" transform="translate(983,156)"><circle r="16"/><text>3</text></g>
         </g>
 
-        <!-- 4 SAB -->
-        <g class="node" data-z="sab" tabindex="0" role="button" aria-label="Stop 4, Supporting Adolescent Boys">
-          <circle class="shape" cx="600" cy="790" r="118" fill="var(--sab)"/>
-          <text class="t" x="600" y="726" font-size="30">SAB</text>
-          <text class="t s" x="600" y="748" font-size="13">Supporting Adolescent Boys</text>
-          <text class="t" x="600" y="778" font-size="15">Hayden Lovell</text>
-          <text class="t" x="600" y="797" font-size="15">Hayden Peckover · Ric</text>
-          <text class="t s" x="600" y="826" font-size="13">Early intervention · Family</text>
-          <text class="t s" x="600" y="844" font-size="13">engagement · Behaviour change</text>
-          <g class="badge" transform="translate(684,700)"><circle r="16"/><text>4</text></g>
+        <!-- 4 Child Witness -->
+        <g class="node" data-z="cw" tabindex="0" role="button" aria-label="Stop 4, Child Witness">
+          <circle class="shape" cx="900" cy="690" r="118" fill="var(--cw)"/>
+          <text class="t" x="900" y="640" font-size="26">Child Witness</text>
+          <text class="t s" x="900" y="662" font-size="13">Children affected by DFV</text>
+          <text class="t" x="900" y="696" font-size="16">Team: add names</text>
+          <text class="t s" x="900" y="726" font-size="13">Child-focused support</text>
+          <text class="t s" x="900" y="746" font-size="13">Trauma-informed · Safe carers</text>
+          <g class="badge" transform="translate(983,784)"><circle r="16"/><text>4</text></g>
         </g>
 
-        <!-- 7 HR -->
-        <g class="node" data-z="hr" tabindex="0" role="button" aria-label="Stop 7, people and HR processes">
-          <rect class="shape" x="28" y="660" width="250" height="80" rx="40" fill="var(--admin)"/>
-          <text class="t" x="153" y="696" font-size="20">People &amp; HR</text>
-          <text class="t s" x="153" y="719" font-size="13">HR 029 · Employment Hero</text>
-          <g class="badge" transform="translate(40,664)"><circle r="16"/><text>7</text></g>
+        <!-- 5 SAB -->
+        <g class="node" data-z="sab" tabindex="0" role="button" aria-label="Stop 5, Supporting Adolescent Boys">
+          <circle class="shape" cx="300" cy="690" r="118" fill="var(--sab)"/>
+          <text class="t" x="300" y="626" font-size="30">SAB</text>
+          <text class="t s" x="300" y="648" font-size="13">Supporting Adolescent Boys</text>
+          <text class="t" x="300" y="678" font-size="15">Hayden Lovell</text>
+          <text class="t" x="300" y="697" font-size="15">Hayden Peckover · Ric</text>
+          <text class="t s" x="300" y="726" font-size="13">Early intervention · Family</text>
+          <text class="t s" x="300" y="744" font-size="13">engagement · Behaviour change</text>
+          <g class="badge" transform="translate(217,784)"><circle r="16"/><text>5</text></g>
         </g>
 
-        <!-- 8 Stakeholders -->
-        <g class="node" data-z="stake" tabindex="0" role="button" aria-label="Stop 8, external stakeholders">
-          <rect class="shape" x="922" y="660" width="250" height="80" rx="40" fill="var(--part)"/>
-          <text class="t" x="1047" y="696" font-size="20">Stakeholders</text>
-          <text class="t s" x="1047" y="719" font-size="13">HRT · Child Safety · QPS · Court</text>
-          <g class="badge" transform="translate(1160,664)"><circle r="16"/><text>8</text></g>
+        <!-- 8 HR -->
+        <g class="node" data-z="hr" tabindex="0" role="button" aria-label="Stop 8, people and HR processes">
+          <rect class="shape" x="318" y="852" width="264" height="80" rx="40" fill="var(--admin)"/>
+          <text class="t" x="450" y="888" font-size="20">People &amp; HR</text>
+          <text class="t s" x="450" y="911" font-size="13">HR 029 · Employment Hero</text>
+          <g class="badge" transform="translate(330,856)"><circle r="16"/><text>8</text></g>
         </g>
 
-        <!-- 5 Overlap ring -->
-        <g class="node" data-z="overlap" tabindex="0" role="button" aria-label="Stop 5, where the overlap occurs">
+        <!-- 9 Stakeholders -->
+        <g class="node" data-z="stake" tabindex="0" role="button" aria-label="Stop 9, external stakeholders">
+          <rect class="shape" x="618" y="852" width="264" height="80" rx="40" fill="var(--part)"/>
+          <text class="t" x="750" y="888" font-size="20">Stakeholders</text>
+          <text class="t s" x="750" y="911" font-size="13">HRT · Child Safety · QPS · Court</text>
+          <g class="badge" transform="translate(870,856)"><circle r="16"/><text>9</text></g>
+        </g>
+
+        <!-- 6 Overlap ring -->
+        <g class="node" data-z="overlap" tabindex="0" role="button" aria-label="Stop 6, where the overlap occurs">
           <circle class="shape" cx="600" cy="450" r="212" fill="var(--ring)"/>
           <g id="ringlabels"></g>
-          <g class="badge" transform="translate(600,226)"><circle r="16"/><text>5</text></g>
+          <g class="badge" transform="translate(600,226)"><circle r="16"/><text>6</text></g>
         </g>
 
         <!-- 1 Centre -->
@@ -202,8 +215,8 @@ ol.steps li::marker { font-family: var(--display); font-weight: 800; }
       <h2 id="pz">Turn the picture into your presentation</h2>
       <ol class="steps">
         <li><b>Background.</b> Upload the ecosystem picture as the Prezi background. Use the labelled version for presenting and the blank one to rehearse.</li>
-        <li><b>Topics.</b> Put a topic over each of the eight parts, named exactly as on the picture.</li>
-        <li><b>Path.</b> Order the path 1 to 8: you, the three programs, the overlap, then outward to leadership, people and stakeholders. End by zooming back out to the whole picture.</li>
+        <li><b>Topics.</b> Put a topic over each of the nine parts, named exactly as on the picture.</li>
+        <li><b>Path.</b> Order the path 1 to 9: you, the four programs, the overlap, then outward to leadership, people and stakeholders. End by zooming back out to the whole picture.</li>
         <li><b>Subtopics.</b> Inside the centre circle, add the nine responsibilities as three groups of three: Leading practice, Leading people, Leading outward. Three groups are easier to hold than nine items.</li>
         <li><b>Speaker notes.</b> Paste the presenter line for each stop into that topic’s notes.</li>
         <li><b>Rehearse with recall mode.</b> Turn on Recall mode here, click each part and say your line before revealing it.</li>
@@ -215,39 +228,44 @@ ol.steps li::marker { font-family: var(--display); font-weight: 800; }
 <script>
 const Z = {
   ctl: { n:1, c:'--role', band:'Centre', title:'Clinical Team Leader', box:[470,320,260,260],
-    say:'My role sits at the centre. I connect three programs, the staff in them, our leadership, our people processes and our partner agencies.',
+    say:'My role sits at the centre. I connect four programs, the staff in them, our leadership, our people processes and our partner agencies.',
     groups:[['Leading practice',['Clinical governance','Quality assurance','Risk assessment and management']],
             ['Leading people',['Staff development','Supervision and support','Workforce wellbeing']],
             ['Leading outward',['Stakeholder engagement','Service integration','Reporting and outcomes']]],
     next:[['overlap','The overlap is where my role does its work'],['lead','I report up to leadership']]},
-  mbc: { n:2, c:'--mbc', band:'Program', title:'Men’s Behaviour Change (MBC)', box:[195,162,256,256],
+  mbc: { n:2, c:'--mbc', band:'Program', title:'Men’s Behaviour Change (MBC)', box:[172,122,256,256],
     say:'MBC works with men using violence, keeping the safety of women and children at the centre. We run in Rockhampton twice a week and in Emerald fortnightly.',
     what:['Group program for men using violence','Rockhampton groups on Wednesday and Thursday','Emerald group fortnightly on Tuesday','Participation reported through collateral checks and HRT RFIs'],
     who:['Rachel','Bree','Zac'],
     next:[['couns','Partners and family members referred to Counselling'],['sab','Shared families with adolescent boys'],['stake','Collateral checks and HRT']]},
-  couns: { n:3, c:'--couns', band:'Program', title:'Counselling team', box:[749,162,256,256],
+  couns: { n:3, c:'--couns', band:'Program', title:'Counselling team', box:[772,122,256,256],
     say:'The Counselling team provides therapeutic interventions and takes internal referrals from our other programs.',
     what:['Therapeutic interventions','Internal referrals from MBC and SAB'],
     who:['Georgia','Candy','Lorena'],
     next:[['mbc','Referrals in from MBC'],['sab','Referrals in from SAB'],['overlap','Shared clients and families']]},
-  sab: { n:4, c:'--sab', band:'Program', title:'Supporting Adolescent Boys (SAB)', box:[472,662,256,256],
+  cw: { n:4, c:'--cw', band:'Program', title:'Child Witness', box:[772,562,256,256],
+    say:'Child Witness supports children who have seen or lived through domestic and family violence, keeping their voices and their safety at the centre.',
+    what:['Support for children affected by domestic and family violence','Child-focused and trauma-informed','Working alongside the child’s safe carers'],
+    who:['Add team names'],
+    next:[['sab','Children and young people across both programs'],['couns','Safe carers referred to Counselling'],['stake','Child Safety']]},
+  sab: { n:5, c:'--sab', band:'Program', title:'Supporting Adolescent Boys (SAB)', box:[172,562,256,256],
     say:'SAB is early intervention. We work with adolescent boys and their families on behaviour change pathways before patterns set in.',
     what:['Early intervention','Family engagement','Behaviour change pathways'],
     who:['Hayden Lovell','Hayden Peckover','Ric'],
     next:[['mbc','Behaviour change pathway links to MBC'],['couns','Family members referred to Counselling'],['overlap','Shared families']]},
-  overlap: { n:5, c:'--role', band:'The overlap', title:'Where the overlap occurs', box:[378,228,444,444],
+  overlap: { n:6, c:'--role', band:'The overlap', title:'Where the overlap occurs', box:[378,228,444,444],
     say:'The programs don’t work in silos. Families, risk and referrals cross between them, and this overlap is where my role adds the most value.',
     what:['Shared clients and families','Risk management','Referrals between programs','Collaborative case planning','Service coordination','Community engagement','Practice improvement'],
     next:[['ctl','The Clinical Team Leader holds the overlap together'],['stake','Community engagement reaches outward']]},
-  lead: { n:6, c:'--gov', band:'Above', title:'Leadership & governance', box:[400,10,400,110],
+  lead: { n:7, c:'--gov', band:'Above', title:'Leadership & governance', box:[400,10,400,110],
     say:'Upward, I report outcomes to senior leadership and the DFV Steering Committee and carry their direction back into practice.',
     what:['CatholicCare CQ senior leadership','DFV Steering Committee priorities and KPIs','Reporting and outcomes','Clinical governance frameworks and policy'],
     next:[['ctl','Direction comes down through the centre'],['hr','Policy shapes people processes']]},
-  hr: { n:7, c:'--admin', band:'Alongside', title:'People & HR processes', box:[10,620,290,140],
+  hr: { n:8, c:'--admin', band:'Alongside', title:'People & HR processes', box:[300,830,300,120],
     say:'Alongside the clinical work, I hold the people processes that keep the team safe, skilled and supported.',
     what:['Line management recorded on HR 029','Employment Hero for leave and compliance','Professional supervision and development','Student placements, including CQU social work','Workforce wellbeing'],
     next:[['ctl','Supervision and support'],['lead','HR policy from leadership']]},
-  stake: { n:8, c:'--part', band:'Outside', title:'External stakeholders', box:[900,620,290,140],
+  stake: { n:9, c:'--part', band:'Outside', title:'External stakeholders', box:[600,830,300,120],
     say:'Outward, I keep our partnerships strong, sharing information safely with the agencies that hold risk with us.',
     what:['HRT Capricornia, the High Risk Team','Child Safety','Queensland Police Service','Corrective Services','Rockhampton court support','CQUniversity'],
     next:[['ctl','Stakeholder engagement'],['mbc','Collateral checks about MBC participants']]}
@@ -255,7 +273,7 @@ const Z = {
 const ORDER = Object.keys(Z).sort((a,b)=>Z[a].n-Z[b].n);
 const svg = document.getElementById('map'), panel = document.getElementById('panel');
 const NS = 'http://www.w3.org/2000/svg';
-const FULL = [0,0,1200,940];
+const FULL = [0,0,1200,960];
 let cur = null, vb = FULL.slice(), recall = false, revealed = false, anim = null;
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -263,7 +281,7 @@ const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const RING = [['Shared clients','& families'],['Risk','management'],['Referrals','between programs'],['Collaborative','case planning'],['Service','coordination'],['Community','engagement'],['Practice','improvement']];
 const rl = document.getElementById('ringlabels');
 RING.forEach((lines,i)=>{
-  const a = (-90 + 360/RING.length*(i+0.5)) * Math.PI/180, x = 600+162*Math.cos(a), y = 450+162*Math.sin(a);
+  const a = [-118,-62,0,53,90,127,180][i] * Math.PI/180, x = 600+162*Math.cos(a), y = 450+162*Math.sin(a);
   lines.forEach((ln,j)=>{ const t=document.createElementNS(NS,'text'); t.setAttribute('class','t ink'+(j?' s':'')); t.setAttribute('x',x.toFixed(1)); t.setAttribute('y',(y+j*16-2).toFixed(1)); t.setAttribute('font-size', j?12:14); t.textContent=ln; rl.appendChild(t); });
 });
 
@@ -286,14 +304,14 @@ function render(){
   if (!cur){
     panel.style.setProperty('--zc','var(--ink)');
     panel.innerHTML = `<div class="head"><span class="eyebrow">Start here</span><h2>Read it from the centre out</h2></div>
-      <ul><li><b>Centre:</b> the Clinical Team Leader and nine areas of responsibility</li><li><b>Ring:</b> the seven places the programs overlap</li><li><b>Three circles:</b> MBC, Counselling and SAB with their teams</li><li><b>Edges:</b> leadership above, people processes and stakeholders either side</li></ul>
+      <ul><li><b>Centre:</b> the Clinical Team Leader and nine areas of responsibility</li><li><b>Ring:</b> the seven places the programs overlap</li><li><b>Four circles:</b> MBC, Counselling, Child Witness and SAB with their teams</li><li><b>Edges:</b> leadership above, people processes and stakeholders below</li></ul>
       <p>Dashed lines show referrals moving between the programs.</p>
       <div class="links"><button type="button" data-go="ctl"><span class="dot" style="background:var(--role)"></span><b>Start the walk-through</b></button></div>`;
     return;
   }
   const z = Z[cur];
   panel.style.setProperty('--zc','var('+z.c+')');
-  const head = `<div class="head"><span class="eyebrow">Stop ${z.n} of 8 · ${esc(z.band)}</span><h2>${esc(z.title)}</h2></div>`;
+  const head = `<div class="head"><span class="eyebrow">Stop ${z.n} of 9 · ${esc(z.band)}</span><h2>${esc(z.title)}</h2></div>`;
   if (recall && !revealed){
     panel.innerHTML = head + `<div class="reveal"><p>Say your presenter line out loud, then name what sits here. Then check.</p><button type="button" id="reveal">Reveal</button></div>`;
     document.getElementById('reveal').onclick = ()=>{ revealed = true; render(); };
@@ -310,7 +328,7 @@ function go(k){
   cur = k; revealed = false;
   document.querySelectorAll('.node').forEach(g=>g.classList.toggle('on', g.dataset.z===k));
   zoomTo(k ? pad(Z[k].box) : FULL);
-  document.getElementById('stopcount').textContent = k ? `Stop ${Z[k].n} of 8` : 'Overview';
+  document.getElementById('stopcount').textContent = k ? `Stop ${Z[k].n} of 9` : 'Overview';
   render();
   try { history.replaceState(null,'', k ? '#'+k : location.pathname); } catch(e){}
 }

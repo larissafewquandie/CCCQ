@@ -101,26 +101,29 @@ const ECO_TOPICS = [
   C('--role','Clinical Team Leader','Circle, over the centre'),
   C('--mbc','Men’s Behaviour Change (MBC)','Circle, top left'),
   C('--couns','Counselling team','Circle, top right'),
-  C('--sab','Supporting Adolescent Boys (SAB)','Circle, bottom'),
+  C('--cw','Child Witness','Circle, bottom right'),
+  C('--sab','Supporting Adolescent Boys (SAB)','Circle, bottom left'),
   C('--role','Where the overlap occurs','Large circle, over the pale ring'),
   C('--gov','Leadership & governance','Rectangle, top'),
-  C('--admin','People & HR processes','Rectangle, bottom left'),
-  C('--part','External stakeholders','Rectangle, bottom right')];
+  C('--admin','People & HR processes','Rectangle, bottom, left of centre'),
+  C('--part','External stakeholders','Rectangle, bottom, right of centre')];
 const ECO_SUBS = [
   C('--role','Clinical Team Leader','Leading practice: Clinical governance · Quality assurance · Risk assessment and management\nLeading people: Staff development · Supervision and support · Workforce wellbeing\nLeading outward: Stakeholder engagement · Service integration · Reporting and outcomes'),
   C('--mbc','MBC','Team: Rachel · Bree · Zac\nWhen: Rockhampton Wednesday and Thursday · Emerald fortnightly Tuesday\nConnects to: Counselling referrals · Shared families with SAB · Collateral checks and HRT'),
   C('--couns','Counselling','Team: Georgia · Candy · Lorena\nFocus: Therapeutic interventions · Internal referrals\nConnects to: Referrals from MBC and SAB · Shared clients and families'),
+  C('--cw','Child Witness','Team: add names\nFocus: Child-focused support · Trauma-informed · Safe carers\nConnects to: SAB · Safe carers to Counselling · Child Safety'),
   C('--sab','SAB','Team: Hayden Lovell · Hayden Peckover · Ric\nFocus: Early intervention · Family engagement · Behaviour change pathways\nConnects to: MBC pathway · Family referrals to Counselling'),
   C('--role','Where the overlap occurs','Shared clients and families · Risk management · Referrals between programs · Collaborative case planning · Service coordination · Community engagement · Practice improvement')];
 const ECO_NOTES = [
-  C('--role','1 · Clinical Team Leader','My role sits at the centre. I connect three programs, the staff in them, our leadership, our people processes and our partner agencies.'),
+  C('--role','1 · Clinical Team Leader','My role sits at the centre. I connect four programs, the staff in them, our leadership, our people processes and our partner agencies.'),
   C('--mbc','2 · MBC','MBC works with men using violence, keeping the safety of women and children at the centre. We run in Rockhampton twice a week and in Emerald fortnightly.'),
   C('--couns','3 · Counselling','The Counselling team provides therapeutic interventions and takes internal referrals from our other programs.'),
-  C('--sab','4 · SAB','SAB is early intervention. We work with adolescent boys and their families on behaviour change pathways before patterns set in.'),
-  C('--role','5 · The overlap','The programs don’t work in silos. Families, risk and referrals cross between them, and this overlap is where my role adds the most value.'),
-  C('--gov','6 · Leadership','Upward, I report outcomes to senior leadership and the DFV Steering Committee and carry their direction back into practice.'),
-  C('--admin','7 · People & HR','Alongside the clinical work, I hold the people processes that keep the team safe, skilled and supported.'),
-  C('--part','8 · Stakeholders','Outward, I keep our partnerships strong, sharing information safely with the agencies that hold risk with us.')];
+  C('--cw','4 · Child Witness','Child Witness supports children who have seen or lived through domestic and family violence, keeping their voices and their safety at the centre.'),
+  C('--sab','5 · SAB','SAB is early intervention. We work with adolescent boys and their families on behaviour change pathways before patterns set in.'),
+  C('--role','6 · The overlap','The programs don’t work in silos. Families, risk and referrals cross between them, and this overlap is where my role adds the most value.'),
+  C('--gov','7 · Leadership','Upward, I report outcomes to senior leadership and the DFV Steering Committee and carry their direction back into practice.'),
+  C('--admin','8 · People & HR','Alongside the clinical work, I hold the people processes that keep the team safe, skilled and supported.'),
+  C('--part','9 · Stakeholders','Outward, I keep our partnerships strong, sharing information safely with the agencies that hold risk with us.')];
 
 const HOUSE_TOPICS = [
   C('--gov','Governance & direction','Triangle area, the roof'),
@@ -145,20 +148,20 @@ const PHASES = {
       ['Delete any topics Prezi added for you','Click each one and press Delete. You want an empty canvas.'],
       ['Set ecosystem-labelled.png as the background image','Open the style or theme options, choose Background, and upload the picture. Stretch it to fill the canvas.','The whole diagram shows when you zoom right out.']]},
     { h:'Add a topic over each part', t:'15 min', steps:[
-      ['Add 8 topics, one over each numbered part','Add a topic, then drag and resize it so it sits exactly over that part of the picture. Use a circle for circles and a rectangle for the pill shapes. Copy each title below so the words match the picture.',null,'topics'],
+      ['Add 9 topics, one over each numbered part','Add a topic, then drag and resize it so it sits exactly over that part of the picture. Use a circle for circles and a rectangle for the pill shapes. Copy each title below so the words match the picture.',null,'topics'],
       ['Make the topic frames invisible or transparent','Select each topic and choose a transparent frame in its style options. The picture shows through and Prezi still zooms to it.','You can see the picture clearly with no boxes on top.']]},
     { h:'Fill the topics', t:'15 min', steps:[
-      ['Add subtopics inside the five main topics','Open each topic and add the three groups below as subtopics. Keep it to three per topic. Copy and paste each one.',null,'subs'],
+      ['Add subtopics inside the six main topics','Open each topic and add the three groups below as subtopics. Keep it to three per topic. Copy and paste each one.',null,'subs'],
       ['Leave Leadership, People & HR and Stakeholders as single slides','The picture already lists what sits there. Your speaker notes do the rest.']]},
     { h:'Set the path', t:'5 min', steps:[
-      ['Check the path order runs 1 to 8','Look at the path list on the left. Drag the topics into this order: Clinical Team Leader, MBC, Counselling, SAB, Where the overlap occurs, Leadership, People & HR, Stakeholders.','The numbers on the left match the badges on the picture.'],
-      ['End on the whole picture','After stop 8, make the last step zoom back out to the full canvas. It lets the audience see the whole ecosystem again while you close.']]},
+      ['Check the path order runs 1 to 9','Look at the path list on the left. Drag the topics into this order: Clinical Team Leader, MBC, Counselling, Child Witness, SAB, Where the overlap occurs, Leadership, People & HR, Stakeholders.','The numbers on the left match the badges on the picture.'],
+      ['End on the whole picture','After stop 9, make the last step zoom back out to the full canvas. It lets the audience see the whole ecosystem again while you close.']]},
     { h:'Add your speaker notes', t:'10 min', steps:[
       ['Paste one presenter line into each topic’s notes','Open the notes area for each topic and paste its line. Only you see these when you present.',null,'notes']]},
     { h:'Rehearse', t:'10 min', steps:[
       ['Duplicate the whole Prezi','Name the copy “Ecosystem rehearsal”.'],
       ['In the copy, swap the background for ecosystem-blank-for-rehearsal.png','The circles and colours stay, the words disappear.'],
-      ['Present the copy once and say each line from memory','Pull the words out before you look. That effort is what makes them stay.','You got through all 8 stops. Check the notes for anything you missed.'],
+      ['Present the copy once and say each line from memory','Pull the words out before you look. That effort is what makes them stay.','You got through all 9 stops. Check the notes for anything you missed.'],
       ['Present the real version once from start to finish','Time it. Aim for about one minute per stop.']]}
   ],
   house: [
