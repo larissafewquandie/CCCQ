@@ -335,7 +335,7 @@ const Z = {
     next:[['role','Records back up your decisions'],['gov','Data feeds the KPIs on the roof']]},
   door:  { n:5,  c:'--door',  band:'Ground floor · Coming in', title:'Front door', box:[440,400,140,240],
     hook:'A letterbox stuffed with envelopes. Referrals, RFIs and collateral checks all come in through this one door.',
-    what:['New referrals into the programs.','Collateral checks from Child Safety, Corrective Services, police and other agencies. You search CSNet and reply Known or Not Known.','Weekly HRT RFIs. A progress email goes to HRT Capricornia, Tennille and Corin before the meeting, and a completed reply after.','Court support requests.'],
+    what:['New referrals into the programs.','Collateral checks from Child Safety, Corrective Services, police and other agencies. You search CSNet and reply Known or Not Known.','HRT RFIs. New RFIs arrive at the Friday HRT meeting, and you complete and send them by 12 pm on Monday.','Collateral checks are answered as soon as possible.','Court support requests.'],
     who:['External agencies','HRT Capricornia, Tennille and Corin'],
     next:[['mbc','Referrals go into a program room'],['admin','Every request is logged'],['part','Replies go back out to the street']]},
   mbc:   { n:6,  c:'--mbc',   band:'Ground floor · Programs', title:'Men’s Behaviour Change (MBC)', box:[190,410,170,200],
@@ -366,7 +366,7 @@ const Z = {
     next:[['gov','The roof rests on these values'],['risk','The alarm runs on them']]},
   part:  { n:11, c:'--part',  band:'Outside · The street', title:'Partners', box:[0,420,1000,360],
     hook:'Neighbours along the street. The courthouse with columns, the police station, Child Safety and Corrections, and the HRT table on the footpath out front.',
-    what:['HRT Capricornia, the High Risk Team, meets weekly. RFIs go to them.','Rockhampton court, staffed through the court support roster.','Child Safety, Corrective Services and Queensland Police send collateral checks.','CQUniversity places social work students with your team.'],
+    what:['HRT Capricornia, the High Risk Team. Friday meeting reviews the week, hands out new RFIs and checks where each referred PUV and victim-survivor (VS) is at. RFIs go back by 12 pm Monday.','Rockhampton court, staffed through the court support roster.','Child Safety, Corrective Services and Queensland Police send collateral checks.','CQUniversity places social work students with your team.'],
     who:['HRT Capricornia, Tennille and Corin','Child Safety','Corrective Services','Queensland Police Service','CQUniversity'],
     next:[['door','Requests walk up to the front door'],['risk','High risk cases go to HRT']]}
 };
@@ -441,8 +441,8 @@ toggle('flowBtn','showflow');
 toggle('recallBtn','recall', on=>{ recall=on; revealed=false; render(); });
 
 const R = [
-  ['Every day', [['risk','Read escalations and risk emails first'],['door','Triage the inbox: collateral checks, referrals'],['admin','Case notes written the same day'],['role','Check in with the team']]],
-  ['Every week', [['mbc','MBC groups in Rockhampton, Wednesday and Thursday'],['mbc','MBC group in Emerald, every second Tuesday'],['door','HRT RFI progress email to HRT Cap, Tennille and Corin'],['part','HRT meeting'],['door','Completed RFIs reply, and FYI to the MBC team'],['admin','Court support roster checked*'],['admin','Receipts into Expense Pro*']]],
+  ['Every day', [['risk','Read escalations and risk emails first'],['door','Respond to collateral checks as soon as possible'],['door','Triage new referrals'],['admin','Case notes written the same day'],['role','Check in with the team']]],
+  ['Every week', [['mbc','MBC groups in Rockhampton, Wednesday and Thursday'],['mbc','MBC group in Emerald, every second Tuesday'],['part','Monday: complete and send HRT RFIs by 12 pm'],['part','Friday: HRT review of the week and new RFIs for next week'],['part','Friday: status meeting on each referred PUV and victim-survivor'],['admin','Court support roster checked*'],['admin','Receipts into Expense Pro*']]],
   ['Every month or so', [['role','Line management meetings, recorded on HR 029*'],['role','Supervision with Brea and the CQU check-ins*'],['role','Practitioner supervision*']]],
   ['Each quarter', [['gov','Steering Committee meeting and KPI update*'],['gov','Program reporting to funders*'],['found','Look back over the house: what changed?']]]
 ];
