@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adolescent Boys Caseload</title>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface-1: #fcfcfb;
+  --text-primary: #0b0b0b; --text-secondary: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface-1: #1a1a19;
+    --text-primary: #f0efec; --text-secondary: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface-1: #1a1a19;
+  --text-primary: #f0efec; --text-secondary: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--text-primary);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { font-size: 22px; margin: 0 0 4px; }
+.sub { color: var(--text-secondary); margin: 0 0 20px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.tile, .card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; }
+.tile { padding: 14px 16px; }
+.tile .v { font-size: 28px; font-weight: 600; }
+.tile .l { color: var(--text-secondary); font-size: 13px; }
+.card { padding: 18px 18px 14px; margin-bottom: 16px; }
+.card h2 { font-size: 16px; margin: 0 0 2px; }
+.card p.note { color: var(--text-secondary); margin: 0 0 12px; font-size: 13px; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 8px; color: var(--text-secondary); font-size: 13px; }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; background: var(--c); vertical-align: -1px; }
+svg { display: block; width: 100%; height: auto; overflow: visible; }
+svg text { fill: var(--muted); font-size: 12px; }
+svg text.val { fill: var(--text-secondary); }
+svg text.lbl { fill: var(--text-secondary); font-size: 13px; }
+.hit { fill: transparent; }
+.hit:hover + g rect, g.bar:hover rect { opacity: .85; }
+#tip { position: fixed; pointer-events: none; background: var(--surface-1); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 13px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12); display: none; z-index: 9; }
+#tip b { display: block; margin-bottom: 2px; }
+details { margin-top: 10px; color: var(--text-secondary); }
+summary { cursor: pointer; font-size: 13px; }
+table { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: 13px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--grid); }
+td.n, th.n { text-align: right; }
+ul.flag { margin: 6px 0 0; padding-left: 18px; color: var(--text-secondary); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Adolescent Boys caseload</h1>
+  <p class="sub">Search for Hayden Peckover and team · 39 activities · Rockhampton · data as at 21 Oct 2026</p>
+
+  <div class="tiles">
+    <div class="tile"><div class="v">39</div><div class="l">Total activities</div></div>
+    <div class="tile"><div class="v">30</div><div class="l">Open (initial + full)</div></div>
+    <div class="tile"><div class="v">8</div><div class="l">Open with no sessions</div></div>
+    <div class="tile"><div class="v">26</div><div class="l">Commenced since Jul 2026</div></div>
+  </div>
+
+  <section class="card">
+    <h2>Caseload by worker and status</h2>
+    <p class="note">Hayden Lovell holds 22 of 39 activities. Hayden Peckover's 14 are half closed, with no cases still in initial establishment.</p>
+    <div class="legend" id="lg1"></div>
+    <div id="c1"></div>
+    <details><summary>Show table</summary><div id="t1"></div></details>
+  </section>
+
+  <section class="card">
+    <h2>Commencements by month</h2>
+    <p class="note">Intake rose sharply from July 2026, with 26 boys commencing in four months. Bars are coloured by each activity's current status.</p>
+    <div class="legend" id="lg2"></div>
+    <div id="c2"></div>
+    <details><summary>Show table</summary><div id="t2"></div></details>
+  </section>
+
+  <section class="card">
+    <h2>Open cases by time since last session</h2>
+    <p class="note">Of the 30 open cases, 15 had a session in the last 7 days. None has gone more than 30 days without one, but 8 have no sessions recorded.</p>
+    <div id="c3"></div>
+    <details open><summary>Open cases with no sessions recorded</summary>
+      <ul class="flag">
+        <li>R.H. and T.H. (Hayden Lovell), commenced 20 Jul 2026</li>
+        <li>R.J. (Ricardo Alvarado), commenced 13 Jul 2026</li>
+        <li>H.D. (Hayden Lovell), commenced 17 Sep 2026</li>
+        <li>S.P. (Hayden Lovell), commenced 30 Sep 2026</li>
+        <li>T.A. and C.Y. (Hayden Lovell), commenced 13 and 14 Oct 2026</li>
+        <li>S.G. (Ricardo Alvarado), commenced 19 Oct 2026</li>
+      </ul>
+    </details>
+  </section>
+</main>
+<div id="tip"></div>
+
+<script>
+const STATUS = [
+  { key: "init",   name: "Initial establishment", c: "var(--s1)" },
+  { key: "full",   name: "Full establishment",    c: "var(--s2)" },
+  { key: "closed", name: "Closed",                c: "var(--s3)" },
+];
+const byWorker = [
+  { w: "Hayden Lovell",    init: 10, full: 11, closed: 1 },
+  { w: "Hayden Peckover",  init: 0,  full: 7,  closed: 7 },
+  { w: "Ricardo Alvarado", init: 2,  full: 0,  closed: 0 },
+  { w: "Corin Iosua",      init: 0,  full: 0,  closed: 1 },
+];
+const byMonth = [
+  ["May 25",0,0,1],["Jun 25",0,0,1],["Jul 25",0,0,2],["Aug 25",0,0,0],["Sep 25",0,1,0],["Oct 25",0,0,0],
+  ["Nov 25",0,1,3],["Dec 25",0,0,1],["Jan 26",0,0,0],["Feb 26",0,0,0],["Mar 26",0,0,0],["Apr 26",0,0,0],
+  ["May 26",0,2,0],["Jun 26",0,1,0],["Jul 26",3,3,1],["Aug 26",0,7,0],["Sep 26",5,3,0],["Oct 26",4,0,0],
+].map(([m,i,f,c]) => ({ m, init: i, full: f, closed: c }));
+const recency = [
+  { k: "Within 7 days", v: 15 },
+  { k: "8 to 30 days",  v: 7 },
+  { k: "Over 30 days",  v: 0 },
+  { k: "No sessions",   v: 8 },
+];
+
+const NS = "http://www.w3.org/2000/svg";
+const el = (t, a = {}, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+const tip = document.getElementById("tip");
+function showTip(ev, html) { tip.innerHTML = html; tip.style.display = "block";
+  const x = Math.min(ev.clientX + 14, innerWidth - tip.offsetWidth - 8);
+  tip.style.left = x + "px"; tip.style.top = (ev.clientY + 14) + "px"; }
+const hideTip = () => tip.style.display = "none";
+function bindTip(node, html) { node.addEventListener("mousemove", e => showTip(e, html)); node.addEventListener("mouseleave", hideTip); }
+// rect rounded only at the data end (right or top)
+function endRounded(x, y, w, h, r, dir) {
+  r = Math.min(r, dir === "h" ? w : h, dir === "h" ? h / 2 : w / 2);
+  if (w <= 0 || h <= 0) return "";
+  return dir === "h"
+    ? `M${x},${y}H${x+w-r}Q${x+w},${y} ${x+w},${y+r}V${y+h-r}Q${x+w},${y+h} ${x+w-r},${y+h}H${x}Z`
+    : `M${x},${y+h}V${y+r}Q${x},${y} ${x+r},${y}H${x+w-r}Q${x+w},${y} ${x+w},${y+r}V${y+h}Z`;
+}
+function legend(id) { document.getElementById(id).innerHTML = STATUS.map(s => `<span style="--c:${s.c}">${s.name}</span>`).join(""); }
+function table(id, head, rows) {
+  document.getElementById(id).innerHTML = `<table><tr>${head.map((h,i)=>`<th class="${i?"n":""}">${h}</th>`).join("")}</tr>` +
+    rows.map(r => `<tr>${r.map((v,i)=>`<td class="${i?"n":""}">${v}</td>`).join("")}</tr>`).join("") + "</table>";
+}
+
+// Chart 1: horizontal stacked bars
+(function () {
+  legend("lg1");
+  const W = 900, L = 140, R = 40, rowH = 30, gap = 14, top = 6;
+  const H = top + byWorker.length * (rowH + gap) + 24, max = 25;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Stacked bar chart of activities by worker and status" }, document.getElementById("c1"));
+  const x = v => L + v / max * (W - L - R);
+  for (let t = 0; t <= max; t += 5) {
+    el("line", { x1: x(t), x2: x(t), y1: top - 4, y2: H - 22, stroke: t ? "var(--grid)" : "var(--axis)" }, svg);
+    el("text", { x: x(t), y: H - 6, "text-anchor": "middle" }, svg).textContent = t;
+  }
+  byWorker.forEach((d, i) => {
+    const y = top + i * (rowH + gap);
+    el("text", { x: L - 10, y: y + rowH / 2 + 4, "text-anchor": "end", class: "lbl" }, svg).textContent = d.w;
+    const segs = STATUS.filter(s => d[s.key] > 0);
+    let acc = 0;
+    segs.forEach((s, j) => {
+      const x0 = x(acc) + (j ? 1 : 0), x1 = x(acc + d[s.key]) - (j < segs.length - 1 ? 1 : 0);
+      const last = j === segs.length - 1;
+      const node = last ? el("path", { d: endRounded(x0, y, x1 - x0, rowH, 4, "h"), fill: s.c }, svg)
+                        : el("rect", { x: x0, y, width: x1 - x0, height: rowH, fill: s.c }, svg);
+      bindTip(node, `<b>${d.w}</b>${s.name}: ${d[s.key]}`);
+      acc += d[s.key];
+    });
+    const tot = d.init + d.full + d.closed;
+    el("text", { x: x(tot) + 8, y: y + rowH / 2 + 4, class: "val" }, svg).textContent = tot;
+  });
+  table("t1", ["Worker", ...STATUS.map(s => s.name), "Total"],
+    byWorker.map(d => [d.w, d.init, d.full, d.closed, d.init + d.full + d.closed]));
+})();
+
+// Chart 2: stacked columns by month
+(function () {
+  legend("lg2");
+  const W = 900, H = 280, L = 30, R = 8, T = 16, B = 40, max = 8;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Stacked column chart of commencements by month" }, document.getElementById("c2"));
+  const y = v => H - B - v / max * (H - B - T);
+  for (let t = 0; t <= max; t += 2) {
+    el("line", { x1: L, x2: W - R, y1: y(t), y2: y(t), stroke: t ? "var(--grid)" : "var(--axis)" }, svg);
+    el("text", { x: L - 8, y: y(t) + 4, "text-anchor": "end" }, svg).textContent = t;
+  }
+  const slot = (W - L - R) / byMonth.length, bw = Math.min(28, slot * 0.6);
+  byMonth.forEach((d, i) => {
+    const cx = L + slot * i + slot / 2, x0 = cx - bw / 2;
+    el("text", { x: cx, y: H - B + 16, "text-anchor": "middle" }, svg).textContent = d.m.split(" ")[0];
+    if (i === 0 || d.m.startsWith("Jan")) el("text", { x: cx, y: H - B + 31, "text-anchor": "middle" }, svg).textContent = "20" + d.m.split(" ")[1];
+    const segs = STATUS.filter(s => d[s.key] > 0);
+    let acc = 0;
+    segs.forEach((s, j) => {
+      const yTop = y(acc + d[s.key]) + (j < segs.length - 1 ? 1 : 0), yBot = y(acc) - (j ? 1 : 0);
+      const last = j === segs.length - 1;
+      if (last) el("path", { d: endRounded(x0, yTop, bw, yBot - yTop, 4, "v"), fill: s.c }, svg);
+      else el("rect", { x: x0, y: yTop, width: bw, height: yBot - yTop, fill: s.c }, svg);
+      acc += d[s.key];
+    });
+    const tot = d.init + d.full + d.closed;
+    if (tot) el("text", { x: cx, y: y(tot) - 6, "text-anchor": "middle", class: "val" }, svg).textContent = tot;
+    const hit = el("rect", { x: L + slot * i, y: T, width: slot, height: H - B - T, class: "hit" }, svg);
+    bindTip(hit, `<b>${d.m.replace(" ", " 20")}</b>${tot} commenced` +
+      segs.map(s => `<br>${s.name}: ${d[s.key]}`).join(""));
+  });
+  table("t2", ["Month", ...STATUS.map(s => s.name), "Total"],
+    byMonth.filter(d => d.init + d.full + d.closed).map(d => [d.m.replace(" ", " 20"), d.init, d.full, d.closed, d.init + d.full + d.closed]));
+})();
+
+// Chart 3: single-series horizontal bars
+(function () {
+  const W = 900, L = 140, R = 40, rowH = 26, gap = 12, top = 4;
+  const H = top + recency.length * (rowH + gap) + 24, max = 16;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Bar chart of open cases by time since last session" }, document.getElementById("c3"));
+  const x = v => L + v / max * (W - L - R);
+  for (let t = 0; t <= max; t += 4) {
+    el("line", { x1: x(t), x2: x(t), y1: top - 4, y2: H - 22, stroke: t ? "var(--grid)" : "var(--axis)" }, svg);
+    el("text", { x: x(t), y: H - 6, "text-anchor": "middle" }, svg).textContent = t;
+  }
+  recency.forEach((d, i) => {
+    const y = top + i * (rowH + gap);
+    el("text", { x: L - 10, y: y + rowH / 2 + 4, "text-anchor": "end", class: "lbl" }, svg).textContent = d.k;
+    if (d.v) { const n = el("path", { d: endRounded(x(0), y, x(d.v) - x(0), rowH, 4, "h"), fill: "var(--s1)" }, svg);
+      bindTip(n, `<b>${d.k}</b>${d.v} open cases`); }
+    el("text", { x: x(d.v) + 8, y: y + rowH / 2 + 4, class: "val" }, svg).textContent = d.v;
+  });
+})();
+</script>
+</body>
+</html>
