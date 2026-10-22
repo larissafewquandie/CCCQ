@@ -1,0 +1,393 @@
+<title>CatholicCare Mind Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap">
+<style>
+/* Layout: a two-sided mind map on a pannable, zoomable canvas (Prezi-style), with a study panel and a full Prezi outline below. Colours match the house and ecosystem pictures. */
+:root {
+  --bg: #eef1f6; --surface: #ffffff; --ink: #172030; --muted: #536079; --line: #cdd4e0; --focus: #ff9f1c; --canvas: #f6f8fb; --wire: #9aa6ba;
+  --gov: #3b4ca6; --risk: #c4362c; --role: #17807a; --admin: #7d6146; --door: #874090; --mbc: #2d68ad; --sab: #3a8448;
+  --couns: #b9466f; --cw: #a37612; --found: #626875; --part: #4f6d61; --week: #1f6f8b; --prog: #34415a;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111722; --surface: #1a2232; --ink: #e8ecf4; --muted: #9da9bf; --line: #2e3a50; --focus: #ffb347; --canvas: #151c2a; --wire: #4c5a74; --prog: #56647f; color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #111722; --surface: #1a2232; --ink: #e8ecf4; --muted: #9da9bf; --line: #2e3a50; --focus: #ffb347; --canvas: #151c2a; --wire: #4c5a74; --prog: #56647f; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 1320px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 32px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(30px, 4.4vw, 46px); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: 24px; font-weight: 700; }
+h3 { font-size: 17px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+header { display: grid; gap: 10px; max-width: 74ch; }
+header p { color: var(--muted); }
+
+button { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+button:hover { border-color: var(--muted); }
+button:focus-visible, .node:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+.board { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 960px) { .board { grid-template-columns: 1fr; } }
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; min-width: 0; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px; border-bottom: 1px solid var(--line); align-items: center; }
+.toolbar .spacer { flex: 1; }
+.viewport { position: relative; height: clamp(440px, 68vh, 760px); overflow: hidden; background: var(--canvas); cursor: grab; touch-action: none; }
+.viewport.drag { cursor: grabbing; }
+.world { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.world.anim { transition: transform .55s cubic-bezier(.65,0,.35,1); }
+.links { position: absolute; left: 0; top: 0; width: 1px; height: 1px; overflow: visible; pointer-events: none; }
+.links path { fill: none; stroke-width: 3; stroke-linecap: round; opacity: .75; }
+.hint { position: absolute; left: 12px; bottom: 10px; font-size: 13px; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 4px 10px; pointer-events: none; }
+
+.node { position: absolute; border-radius: 12px; padding: 9px 12px; cursor: pointer; user-select: none; transition: left .35s, top .35s, box-shadow .2s; display: grid; gap: 2px; line-height: 1.3; }
+.node .txt { font-size: 14px; overflow-wrap: anywhere; }
+.node .meta { font-size: 12px; opacity: .85; }
+.node.d0 { background: var(--role); color: #fff; border-radius: 999px; text-align: center; padding: 16px 20px; }
+.node.d0 .txt { font-family: var(--display); font-weight: 800; font-size: 20px; }
+.node.d1 { background: var(--c); color: #fff; }
+.node.d1 .txt { font-family: var(--display); font-weight: 700; font-size: 17px; }
+.node.d2 { background: var(--c); color: #fff; }
+.node.d2 .txt { font-family: var(--display); font-weight: 700; font-size: 15px; }
+.node.d3 { background: color-mix(in srgb, var(--c) 16%, var(--surface)); color: var(--ink); border: 2px solid var(--c); }
+.node.d3 .txt { font-weight: 700; }
+.node.d4 { background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-left: 5px solid var(--c); border-radius: 8px; padding: 6px 10px; }
+.node.sel { box-shadow: 0 0 0 4px var(--focus); }
+.node .more { display: inline-block; font-size: 11px; font-weight: 700; padding: 0 7px; border-radius: 999px; background: rgba(255,255,255,.28); margin-left: 6px; vertical-align: 1px; }
+.node.d3 .more { background: color-mix(in srgb, var(--c) 25%, var(--surface)); }
+.recall .node.leaf:not(.shown) .txt { filter: blur(6px); }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 16px; min-width: 0; border-top: 8px solid var(--pc, var(--ink)); }
+.crumbs { font-size: 13px; color: var(--muted); }
+.box { background: color-mix(in srgb, var(--pc, var(--ink)) 12%, var(--surface)); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; }
+.box strong { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.panel ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+.panel .row { display: flex; flex-wrap: wrap; gap: 8px; }
+.panel pre, .outline pre { margin: 0; white-space: pre-wrap; font-family: var(--body); font-size: 14px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px; max-height: 260px; overflow: auto; }
+
+.section { display: grid; gap: 14px; }
+.section > p { color: var(--muted); max-width: 74ch; }
+.map { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 760px) { .map { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.map div { border-top: 4px solid var(--ink); padding-top: 8px; display: grid; gap: 2px; min-width: 0; }
+.map b { font-family: var(--display); }
+.map span { font-size: 14px; color: var(--muted); }
+.outline { display: grid; gap: 12px; }
+.outline .head { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.outline pre { max-height: 520px; }
+.branches { display: flex; flex-wrap: wrap; gap: 8px; }
+.branches button { display: inline-flex; align-items: center; gap: 8px; }
+.branches .dot { width: 12px; height: 12px; border-radius: 50%; }
+.toast { font-size: 13px; color: var(--muted); min-height: 1.2em; }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Interactive mind map · CatholicCare CQ DFV services</span>
+    <h1>CatholicCare Mind Map</h1>
+    <p>Everything from the house and the ecosystem in one map. Click a bubble to open or close its branch. Drag to move around, scroll or use the buttons to zoom. Every branch has a Copy for Prezi button, and the full outline is at the bottom.</p>
+  </header>
+
+  <section class="board" aria-label="Mind map">
+    <div class="stage">
+      <div class="toolbar">
+        <button id="fit" type="button">Fit to screen</button>
+        <button id="zin" type="button" aria-label="Zoom in">＋</button>
+        <button id="zout" type="button" aria-label="Zoom out">－</button>
+        <button id="expand" type="button">Open everything</button>
+        <button id="collapse" type="button">Main branches only</button>
+        <span class="spacer"></span>
+        <button id="recall" type="button" aria-pressed="false">Recall mode</button>
+      </div>
+      <div class="viewport" id="vp">
+        <div class="world" id="world"><svg class="links" id="links" aria-hidden="true"></svg></div>
+        <span class="hint" id="hint">Click a bubble to open it</span>
+      </div>
+    </div>
+    <aside class="panel" id="panel" aria-live="polite"></aside>
+  </section>
+
+  <section class="section" aria-labelledby="how">
+    <span class="eyebrow">How the map turns into Prezi</span>
+    <h2 id="how">One level of the map is one level of Prezi</h2>
+    <div class="map">
+      <div style="border-color:var(--role)"><b>Centre bubble</b><span>Your Prezi title slide</span></div>
+      <div style="border-color:var(--mbc)"><b>Main branch</b><span>A Prezi topic (6 in total)</span></div>
+      <div style="border-color:var(--sab)"><b>Next level out</b><span>A subtopic inside that topic</span></div>
+      <div style="border-color:var(--cw)"><b>Outer bubbles</b><span>Bullet points on the subtopic</span></div>
+    </div>
+    <p>“Say this” lines go in Prezi’s speaker notes. Memory hooks are for you, so add them as an image or leave them out.</p>
+  </section>
+
+  <section class="section outline" aria-labelledby="ol">
+    <span class="eyebrow">Cut and paste</span>
+    <div class="head"><h2 id="ol">The whole map as a Prezi outline</h2><button id="copyAll" type="button">Copy the whole outline</button></div>
+    <p>Or copy one topic at a time.</p>
+    <div class="branches" id="branchBtns"></div>
+    <p class="toast" id="toast" role="status"></p>
+    <pre id="outline" tabindex="0"></pre>
+  </section>
+</div>
+
+<script>
+const L = (t, kids) => ({ t, k: kids.map(x => typeof x === 'string' ? { t: x } : x) });
+const N = (o, kids) => Object.assign(o, { k: (kids || []).map(x => typeof x === 'string' ? { t: x } : x) });
+
+const ROOT = N({ t: 'CatholicCare CQ DFV Services', meta: 'Clinical Team Leader', c: '--role',
+  say: 'Four programs, one connection point. My role keeps the whole ecosystem working together, so families get joined-up support and risk is held safely across every program.' }, [
+  N({ t: 'My role · Clinical Team Leader', c: '--role', side: 'R',
+      hook: 'Your desk in the middle of the upper floor, with a window into every room and a ladder up to the roof.',
+      say: 'My role sits at the centre. I connect four programs, the staff in them, our leadership, our people processes and our partner agencies.' }, [
+    L('Leading practice', ['Clinical governance', 'Quality assurance', 'Risk assessment and management']),
+    L('Leading people', ['Staff development', 'Supervision and support', 'Workforce wellbeing']),
+    L('Leading outward', ['Stakeholder engagement', 'Service integration', 'Reporting and outcomes'])
+  ]),
+  N({ t: 'Programs', c: '--prog', side: 'R', hook: 'The ground floor of the house. Four rooms side by side, each with its own colour and object.' }, [
+    N({ t: 'Men’s Behaviour Change (MBC)', c: '--mbc', hook: 'A circle of six chairs and a whiteboard. Behind the men are photos of the women and children the work is really for.',
+        say: 'MBC works with men using violence, keeping the safety of women and children at the centre. We run in Rockhampton twice a week and in Emerald fortnightly.' }, [
+      L('Team', ['Rachel', 'Bree', 'Zac']),
+      L('When', ['Rockhampton: Wednesday and Thursday', 'Emerald: fortnightly Tuesday']),
+      L('Connects to', ['Counselling referrals', 'Shared families with SAB', 'RFIs and status updates for HRT'])
+    ]),
+    N({ t: 'Counselling', c: '--couns', hook: 'Two armchairs facing each other with a box of tissues between them.',
+        say: 'The Counselling team provides therapeutic interventions and takes internal referrals from our other programs.' }, [
+      L('Team', ['Georgia', 'Candy', 'Lorena']),
+      L('Focus', ['Therapeutic interventions', 'Internal referrals']),
+      L('Connects to', ['Referrals from MBC and SAB', 'Shared clients and families'])
+    ]),
+    N({ t: 'Child Witness', c: '--cw', hook: 'A small chair, a teddy bear and a box of crayons. The smallest room holds the most important people.',
+        say: 'Child Witness supports children who have seen or lived through domestic and family violence, keeping their voices and their safety at the centre.' }, [
+      L('Team', ['Add names']),
+      L('Focus', ['Support for children affected by DFV', 'Child-focused and trauma-informed', 'Working alongside safe carers']),
+      L('Connects to', ['SAB', 'Safe carers referred to Counselling', 'Child Safety'])
+    ]),
+    N({ t: 'Supporting Adolescent Boys (SAB)', c: '--sab', hook: 'A skateboard leaning against the wall next to a family photo.',
+        say: 'SAB is early intervention. We work with adolescent boys and their families on behaviour change pathways before patterns set in.' }, [
+      L('Team', ['Hayden Lovell', 'Hayden Peckover', 'Ric']),
+      L('Focus', ['Early intervention', 'Family engagement', 'Behaviour change pathways']),
+      L('Connects to', ['MBC pathway', 'Family referrals to Counselling'])
+    ]),
+    N({ t: 'Where the overlap occurs', c: '--role', hook: 'The pale ring around you on the ecosystem picture.',
+        say: 'The programs don’t work in silos. Families, risk and referrals cross between them, and this overlap is where my role adds the most value.' },
+      ['Shared clients and families', 'Risk management', 'Referrals between programs', 'Collaborative case planning', 'Service coordination', 'Community engagement', 'Practice improvement'])
+  ]),
+  N({ t: 'Safety & HRT', c: '--risk', side: 'R', hook: 'The chimney with the red light that never switches off.' }, [
+    N({ t: 'HRT Capricornia (High Risk Team)', c: '--risk', hook: 'The HRT table on the footpath out the front of the house.',
+        say: 'HRT is where we hold the highest risk together with our partners. Every week I complete our RFIs by Monday midday, answer collateral checks as soon as they arrive, and on Friday we review where every referred PUV and victim-survivor is at.' }, [
+      L('Monday', ['Complete and send the RFIs by 12 pm']),
+      L('Every day', ['Respond to collateral checks as soon as possible']),
+      L('Friday', ['Review of the week', 'Receive the new RFIs for next week', 'Status meeting on each PUV and victim-survivor (VS) referred to CatholicCare']),
+      L('Who', ['HRT Capricornia', 'Tennille and Corin'])
+    ]),
+    N({ t: 'Risk & safety', c: '--risk' }, ['Risk assessment and safety planning at every PUV contact', 'Incident and risk responses recapped for the team', 'Practitioner escalations, including suicidal ideation disclosures', 'Information sharing with HRT when risk is high']),
+    N({ t: 'Requests coming in', c: '--door', hook: 'The front door with a letterbox stuffed with envelopes.' }, ['New referrals into the programs', 'Collateral checks: search CSNet, reply Known or Not Known', 'Court support requests'])
+  ]),
+  N({ t: 'Above & around', c: '--gov', side: 'L', hook: 'The roof above the house and the neighbours along the street.' }, [
+    N({ t: 'Leadership & governance', c: '--gov',
+        say: 'Upward, I report outcomes to senior leadership and the DFV Steering Committee and carry their direction back into practice.' },
+      ['CatholicCare CQ senior leadership', 'DFV Steering Committee priorities and KPIs', 'Reporting and outcomes', 'Clinical governance frameworks and policy']),
+    N({ t: 'People & HR', c: '--admin',
+        say: 'Alongside the clinical work, I hold the people processes that keep the team safe, skilled and supported.' },
+      ['Line management (HR 029)', 'Employment Hero: leave and compliance', 'Supervision and professional development', 'Student placement: Brea, CQU social work', 'Workforce wellbeing']),
+    N({ t: 'External stakeholders', c: '--part',
+        say: 'Outward, I keep our partnerships strong, sharing information safely with the agencies that hold risk with us.' },
+      ['Child Safety', 'Queensland Police Service', 'Corrective Services', 'Rockhampton court support', 'CQUniversity'])
+  ]),
+  N({ t: 'Foundations & records', c: '--found', side: 'L', hook: 'The concrete slab under the house, and the filing cabinet in the back office.' }, [
+    N({ t: 'Values & standards', c: '--found' }, ['CatholicCare CQ mission and values', 'Safety of women and children first', 'AASW Practice Standards (2023)', 'Privacy, consent and de-identification']),
+    N({ t: 'Records & admin', c: '--admin' }, ['Case notes with real dates and what happened', 'Consumables receipts into Expense Pro', 'Rockhampton court support roster'])
+  ]),
+  N({ t: 'My week', c: '--week', side: 'L', hook: 'The same loop every week. Monday sends, Friday reviews.' }, [
+    N({ t: 'Every day' }, ['Read escalations and risk emails first', 'Respond to collateral checks as soon as possible', 'Case notes the same day', 'Check in with the team']),
+    N({ t: 'Monday' }, ['HRT RFIs completed and sent by 12 pm']),
+    N({ t: 'Tuesday' }, ['Emerald MBC group (fortnightly)']),
+    N({ t: 'Wednesday & Thursday' }, ['Rockhampton MBC groups']),
+    N({ t: 'Friday' }, ['HRT review of the week', 'New RFIs for next week', 'PUV and VS status meeting']),
+    N({ t: 'Monthly (check timing)' }, ['Line management meetings (HR 029)', 'Student supervision with Brea', 'Practitioner supervision']),
+    N({ t: 'Quarterly (check timing)' }, ['Steering Committee and KPI update', 'Program reporting'])
+  ])
+]);
+
+// ids, parents, colours, depth
+const BY = {};
+(function walk(n, d, parent, c, path) {
+  n.d = d; n.p = parent; n.c = n.c || c; n.id = path; n.k = n.k || []; BY[path] = n;
+  n.k.forEach((ch, i) => walk(ch, d + 1, n, n.c, path + '.' + i));
+})(ROOT, 0, null, '--role', 'r');
+ROOT.k.forEach(b => (function set(n){ n.side = b.side; n.k.forEach(set); })(b));
+
+const W = [230, 200, 210, 170, 230];
+const NEAR = [0]; NEAR[1] = W[0] / 2 + 60; for (let d = 2; d <= 4; d++) NEAR[d] = NEAR[d - 1] + W[d - 1] + 46;
+const GAP = 12;
+const open = new Set(['r']);
+let sel = null, recall = false;
+const vp = document.getElementById('vp'), world = document.getElementById('world'), links = document.getElementById('links');
+const panel = document.getElementById('panel');
+const els = {};
+let view = { x: 0, y: 0, s: 1 };
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+
+function visible() { const out = []; (function v(n) { out.push(n); if (open.has(n.id)) n.k.forEach(v); })(ROOT); return out; }
+
+function el(n) {
+  if (els[n.id]) return els[n.id];
+  const e = document.createElement('div');
+  e.className = 'node d' + n.d + (n.k.length ? '' : ' leaf');
+  e.tabIndex = 0; e.setAttribute('role', 'button');
+  e.style.setProperty('--c', 'var(' + n.c + ')');
+  e.style.width = W[n.d] + 'px';
+  e.dataset.id = n.id;
+  world.appendChild(e);
+  return els[n.id] = e;
+}
+function paintNode(n) {
+  const e = el(n);
+  const more = n.k.length && !open.has(n.id) ? `<span class="more">+${n.k.length}</span>` : '';
+  e.innerHTML = `<span class="txt">${esc(n.t)}${more}</span>${n.meta ? `<span class="meta">${esc(n.meta)}</span>` : ''}`;
+  e.setAttribute('aria-label', n.t + (n.k.length ? (open.has(n.id) ? ', open' : ', closed, ' + n.k.length + ' inside') : ''));
+  e.classList.toggle('sel', sel === n);
+}
+
+function layout() {
+  const vis = visible(), ids = new Set(vis.map(n => n.id));
+  Object.keys(els).forEach(id => { if (!ids.has(id)) { els[id].remove(); delete els[id]; } });
+  vis.forEach(paintNode);
+  const h = {}; vis.forEach(n => h[n.id] = els[n.id].offsetHeight);
+  const pos = {};
+  function block(n) { const kids = open.has(n.id) ? n.k : []; if (!kids.length) return h[n.id]; const t = kids.reduce((a, c) => a + block(c), 0) + GAP * (kids.length - 1); return Math.max(h[n.id], t); }
+  function place(n, top) {
+    const H = block(n), kids = open.has(n.id) ? n.k : [];
+    const x = n.side === 'L' ? -NEAR[n.d] - W[n.d] : NEAR[n.d];
+    pos[n.id] = { x, y: top + H / 2 - h[n.id] / 2 };
+    if (kids.length) { const t = kids.reduce((a, c) => a + block(c), 0) + GAP * (kids.length - 1); let y = top + (H - t) / 2; kids.forEach(c => { place(c, y); y += block(c) + GAP; }); }
+  }
+  pos.r = { x: -W[0] / 2, y: -h.r / 2 };
+  if (open.has('r')) ['R', 'L'].forEach(side => {
+    const br = ROOT.k.filter(b => b.side === side), bg = 26;
+    const tot = br.reduce((a, b) => a + block(b), 0) + bg * (br.length - 1);
+    let y = -tot / 2; br.forEach(b => { place(b, y); y += block(b) + bg; });
+  });
+  vis.forEach(n => { const e = els[n.id]; e.style.left = pos[n.id].x + 'px'; e.style.top = pos[n.id].y + 'px'; });
+  let d = '';
+  links.innerHTML = vis.filter(n => n.p).map(n => {
+    const p = pos[n.p.id], c = pos[n.id], L = n.side === 'L';
+    const x1 = n.p.d === 0 ? (L ? p.x : p.x + W[0]) : (L ? p.x : p.x + W[n.p.d]), y1 = p.y + h[n.p.id] / 2;
+    const x2 = L ? c.x + W[n.d] : c.x, y2 = c.y + h[n.id] / 2, mx = (x1 + x2) / 2;
+    return `<path d="M${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}" stroke="var(${n.c})"/>`;
+  }).join('');
+  layout.pos = pos; layout.h = h;
+}
+
+function apply(anim) {
+  world.classList.toggle('anim', !!anim && !reduce);
+  world.style.transform = `translate(${view.x}px, ${view.y}px) scale(${view.s})`;
+}
+function bounds(nodes) {
+  const p = layout.pos; let a = Infinity, b = Infinity, c = -Infinity, d = -Infinity;
+  nodes.forEach(n => { const q = p[n.id]; if (!q) return; a = Math.min(a, q.x); b = Math.min(b, q.y); c = Math.max(c, q.x + W[n.d]); d = Math.max(d, q.y + layout.h[n.id]); });
+  return { x: a, y: b, w: c - a, h: d - b };
+}
+function fitTo(nodes, maxS) {
+  const r = bounds(nodes), vw = vp.clientWidth, vh = vp.clientHeight;
+  const s = Math.min((vw - 40) / r.w, (vh - 40) / r.h, maxS || 1.1);
+  view = { s, x: vw / 2 - (r.x + r.w / 2) * s, y: vh / 2 - (r.y + r.h / 2) * s };
+  apply(true);
+}
+function subtree(n) { const out = []; (function v(m) { out.push(m); if (open.has(m.id)) m.k.forEach(v); })(n); return out; }
+
+function select(n, toggle) {
+  if (toggle && n.k.length) { if (open.has(n.id) && n !== ROOT) { (function close(m) { open.delete(m.id); m.k.forEach(close); })(n); } else open.add(n.id); }
+  if (!n.k.length && recall) els[n.id] && els[n.id].classList.toggle('shown');
+  sel = n; layout(); renderPanel();
+  const focus = n === ROOT ? visible() : (n.k.length && open.has(n.id) ? subtree(n) : [n.p || n, n]);
+  fitTo(focus, 1.15);
+  document.getElementById('hint').hidden = true;
+}
+
+function outline(n, base) {
+  const lines = [];
+  const r = n.d - base;
+  if (r === 0) lines.push(n.t.toUpperCase());
+  n.k.forEach(c => {
+    if (c.k.length) {
+      lines.push('', c.t);
+      c.k.forEach(g => { if (g.k.length) { lines.push('  ' + g.t); g.k.forEach(x => lines.push('    • ' + x.t)); } else lines.push('• ' + g.t); });
+    } else lines.push('• ' + c.t);
+  });
+  const notes = [];
+  (function sn(m) { if (m.say) notes.push((m === n ? '' : m.t + ': ') + m.say); m.k.forEach(sn); })(n);
+  if (notes.length) { lines.push('', 'Speaker notes'); notes.forEach(s => lines.push(s)); }
+  return lines.join('\n');
+}
+function fullOutline() {
+  const parts = ['CATHOLICCARE CQ DFV SERVICES', 'Clinical Team Leader', '', 'Speaker notes (title slide)', ROOT.say];
+  ROOT.k.forEach((b, i) => parts.push('', '', `===== TOPIC ${i + 1} =====`, outline(b, b.d)));
+  return parts.join('\n');
+}
+
+async function copy(text, btn, label) {
+  const old = btn.textContent;
+  try { await navigator.clipboard.writeText(text); btn.textContent = 'Copied'; msg((label || 'Text') + ' copied. Paste it into Prezi.'); }
+  catch (e) { const pre = document.getElementById('outline'); pre.textContent = text; const rg = document.createRange(); rg.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(rg); pre.scrollIntoView({ block: 'nearest' }); msg('Copy is blocked here, so the text is selected in the outline box. Press Ctrl+C (or Cmd+C).'); }
+  setTimeout(() => { btn.textContent = old; }, 1800);
+}
+function msg(t) { document.getElementById('toast').textContent = t; }
+
+function renderPanel() {
+  const n = sel || ROOT;
+  panel.style.setProperty('--pc', 'var(' + n.c + ')');
+  const crumbs = []; for (let m = n.p; m; m = m.p) crumbs.unshift(m.t);
+  let html = `<div class="crumbs">${crumbs.map(esc).join(' › ') || 'Centre'}</div><h2>${esc(n.t)}</h2>`;
+  if (n.hook) html += `<div class="box"><strong>Memory hook</strong><p>${esc(n.hook)}</p></div>`;
+  if (n.say) html += `<div class="box"><strong>Say this</strong><p>${esc(n.say)}</p></div>`;
+  if (n.k.length) html += `<div><h3>Inside this branch</h3><ul>${n.k.map(c => `<li>${esc(c.t)}${c.k.length ? ` <span style="color:var(--muted)">(${c.k.length})</span>` : ''}</li>`).join('')}</ul></div>`;
+  const tgt = n.k.length ? n : (n.p || n);
+  html += `<div class="row"><button type="button" id="pcopy">Copy “${esc(tgt.t)}” for Prezi</button>${n.k.length ? `<button type="button" id="popen">${open.has(n.id) ? 'Open every level' : 'Open this branch'}</button>` : ''}</div>`;
+  html += `<pre>${esc(tgt === ROOT ? fullOutline() : outline(tgt, tgt.d))}</pre>`;
+  panel.innerHTML = html;
+  document.getElementById('pcopy').onclick = e => copy(tgt === ROOT ? fullOutline() : outline(tgt, tgt.d), e.currentTarget, tgt.t);
+  const po = document.getElementById('popen');
+  if (po) po.onclick = () => { (function o(m) { if (m.k.length) { open.add(m.id); m.k.forEach(o); } })(n); layout(); renderPanel(); fitTo(subtree(n), 1.15); };
+}
+
+// events
+world.addEventListener('click', e => { const t = e.target.closest('.node'); if (t && !moved) select(BY[t.dataset.id], true); });
+world.addEventListener('keydown', e => { const t = e.target.closest('.node'); if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); select(BY[t.dataset.id], true); } });
+let drag = null, moved = false;
+vp.addEventListener('pointerdown', e => { drag = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y }; moved = false; });
+window.addEventListener('pointermove', e => {
+  if (!drag) return; const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  if (!moved && Math.hypot(dx, dy) < 5) return;
+  moved = true; vp.classList.add('drag'); view.x = drag.vx + dx; view.y = drag.vy + dy; apply(false);
+});
+window.addEventListener('pointerup', () => { drag = null; vp.classList.remove('drag'); setTimeout(() => moved = false, 0); });
+function zoomAt(f, cx, cy) { const s = Math.max(.25, Math.min(2.5, view.s * f)); view.x = cx - (cx - view.x) * (s / view.s); view.y = cy - (cy - view.y) * (s / view.s); view.s = s; }
+vp.addEventListener('wheel', e => { e.preventDefault(); const r = vp.getBoundingClientRect(); zoomAt(e.deltaY < 0 ? 1.12 : 1 / 1.12, e.clientX - r.left, e.clientY - r.top); apply(false); }, { passive: false });
+document.getElementById('zin').onclick = () => { zoomAt(1.25, vp.clientWidth / 2, vp.clientHeight / 2); apply(true); };
+document.getElementById('zout').onclick = () => { zoomAt(1 / 1.25, vp.clientWidth / 2, vp.clientHeight / 2); apply(true); };
+document.getElementById('fit').onclick = () => fitTo(visible());
+document.getElementById('expand').onclick = () => { Object.values(BY).forEach(n => n.k.length && open.add(n.id)); layout(); renderPanel(); fitTo(visible()); };
+document.getElementById('collapse').onclick = () => { open.clear(); open.add('r'); sel = null; layout(); renderPanel(); fitTo(visible()); };
+const rb = document.getElementById('recall');
+rb.onclick = () => { recall = rb.getAttribute('aria-pressed') !== 'true'; rb.setAttribute('aria-pressed', recall); vp.classList.toggle('recall', recall); document.querySelectorAll('.node.shown').forEach(e => e.classList.remove('shown')); msg(recall ? 'Recall mode is on. Outer bubbles are blurred. Say what’s there, then click to check.' : ''); };
+window.addEventListener('resize', () => fitTo(visible()));
+
+// outline section
+document.getElementById('outline').textContent = fullOutline();
+document.getElementById('copyAll').onclick = e => copy(fullOutline(), e.currentTarget, 'The whole outline');
+document.getElementById('branchBtns').innerHTML = ROOT.k.map((b, i) => `<button type="button" data-b="${b.id}"><span class="dot" style="background:var(${b.c})"></span>Topic ${i + 1}: ${esc(b.t)}</button>`).join('');
+document.getElementById('branchBtns').addEventListener('click', e => { const b = e.target.closest('[data-b]'); if (b) copy(outline(BY[b.dataset.b], BY[b.dataset.b].d), b, BY[b.dataset.b].t); });
+
+// start: centre plus main branches and their first level, so the page opens on a real map
+ROOT.k.forEach(b => open.add(b.id));
+layout(); renderPanel(); fitTo(visible()); apply(false);
+document.fonts && document.fonts.ready.then(() => { layout(); fitTo(visible()); apply(false); });
+</script>
