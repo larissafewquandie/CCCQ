@@ -1,0 +1,334 @@
+<title>Clinical Team Leader Ecosystem</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap">
+<style>
+/* Layout: a professional ecosystem diagram. The Clinical Team Leader sits at the centre, ringed by the overlap between programs, with programs, leadership, people processes and stakeholders around it. Same colours as the CatholicCare House so the two pictures reinforce each other. */
+:root {
+  --bg: #eef1f6; --surface: #ffffff; --ink: #172030; --muted: #536079; --line: #cdd4e0; --focus: #ff9f1c;
+  --canvas: #f6f8fb; --wire: #9aa6ba; --ring: #d5ebe8;
+  --gov: #3b4ca6; --role: #17807a; --admin: #7d6146; --mbc: #2d68ad; --sab: #3a8448; --couns: #b9466f; --part: #4f6d61;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111722; --surface: #1a2232; --ink: #e8ecf4; --muted: #9da9bf; --line: #2e3a50; --focus: #ffb347;
+  --canvas: #151c2a; --wire: #4c5a74; --ring: #1c3a3a; color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #111722; --surface: #1a2232; --ink: #e8ecf4; --muted: #9da9bf; --line: #2e3a50; --focus: #ffb347;
+  --canvas: #151c2a; --wire: #4c5a74; --ring: #1c3a3a; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 1280px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 36px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(30px, 4.4vw, 46px); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: 26px; font-weight: 700; }
+h3 { font-size: 18px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+header { display: grid; gap: 10px; max-width: 72ch; }
+header p { color: var(--muted); }
+
+.board { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 960px) { .board { grid-template-columns: 1fr; } }
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px; border-bottom: 1px solid var(--line); align-items: center; }
+.toolbar .spacer { flex: 1; }
+button { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+button:hover { border-color: var(--muted); }
+button:focus-visible, .node:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.stopcount { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+svg.map { width: 100%; height: auto; display: block; aspect-ratio: 1200 / 940; max-width: 100%; background: var(--canvas); }
+
+.wire { stroke: var(--wire); stroke-width: 3; fill: none; }
+.wire.ref { stroke-dasharray: 10 8; stroke-width: 3.5; }
+.node { cursor: pointer; outline: none; }
+.node .shape { stroke: var(--ink); stroke-width: 2.5; transition: filter .2s; }
+.node:hover .shape { filter: brightness(1.1); }
+.node.on .shape { stroke: var(--focus); stroke-width: 7; }
+.t { font-family: var(--display); font-weight: 700; fill: #fff; pointer-events: none; text-anchor: middle; transition: opacity .25s; }
+.t.s { font-family: var(--body); font-weight: 400; }
+.t.ink { fill: var(--ink); }
+.recall .t { opacity: 0; }
+.badge circle { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+.badge text { font-family: var(--display); font-weight: 800; font-size: 16px; fill: var(--ink); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+.ringdot { fill: var(--role); }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 18px; min-width: 0; border-top: 8px solid var(--zc, var(--ink)); }
+.panel .head { display: grid; gap: 6px; }
+.say { background: color-mix(in srgb, var(--zc, var(--ink)) 12%, var(--surface)); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; }
+.say strong { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.panel ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.sec { display: grid; gap: 8px; }
+.links { display: flex; flex-wrap: wrap; gap: 8px; }
+.links button { display: inline-flex; gap: 8px; align-items: center; font-weight: 400; text-align: left; }
+.links .dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+.links b { font-weight: 700; }
+.reveal { display: grid; gap: 12px; justify-items: start; }
+
+.section { display: grid; gap: 16px; }
+.section > p { color: var(--muted); max-width: 72ch; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; }
+@media (max-width: 960px) { .two { grid-template-columns: 1fr; } }
+ol.steps { margin: 0; padding-left: 22px; display: grid; gap: 10px; }
+ol.steps li::marker { font-family: var(--display); font-weight: 800; }
+.script { display: grid; gap: 10px; }
+.script div { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; }
+.script .n { font-family: var(--display); font-weight: 800; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 14px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Leadership presentation · CatholicCare CQ DFV services</span>
+    <h1>Clinical Team Leader Ecosystem</h1>
+    <p>The Clinical Team Leader is the connection point between three programs, the leadership above them, the people processes that support staff, and the agencies outside. Click any part to zoom in, or press Next to walk the eight stops in presentation order.</p>
+  </header>
+
+  <section class="board" aria-label="Interactive ecosystem diagram">
+    <div class="stage">
+      <div class="toolbar">
+        <button id="prev" type="button" aria-label="Previous stop">◀ Prev</button>
+        <button id="next" type="button" aria-label="Next stop">Next ▶</button>
+        <button id="overview" type="button">Whole picture</button>
+        <span class="stopcount" id="stopcount">Overview</span>
+        <span class="spacer"></span>
+        <button id="recallBtn" type="button" aria-pressed="false">Recall mode</button>
+      </div>
+      <svg class="map" id="map" viewBox="0 0 1200 940" role="img" aria-label="Ecosystem diagram with the Clinical Team Leader at the centre">
+        <!-- wires from centre -->
+        <line class="wire" x1="600" y1="450" x2="600" y2="92"/>
+        <line class="wire" x1="600" y1="450" x2="323" y2="290"/>
+        <line class="wire" x1="600" y1="450" x2="877" y2="290"/>
+        <line class="wire" x1="600" y1="450" x2="600" y2="790"/>
+        <line class="wire" x1="600" y1="450" x2="150" y2="700"/>
+        <line class="wire" x1="600" y1="450" x2="1050" y2="700"/>
+        <!-- referrals between programs -->
+        <path class="wire ref" d="M420 225 Q 600 130 780 225"/>
+        <path class="wire ref" d="M960 390 Q 930 640 715 780"/>
+        <path class="wire ref" d="M240 390 Q 270 640 485 780"/>
+        <text class="t s ink" x="470" y="186" font-size="13">referrals between programs</text>
+
+        <!-- 6 Leadership -->
+        <g class="node" data-z="lead" tabindex="0" role="button" aria-label="Stop 6, leadership and governance">
+          <rect class="shape" x="420" y="28" width="360" height="72" rx="36" fill="var(--gov)"/>
+          <text class="t" x="600" y="62" font-size="22">Leadership &amp; governance</text>
+          <text class="t s" x="600" y="84" font-size="13">Senior leadership · DFV Steering Committee</text>
+          <g class="badge" transform="translate(420,40)"><circle r="16"/><text>6</text></g>
+        </g>
+
+        <!-- 2 MBC -->
+        <g class="node" data-z="mbc" tabindex="0" role="button" aria-label="Stop 2, Men's Behaviour Change">
+          <circle class="shape" cx="323" cy="290" r="118" fill="var(--mbc)"/>
+          <text class="t" x="323" y="238" font-size="30">MBC</text>
+          <text class="t s" x="323" y="260" font-size="13">Men’s Behaviour Change</text>
+          <text class="t" x="323" y="294" font-size="16">Rachel · Bree · Zac</text>
+          <text class="t s" x="323" y="324" font-size="13">Rockhampton · Wed &amp; Thu</text>
+          <text class="t s" x="323" y="344" font-size="13">Emerald · fortnightly Tue</text>
+          <g class="badge" transform="translate(240,196)"><circle r="16"/><text>2</text></g>
+        </g>
+
+        <!-- 3 Counselling -->
+        <g class="node" data-z="couns" tabindex="0" role="button" aria-label="Stop 3, Counselling team">
+          <circle class="shape" cx="877" cy="290" r="118" fill="var(--couns)"/>
+          <text class="t" x="877" y="238" font-size="26">Counselling</text>
+          <text class="t s" x="877" y="260" font-size="13">Counselling team</text>
+          <text class="t" x="877" y="294" font-size="16">Georgia · Candy · Lorena</text>
+          <text class="t s" x="877" y="324" font-size="13">Therapeutic interventions</text>
+          <text class="t s" x="877" y="344" font-size="13">Internal referrals</text>
+          <g class="badge" transform="translate(960,196)"><circle r="16"/><text>3</text></g>
+        </g>
+
+        <!-- 4 SAB -->
+        <g class="node" data-z="sab" tabindex="0" role="button" aria-label="Stop 4, Supporting Adolescent Boys">
+          <circle class="shape" cx="600" cy="790" r="118" fill="var(--sab)"/>
+          <text class="t" x="600" y="726" font-size="30">SAB</text>
+          <text class="t s" x="600" y="748" font-size="13">Supporting Adolescent Boys</text>
+          <text class="t" x="600" y="778" font-size="15">Hayden Lovell</text>
+          <text class="t" x="600" y="797" font-size="15">Hayden Peckover · Ric</text>
+          <text class="t s" x="600" y="826" font-size="13">Early intervention · Family</text>
+          <text class="t s" x="600" y="844" font-size="13">engagement · Behaviour change</text>
+          <g class="badge" transform="translate(684,700)"><circle r="16"/><text>4</text></g>
+        </g>
+
+        <!-- 7 HR -->
+        <g class="node" data-z="hr" tabindex="0" role="button" aria-label="Stop 7, people and HR processes">
+          <rect class="shape" x="28" y="660" width="250" height="80" rx="40" fill="var(--admin)"/>
+          <text class="t" x="153" y="696" font-size="20">People &amp; HR</text>
+          <text class="t s" x="153" y="719" font-size="13">HR 029 · Employment Hero</text>
+          <g class="badge" transform="translate(40,664)"><circle r="16"/><text>7</text></g>
+        </g>
+
+        <!-- 8 Stakeholders -->
+        <g class="node" data-z="stake" tabindex="0" role="button" aria-label="Stop 8, external stakeholders">
+          <rect class="shape" x="922" y="660" width="250" height="80" rx="40" fill="var(--part)"/>
+          <text class="t" x="1047" y="696" font-size="20">Stakeholders</text>
+          <text class="t s" x="1047" y="719" font-size="13">HRT · Child Safety · QPS · Court</text>
+          <g class="badge" transform="translate(1160,664)"><circle r="16"/><text>8</text></g>
+        </g>
+
+        <!-- 5 Overlap ring -->
+        <g class="node" data-z="overlap" tabindex="0" role="button" aria-label="Stop 5, where the overlap occurs">
+          <circle class="shape" cx="600" cy="450" r="212" fill="var(--ring)"/>
+          <g id="ringlabels"></g>
+          <g class="badge" transform="translate(600,226)"><circle r="16"/><text>5</text></g>
+        </g>
+
+        <!-- 1 Centre -->
+        <g class="node" data-z="ctl" tabindex="0" role="button" aria-label="Stop 1, Clinical Team Leader">
+          <circle class="shape" cx="600" cy="450" r="112" fill="var(--role)"/>
+          <text class="t s" x="600" y="412" font-size="13" letter-spacing="1.5">THE CONNECTION POINT</text>
+          <text class="t" x="600" y="446" font-size="27">Clinical</text>
+          <text class="t" x="600" y="476" font-size="27">Team Leader</text>
+          <text class="t s" x="600" y="504" font-size="13">9 areas of responsibility</text>
+          <g class="badge" transform="translate(600,338)"><circle r="16"/><text>1</text></g>
+        </g>
+      </svg>
+    </div>
+    <aside class="panel" id="panel" aria-live="polite"></aside>
+  </section>
+
+  <section class="two">
+    <div class="section" aria-labelledby="ps">
+      <span class="eyebrow">Presenter script</span>
+      <h2 id="ps">One line per stop</h2>
+      <p>Say these in order. If you lose your place, look at the number on the picture.</p>
+      <div class="script" id="script"></div>
+    </div>
+    <div class="section" aria-labelledby="pz">
+      <span class="eyebrow">Build it in Prezi</span>
+      <h2 id="pz">Turn the picture into your presentation</h2>
+      <ol class="steps">
+        <li><b>Background.</b> Upload the ecosystem picture as the Prezi background. Use the labelled version for presenting and the blank one to rehearse.</li>
+        <li><b>Topics.</b> Put a topic over each of the eight parts, named exactly as on the picture.</li>
+        <li><b>Path.</b> Order the path 1 to 8: you, the three programs, the overlap, then outward to leadership, people and stakeholders. End by zooming back out to the whole picture.</li>
+        <li><b>Subtopics.</b> Inside the centre circle, add the nine responsibilities as three groups of three: Leading practice, Leading people, Leading outward. Three groups are easier to hold than nine items.</li>
+        <li><b>Speaker notes.</b> Paste the presenter line for each stop into that topic’s notes.</li>
+        <li><b>Rehearse with recall mode.</b> Turn on Recall mode here, click each part and say your line before revealing it.</li>
+      </ol>
+    </div>
+  </section>
+</div>
+
+<script>
+const Z = {
+  ctl: { n:1, c:'--role', band:'Centre', title:'Clinical Team Leader', box:[470,320,260,260],
+    say:'My role sits at the centre. I connect three programs, the staff in them, our leadership, our people processes and our partner agencies.',
+    groups:[['Leading practice',['Clinical governance','Quality assurance','Risk assessment and management']],
+            ['Leading people',['Staff development','Supervision and support','Workforce wellbeing']],
+            ['Leading outward',['Stakeholder engagement','Service integration','Reporting and outcomes']]],
+    next:[['overlap','The overlap is where my role does its work'],['lead','I report up to leadership']]},
+  mbc: { n:2, c:'--mbc', band:'Program', title:'Men’s Behaviour Change (MBC)', box:[195,162,256,256],
+    say:'MBC works with men using violence, keeping the safety of women and children at the centre. We run in Rockhampton twice a week and in Emerald fortnightly.',
+    what:['Group program for men using violence','Rockhampton groups on Wednesday and Thursday','Emerald group fortnightly on Tuesday','Participation reported through collateral checks and HRT RFIs'],
+    who:['Rachel','Bree','Zac'],
+    next:[['couns','Partners and family members referred to Counselling'],['sab','Shared families with adolescent boys'],['stake','Collateral checks and HRT']]},
+  couns: { n:3, c:'--couns', band:'Program', title:'Counselling team', box:[749,162,256,256],
+    say:'The Counselling team provides therapeutic interventions and takes internal referrals from our other programs.',
+    what:['Therapeutic interventions','Internal referrals from MBC and SAB'],
+    who:['Georgia','Candy','Lorena'],
+    next:[['mbc','Referrals in from MBC'],['sab','Referrals in from SAB'],['overlap','Shared clients and families']]},
+  sab: { n:4, c:'--sab', band:'Program', title:'Supporting Adolescent Boys (SAB)', box:[472,662,256,256],
+    say:'SAB is early intervention. We work with adolescent boys and their families on behaviour change pathways before patterns set in.',
+    what:['Early intervention','Family engagement','Behaviour change pathways'],
+    who:['Hayden Lovell','Hayden Peckover','Ric'],
+    next:[['mbc','Behaviour change pathway links to MBC'],['couns','Family members referred to Counselling'],['overlap','Shared families']]},
+  overlap: { n:5, c:'--role', band:'The overlap', title:'Where the overlap occurs', box:[378,228,444,444],
+    say:'The programs don’t work in silos. Families, risk and referrals cross between them, and this overlap is where my role adds the most value.',
+    what:['Shared clients and families','Risk management','Referrals between programs','Collaborative case planning','Service coordination','Community engagement','Practice improvement'],
+    next:[['ctl','The Clinical Team Leader holds the overlap together'],['stake','Community engagement reaches outward']]},
+  lead: { n:6, c:'--gov', band:'Above', title:'Leadership & governance', box:[400,10,400,110],
+    say:'Upward, I report outcomes to senior leadership and the DFV Steering Committee and carry their direction back into practice.',
+    what:['CatholicCare CQ senior leadership','DFV Steering Committee priorities and KPIs','Reporting and outcomes','Clinical governance frameworks and policy'],
+    next:[['ctl','Direction comes down through the centre'],['hr','Policy shapes people processes']]},
+  hr: { n:7, c:'--admin', band:'Alongside', title:'People & HR processes', box:[10,620,290,140],
+    say:'Alongside the clinical work, I hold the people processes that keep the team safe, skilled and supported.',
+    what:['Line management recorded on HR 029','Employment Hero for leave and compliance','Professional supervision and development','Student placements, including CQU social work','Workforce wellbeing'],
+    next:[['ctl','Supervision and support'],['lead','HR policy from leadership']]},
+  stake: { n:8, c:'--part', band:'Outside', title:'External stakeholders', box:[900,620,290,140],
+    say:'Outward, I keep our partnerships strong, sharing information safely with the agencies that hold risk with us.',
+    what:['HRT Capricornia, the High Risk Team','Child Safety','Queensland Police Service','Corrective Services','Rockhampton court support','CQUniversity'],
+    next:[['ctl','Stakeholder engagement'],['mbc','Collateral checks about MBC participants']]}
+};
+const ORDER = Object.keys(Z).sort((a,b)=>Z[a].n-Z[b].n);
+const svg = document.getElementById('map'), panel = document.getElementById('panel');
+const NS = 'http://www.w3.org/2000/svg';
+const FULL = [0,0,1200,940];
+let cur = null, vb = FULL.slice(), recall = false, revealed = false, anim = null;
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// overlap labels placed around the ring, between the wires
+const RING = [['Shared clients','& families'],['Risk','management'],['Referrals','between programs'],['Collaborative','case planning'],['Service','coordination'],['Community','engagement'],['Practice','improvement']];
+const rl = document.getElementById('ringlabels');
+RING.forEach((lines,i)=>{
+  const a = (-90 + 360/RING.length*(i+0.5)) * Math.PI/180, x = 600+162*Math.cos(a), y = 450+162*Math.sin(a);
+  lines.forEach((ln,j)=>{ const t=document.createElementNS(NS,'text'); t.setAttribute('class','t ink'+(j?' s':'')); t.setAttribute('x',x.toFixed(1)); t.setAttribute('y',(y+j*16-2).toFixed(1)); t.setAttribute('font-size', j?12:14); t.textContent=ln; rl.appendChild(t); });
+});
+
+function zoomTo(t){
+  if (anim) cancelAnimationFrame(anim);
+  const from = vb.slice(), t0 = performance.now(), dur = reduce ? 0 : 650;
+  const step = now => {
+    const p = dur ? Math.min(1,(now-t0)/dur) : 1, e = p<.5 ? 4*p*p*p : 1-Math.pow(-2*p+2,3)/2;
+    vb = from.map((v,i)=>v+(t[i]-v)*e);
+    svg.setAttribute('viewBox', vb.join(' '));
+    if (p<1) anim = requestAnimationFrame(step);
+  };
+  anim = requestAnimationFrame(step);
+}
+const pad = b => { const px=b[2]*.1, py=b[3]*.1; return [b[0]-px,b[1]-py,b[2]+2*px,b[3]+2*py]; };
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const list = a => '<ul>'+a.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+
+function render(){
+  if (!cur){
+    panel.style.setProperty('--zc','var(--ink)');
+    panel.innerHTML = `<div class="head"><span class="eyebrow">Start here</span><h2>Read it from the centre out</h2></div>
+      <ul><li><b>Centre:</b> the Clinical Team Leader and nine areas of responsibility</li><li><b>Ring:</b> the seven places the programs overlap</li><li><b>Three circles:</b> MBC, Counselling and SAB with their teams</li><li><b>Edges:</b> leadership above, people processes and stakeholders either side</li></ul>
+      <p>Dashed lines show referrals moving between the programs.</p>
+      <div class="links"><button type="button" data-go="ctl"><span class="dot" style="background:var(--role)"></span><b>Start the walk-through</b></button></div>`;
+    return;
+  }
+  const z = Z[cur];
+  panel.style.setProperty('--zc','var('+z.c+')');
+  const head = `<div class="head"><span class="eyebrow">Stop ${z.n} of 8 · ${esc(z.band)}</span><h2>${esc(z.title)}</h2></div>`;
+  if (recall && !revealed){
+    panel.innerHTML = head + `<div class="reveal"><p>Say your presenter line out loud, then name what sits here. Then check.</p><button type="button" id="reveal">Reveal</button></div>`;
+    document.getElementById('reveal').onclick = ()=>{ revealed = true; render(); };
+    return;
+  }
+  let body = `<div class="say"><strong>Say this</strong><p>${esc(z.say)}</p></div>`;
+  if (z.groups) body += z.groups.map(([h,a])=>`<div class="sec"><h3>${esc(h)}</h3>${list(a)}</div>`).join('');
+  if (z.what) body += `<div class="sec"><h3>${z.who?'Focus':'What sits here'}</h3>${list(z.what)}</div>`;
+  if (z.who) body += `<div class="sec"><h3>Team</h3>${list(z.who)}</div>`;
+  body += `<div class="sec"><h3>Connects to</h3><div class="links">${z.next.map(([k,why])=>`<button type="button" data-go="${k}"><span class="dot" style="background:var(${Z[k].c})"></span><span><b>${esc(Z[k].title)}</b> · ${esc(why)}</span></button>`).join('')}</div></div>`;
+  panel.innerHTML = head + body;
+}
+function go(k){
+  cur = k; revealed = false;
+  document.querySelectorAll('.node').forEach(g=>g.classList.toggle('on', g.dataset.z===k));
+  zoomTo(k ? pad(Z[k].box) : FULL);
+  document.getElementById('stopcount').textContent = k ? `Stop ${Z[k].n} of 8` : 'Overview';
+  render();
+  try { history.replaceState(null,'', k ? '#'+k : location.pathname); } catch(e){}
+}
+panel.addEventListener('click', e=>{ const b=e.target.closest('[data-go]'); if(b) go(b.dataset.go); });
+document.querySelectorAll('.node').forEach(g=>{
+  g.addEventListener('click', e=>{ e.stopPropagation(); go(g.dataset.z); });
+  g.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(g.dataset.z);} });
+});
+const step = d => { const i = cur ? ORDER.indexOf(cur) : -1, j = i+d; go(j<0||j>=ORDER.length ? null : ORDER[j]); };
+document.getElementById('next').onclick = ()=>step(1);
+document.getElementById('prev').onclick = ()=>step(-1);
+document.getElementById('overview').onclick = ()=>go(null);
+document.addEventListener('keydown', e=>{ if (e.key==='ArrowRight') step(1); else if (e.key==='ArrowLeft') step(-1); else if (e.key==='Escape') go(null); });
+const rb = document.getElementById('recallBtn');
+rb.onclick = ()=>{ recall = rb.getAttribute('aria-pressed')!=='true'; rb.setAttribute('aria-pressed',recall); svg.classList.toggle('recall',recall); revealed=false; render(); };
+
+document.getElementById('script').innerHTML = ORDER.map(k=>`<div><span class="n" style="background:var(${Z[k].c})">${Z[k].n}</span><p><b>${esc(Z[k].title)}.</b> ${esc(Z[k].say)}</p></div>`).join('');
+
+const start = (location.hash||'').slice(1);
+go(Z[start] ? start : null);
+</script>

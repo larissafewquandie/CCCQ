@@ -1,0 +1,235 @@
+<title>Prezi Build Directions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap">
+<style>
+/* Layout: one column of short phases. Each step is a tickable row with one action; copy buttons hold the exact words to paste. Colours match the ecosystem and house pictures. */
+:root {
+  --bg: #eef1f6; --surface: #ffffff; --ink: #172030; --muted: #536079; --line: #cdd4e0; --focus: #ff9f1c; --done: #2f7d4f;
+  --gov: #3b4ca6; --role: #17807a; --admin: #7d6146; --mbc: #2d68ad; --sab: #3a8448; --couns: #b9466f; --part: #4f6d61; --risk: #c4362c; --door: #874090; --cw: #a37612; --found: #626875;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111722; --surface: #1a2232; --ink: #e8ecf4; --muted: #9da9bf; --line: #2e3a50; --focus: #ffb347; --done: #5cc287; color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #111722; --surface: #1a2232; --ink: #e8ecf4; --muted: #9da9bf; --line: #2e3a50; --focus: #ffb347; --done: #5cc287; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+.wrap { max-width: 860px; margin: 0 auto; padding-block: 28px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 32px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(30px, 5vw, 44px); font-weight: 800; }
+h2 { font-size: 24px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+header { display: grid; gap: 10px; }
+header p { color: var(--muted); }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.tabs button { font: inherit; font-weight: 700; font-size: 15px; padding: 10px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.progress { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 10px; display: grid; gap: 6px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.bar { height: 10px; border-radius: 5px; background: var(--line); overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--done); transition: width .3s; }
+.progress p { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.phase { display: grid; gap: 12px; }
+.phase .ph { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+.phase .time { font-size: 14px; color: var(--muted); }
+.steps { display: grid; gap: 8px; }
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 14px; align-items: start; }
+.step input { width: 24px; height: 24px; margin: 2px 0 0; accent-color: var(--done); cursor: pointer; }
+.step .body { display: grid; gap: 8px; min-width: 0; }
+.step label { font-weight: 700; cursor: pointer; }
+.step.done { opacity: .6; }
+.step.done label { text-decoration: line-through; }
+.step .how { color: var(--muted); font-size: 15px; }
+.check { font-size: 14px; color: var(--done); font-weight: 700; }
+
+.copylist { display: grid; gap: 6px; }
+.copy { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 8px; padding: 6px 6px 6px 10px; }
+.copy .dot { width: 12px; height: 12px; border-radius: 50%; }
+.copy .txt { font-size: 15px; min-width: 0; overflow-wrap: anywhere; }
+.copy .txt b { display: block; }
+.copy button { font: inherit; font-size: 13px; font-weight: 700; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; white-space: nowrap; }
+
+.tips { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: grid; gap: 10px; }
+.tips dl { margin: 0; display: grid; gap: 10px; }
+.tips dt { font-weight: 700; }
+.tips dd { margin: 0; color: var(--muted); }
+.note { font-size: 14px; color: var(--muted); }
+.reset { justify-self: start; font: inherit; font-size: 14px; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Step by step · one action at a time</span>
+    <h1>Prezi Build Directions</h1>
+    <p>Tick each step as you go. Your ticks are saved in this browser, so you can stop and come back. Do one phase per sitting if that’s easier. Every phase takes 15 minutes or less.</p>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Which Prezi">
+    <button id="tab-eco" role="tab" type="button" aria-selected="true" aria-controls="build">Leadership presentation (ecosystem)</button>
+    <button id="tab-house" role="tab" type="button" aria-selected="false" aria-controls="build">My learning Prezi (house)</button>
+  </div>
+
+  <div class="progress" aria-live="polite"><div class="bar"><span id="barfill"></span></div><p id="bartext"></p></div>
+
+  <div id="build" class="wrap" style="padding:0;gap:28px"></div>
+
+  <section class="tips" aria-labelledby="tr">
+    <h2 id="tr">If something doesn’t look right</h2>
+    <dl>
+      <dt>A button isn’t where these steps say</dt><dd>Prezi moves its menus between versions. Look for the same word (Topic, Background, Notes, Path) in the toolbar or the left panel.</dd>
+      <dt>The topic frames hide the picture</dt><dd>Select the topic, open its style options and pick a transparent or invisible frame. The picture then shows through and Prezi still zooms to it.</dd>
+      <dt>The picture is blurry when it zooms in</dt><dd>Use the PNG files from this pack. They’re saved at double size so they stay sharp when Prezi zooms.</dd>
+      <dt>A topic feels crowded</dt><dd>Keep it to three subtopics. Move anything extra into your speaker notes.</dd>
+      <dt>I lost my place in the steps</dt><dd>Scroll to the first unticked box. That’s your next step.</dd>
+    </dl>
+    <button class="reset" id="reset" type="button">Clear ticks for this Prezi</button>
+  </section>
+</div>
+
+<script>
+const C = (color, title, sub) => ({color, title, sub});
+const ECO_TOPICS = [
+  C('--role','Clinical Team Leader','Circle, over the centre'),
+  C('--mbc','Men’s Behaviour Change (MBC)','Circle, top left'),
+  C('--couns','Counselling team','Circle, top right'),
+  C('--sab','Supporting Adolescent Boys (SAB)','Circle, bottom'),
+  C('--role','Where the overlap occurs','Large circle, over the pale ring'),
+  C('--gov','Leadership & governance','Rectangle, top'),
+  C('--admin','People & HR processes','Rectangle, bottom left'),
+  C('--part','External stakeholders','Rectangle, bottom right')];
+const ECO_SUBS = [
+  C('--role','Clinical Team Leader','Leading practice: Clinical governance · Quality assurance · Risk assessment and management\nLeading people: Staff development · Supervision and support · Workforce wellbeing\nLeading outward: Stakeholder engagement · Service integration · Reporting and outcomes'),
+  C('--mbc','MBC','Team: Rachel · Bree · Zac\nWhen: Rockhampton Wednesday and Thursday · Emerald fortnightly Tuesday\nConnects to: Counselling referrals · Shared families with SAB · Collateral checks and HRT'),
+  C('--couns','Counselling','Team: Georgia · Candy · Lorena\nFocus: Therapeutic interventions · Internal referrals\nConnects to: Referrals from MBC and SAB · Shared clients and families'),
+  C('--sab','SAB','Team: Hayden Lovell · Hayden Peckover · Ric\nFocus: Early intervention · Family engagement · Behaviour change pathways\nConnects to: MBC pathway · Family referrals to Counselling'),
+  C('--role','Where the overlap occurs','Shared clients and families · Risk management · Referrals between programs · Collaborative case planning · Service coordination · Community engagement · Practice improvement')];
+const ECO_NOTES = [
+  C('--role','1 · Clinical Team Leader','My role sits at the centre. I connect three programs, the staff in them, our leadership, our people processes and our partner agencies.'),
+  C('--mbc','2 · MBC','MBC works with men using violence, keeping the safety of women and children at the centre. We run in Rockhampton twice a week and in Emerald fortnightly.'),
+  C('--couns','3 · Counselling','The Counselling team provides therapeutic interventions and takes internal referrals from our other programs.'),
+  C('--sab','4 · SAB','SAB is early intervention. We work with adolescent boys and their families on behaviour change pathways before patterns set in.'),
+  C('--role','5 · The overlap','The programs don’t work in silos. Families, risk and referrals cross between them, and this overlap is where my role adds the most value.'),
+  C('--gov','6 · Leadership','Upward, I report outcomes to senior leadership and the DFV Steering Committee and carry their direction back into practice.'),
+  C('--admin','7 · People & HR','Alongside the clinical work, I hold the people processes that keep the team safe, skilled and supported.'),
+  C('--part','8 · Stakeholders','Outward, I keep our partnerships strong, sharing information safely with the agencies that hold risk with us.')];
+
+const HOUSE_TOPICS = [
+  C('--gov','Governance & direction','Triangle area, the roof'),
+  C('--risk','Risk & safety alarm','Small frame, the chimney'),
+  C('--role','Your office · Clinical Team Leader','Upper floor, left'),
+  C('--admin','Back office','Upper floor, right'),
+  C('--door','Front door','Ground floor, middle'),
+  C('--mbc','Men’s Behaviour Change (MBC)','Ground floor, far left'),
+  C('--sab','Supporting Adolescent Boys (SAB)','Ground floor, second left'),
+  C('--couns','Counselling','Ground floor, second right'),
+  C('--cw','Child Witness','Ground floor, far right'),
+  C('--found','Values & standards','The foundation strip'),
+  C('--part','Partners','The street and neighbours')];
+
+const PHASES = {
+  eco: [
+    { h:'Get the pictures ready', t:'5 min', steps:[
+      ['Save the two ecosystem pictures to your computer','They are ecosystem-labelled.png and ecosystem-blank-for-rehearsal.png, sent to you in this chat and saved in the Visual Learning Board folder.','You can see both files in your Downloads or Desktop.'],
+      ['Open Prezi and start a new, blank presentation','Choose Create, then a new presentation. Pick a blank start rather than a template so nothing fights with your picture.'],
+      ['Name it “Clinical Team Leader Ecosystem”',null,'The name shows at the top of the editor.']]},
+    { h:'Put the picture on the canvas', t:'5 min', steps:[
+      ['Delete any topics Prezi added for you','Click each one and press Delete. You want an empty canvas.'],
+      ['Set ecosystem-labelled.png as the background image','Open the style or theme options, choose Background, and upload the picture. Stretch it to fill the canvas.','The whole diagram shows when you zoom right out.']]},
+    { h:'Add a topic over each part', t:'15 min', steps:[
+      ['Add 8 topics, one over each numbered part','Add a topic, then drag and resize it so it sits exactly over that part of the picture. Use a circle for circles and a rectangle for the pill shapes. Copy each title below so the words match the picture.',null,'topics'],
+      ['Make the topic frames invisible or transparent','Select each topic and choose a transparent frame in its style options. The picture shows through and Prezi still zooms to it.','You can see the picture clearly with no boxes on top.']]},
+    { h:'Fill the topics', t:'15 min', steps:[
+      ['Add subtopics inside the five main topics','Open each topic and add the three groups below as subtopics. Keep it to three per topic. Copy and paste each one.',null,'subs'],
+      ['Leave Leadership, People & HR and Stakeholders as single slides','The picture already lists what sits there. Your speaker notes do the rest.']]},
+    { h:'Set the path', t:'5 min', steps:[
+      ['Check the path order runs 1 to 8','Look at the path list on the left. Drag the topics into this order: Clinical Team Leader, MBC, Counselling, SAB, Where the overlap occurs, Leadership, People & HR, Stakeholders.','The numbers on the left match the badges on the picture.'],
+      ['End on the whole picture','After stop 8, make the last step zoom back out to the full canvas. It lets the audience see the whole ecosystem again while you close.']]},
+    { h:'Add your speaker notes', t:'10 min', steps:[
+      ['Paste one presenter line into each topic’s notes','Open the notes area for each topic and paste its line. Only you see these when you present.',null,'notes']]},
+    { h:'Rehearse', t:'10 min', steps:[
+      ['Duplicate the whole Prezi','Name the copy “Ecosystem rehearsal”.'],
+      ['In the copy, swap the background for ecosystem-blank-for-rehearsal.png','The circles and colours stay, the words disappear.'],
+      ['Present the copy once and say each line from memory','Pull the words out before you look. That effort is what makes them stay.','You got through all 8 stops. Check the notes for anything you missed.'],
+      ['Present the real version once from start to finish','Time it. Aim for about one minute per stop.']]}
+  ],
+  house: [
+    { h:'Get the pictures ready', t:'5 min', steps:[
+      ['Save the two house pictures to your computer','They are house-labelled.png and house-blank-for-recall.png, sent to you in this chat and saved in the Visual Learning Board folder.'],
+      ['Start a new, blank Prezi called “The CatholicCare House”']]},
+    { h:'Put the house on the canvas', t:'5 min', steps:[
+      ['Delete any starter topics, then set house-labelled.png as the background image','Stretch it to fill the canvas.','The whole house shows when you zoom right out.']]},
+    { h:'Add a topic over each room', t:'15 min', steps:[
+      ['Add 11 topics, one over each numbered part of the house','Match the numbers on the picture. Copy each title below.',null,'housetopics'],
+      ['Make the frames transparent so the house shows through']]},
+    { h:'Fill the rooms', t:'15 min, or one room a day', steps:[
+      ['Give each room three subtopics: Memory hook, What happens here, Where it goes next','Copy the words for each room from the CatholicCare House page. Doing one room a day is fine and helps it stick.'],
+      ['Add an image to the Memory hook if you like','A real photo of a circle of chairs, a teddy bear or a skateboard makes the hook even stronger.']]},
+    { h:'Set the path', t:'5 min', steps:[
+      ['Order the path 1 to 11, roof to street','Same route every time. Your brain learns the walk.']]},
+    { h:'Practise', t:'5 min a day', steps:[
+      ['Duplicate the Prezi and swap in house-blank-for-recall.png'],
+      ['Day 1, 2, 4, 7 and 14: walk the blank copy and name each room before you look','Use the practice plan on the CatholicCare House page.']]}
+  ]
+};
+
+const build = document.getElementById('build');
+let which = 'eco';
+const KEY = () => 'prezi-steps-' + which;
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY()) || '[]'); } catch(e) { return []; } };
+const save = a => { try { localStorage.setItem(KEY(), JSON.stringify(a)); } catch(e) {} };
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+function copyRows(list){
+  return '<div class="copylist">' + list.map((c,i)=>`<div class="copy"><span class="dot" style="background:var(${c.color}, var(--ink))"></span><span class="txt"><b>${esc(c.title)}</b>${c.sub?esc(c.sub).replace(/\n/g,'<br>'):''}</span><button type="button" data-copy="${esc(c.copy ?? c.title)}">Copy</button></div>`).join('') + '</div>';
+}
+const EXTRA = {
+  topics: () => copyRows(ECO_TOPICS.map(c=>({...c, copy:c.title}))),
+  subs: () => copyRows(ECO_SUBS.map(c=>({...c, copy:c.sub}))),
+  notes: () => copyRows(ECO_NOTES.map(c=>({...c, copy:c.sub}))),
+  housetopics: () => copyRows(HOUSE_TOPICS.map(c=>({...c, copy:c.title})))
+};
+
+function render(){
+  const done = new Set(load());
+  let id = 0, total = 0;
+  build.innerHTML = PHASES[which].map((ph,pi)=>`
+    <section class="phase" aria-labelledby="ph${pi}">
+      <div class="ph"><span class="eyebrow">Phase ${pi+1} of ${PHASES[which].length}</span><h2 id="ph${pi}">${esc(ph.h)}</h2><span class="time">${esc(ph.t)}</span></div>
+      <div class="steps">${ph.steps.map(([a,how,ok,extra])=>{ const sid = which+'-'+(id++); total++; const on = done.has(sid);
+        return `<div class="step${on?' done':''}"><input type="checkbox" id="${sid}" ${on?'checked':''}><div class="body"><label for="${sid}">${esc(a)}</label>${how?`<p class="how">${esc(how)}</p>`:''}${ok?`<p class="check">You’ll know it worked when: ${esc(ok)}</p>`:''}${extra?EXTRA[extra]():''}</div></div>`; }).join('')}</div>
+    </section>`).join('');
+  const n = [...done].filter(s=>s.startsWith(which+'-')).length;
+  document.getElementById('barfill').style.width = (total ? n/total*100 : 0) + '%';
+  document.getElementById('bartext').textContent = n === total ? `All ${total} steps done. Well done.` : `${n} of ${total} steps done`;
+}
+build.addEventListener('change', e=>{
+  if (e.target.type !== 'checkbox') return;
+  const a = new Set(load()); e.target.checked ? a.add(e.target.id) : a.delete(e.target.id); save([...a]); render();
+  const el = document.getElementById(e.target.id); if (el) el.focus();
+});
+build.addEventListener('click', async e=>{
+  const b = e.target.closest('[data-copy]'); if (!b) return;
+  const text = b.getAttribute('data-copy');
+  try { await navigator.clipboard.writeText(text); b.textContent = 'Copied'; }
+  catch(err) { const r = document.createRange(); r.selectNodeContents(b.previousElementSibling); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Selected, press Ctrl+C'; }
+  setTimeout(()=>{ b.textContent = 'Copy'; }, 1800);
+});
+['eco','house'].forEach(k=>{
+  document.getElementById('tab-'+k).onclick = ()=>{
+    which = k;
+    document.querySelectorAll('[role=tab]').forEach(t=>t.setAttribute('aria-selected', t.id==='tab-'+k));
+    render();
+  };
+});
+document.getElementById('reset').onclick = ()=>{ save([]); render(); };
+render();
+</script>

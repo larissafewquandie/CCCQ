@@ -172,7 +172,7 @@ table.spaced th { font-size: 12px; letter-spacing: .08em; text-transform: upperc
           <rect class="shape" x="200" y="262" width="340" height="158" fill="var(--role)"/>
           <g class="glyph"><rect x="440" y="372" width="84" height="9"/><line x1="450" y1="381" x2="450" y2="410"/><line x1="514" y1="381" x2="514" y2="410"/><rect x="462" y="344" width="40" height="28"/></g>
           <text class="lbl" x="226" y="318" font-size="24">Your office</text>
-          <text class="lbl small" x="226" y="344" font-size="14">Leading the team</text>
+          <text class="lbl small" x="226" y="344" font-size="14">Clinical Team Leader</text>
           <text class="lbl small" x="226" y="364" font-size="14">Line management</text>
           <text class="lbl small" x="226" y="384" font-size="14">Supervision</text>
           <g class="badge" transform="translate(220,282)"><circle r="15"/><text>3</text></g>
@@ -199,12 +199,12 @@ table.spaced th { font-size: 12px; letter-spacing: .08em; text-transform: upperc
         </g>
 
         <!-- 7 SAB -->
-        <g class="zone" data-z="sab" tabindex="0" role="button" aria-label="Stop 7, SAB room">
+        <g class="zone" data-z="sab" tabindex="0" role="button" aria-label="Stop 7, Supporting Adolescent Boys room">
           <rect class="shape" x="350" y="420" width="120" height="180" fill="var(--sab)"/>
           <g class="glyph"><rect x="380" y="510" width="60" height="60" stroke-dasharray="6 6"/><line x1="410" y1="525" x2="410" y2="555"/><line x1="395" y1="540" x2="425" y2="540"/></g>
           <text class="lbl" x="364" y="462" font-size="26">SAB</text>
-          <text class="lbl small" x="364" y="484" font-size="12">Add your own</text>
-          <text class="lbl small" x="364" y="499" font-size="12">object here</text>
+          <text class="lbl small" x="364" y="484" font-size="12">Supporting</text>
+          <text class="lbl small" x="364" y="499" font-size="12">Adolescent Boys</text>
           <g class="badge" transform="translate(452,440)"><circle r="15"/><text>7</text></g>
         </g>
 
@@ -323,11 +323,10 @@ const Z = {
     what:['Risk assessment and safety planning at every contact with a person using violence (PUV).','Incident and risk responses, written up as a recap for the team.','Practitioner escalations, including clients who disclose suicidal ideation.','Sharing information with HRT when risk is high.'],
     who:['Every practitioner','You, as the escalation point','HRT Capricornia'],
     next:[['role','Escalations come to your office'],['part','High risk goes to the HRT table'],['mbc','Risk is assessed in every program room']]},
-  role:  { n:3,  c:'--role',  band:'Upper floor · Leading', title:'Your office', box:[190,250,370,180],
+  role:  { n:3,  c:'--role',  band:'Upper floor · Leading', title:'Your office · Clinical Team Leader', box:[190,250,370,180],
     hook:'Your desk is in the middle of the upper floor. There’s a window down into every room and a ladder up to the roof.',
-    what:['Line management for your team, recorded on the HR 029 Census Line Management Record.','Supervising practitioners and the social work student placement (Brea, CQU).','Being the escalation point when risk rises.','Turning steer co direction into what the team does this week.'],
-    who:['You','Your team of practitioners','Brea, CQU social work student'],
-    fill:'Add your title, your team members and who you report to.',
+    what:['Leading practice: clinical governance, quality assurance, risk assessment and management.','Leading people: staff development, supervision and support, workforce wellbeing. Line management is recorded on HR 029.','Leading outward: stakeholder engagement, service integration, reporting and outcomes.','The connection point where MBC, Counselling and SAB overlap.'],
+    who:['You, Clinical Team Leader','MBC: Rachel, Bree, Zac','Counselling: Georgia, Candy, Lorena','SAB: Hayden Lovell, Hayden Peckover, Ric','Brea, CQU social work student'],
     next:[['gov','Report up to the roof'],['risk','Take escalations from the alarm'],['admin','Check records next door']]},
   admin: { n:4,  c:'--admin', band:'Upper floor · Records', title:'Back office', box:[530,250,280,180],
     hook:'A filing cabinet and a spike full of receipts. Nothing leaves this house without a record.',
@@ -341,20 +340,18 @@ const Z = {
     next:[['mbc','Referrals go into a program room'],['admin','Every request is logged'],['part','Replies go back out to the street']]},
   mbc:   { n:6,  c:'--mbc',   band:'Ground floor · Programs', title:'Men’s Behaviour Change (MBC)', box:[190,410,170,200],
     hook:'A circle of six chairs and a whiteboard. Behind the men, on the wall, are photos of the women and children the work is really for.',
-    what:['Group program for men using violence (PUVs).','Intake, assessment and group sessions.','Attendance and participation reported out through collateral checks and RFIs.','Every session keeps the focus on the safety of women and children.'],
-    who:['MBC facilitators','Program participants'],
+    what:['Group program for men using violence (PUVs).','Rockhampton groups on Wednesday and Thursday. Emerald group fortnightly on Tuesday.','Attendance and participation reported out through collateral checks and RFIs.','Every session keeps the focus on the safety of women and children.'],
+    who:['Rachel','Bree','Zac'],
     next:[['risk','Risk is checked every session'],['door','Collateral checks ask about MBC participation'],['admin','Session notes go to the back office']]},
-  sab:   { n:7,  c:'--sab',   band:'Ground floor · Programs', title:'SAB', box:[340,410,140,200],
-    hook:'This room is waiting for your own picture. Choose one object that means SAB to you and imagine it sitting in the middle of the floor.',
-    what:['SAB is one of the DFV programs, alongside MBC.','Client consumables receipts from SAB are reconciled into Expense Pro.'],
-    who:['SAB practitioners'],
-    fill:'Add what SAB stands for, who it’s for, and your memory object.',
-    next:[['risk','Same safety rules as every room'],['admin','Receipts go to the back office']]},
+  sab:   { n:7,  c:'--sab',   band:'Ground floor · Programs', title:'Supporting Adolescent Boys (SAB)', box:[340,410,140,200],
+    hook:'A skateboard leaning against the wall next to a family photo. Young boys, with their families, early on. Swap in your own object if another one sticks better.',
+    what:['Early intervention with adolescent boys.','Family engagement.','Behaviour change pathways.','Client consumables receipts reconciled into Expense Pro.'],
+    who:['Hayden Lovell','Hayden Peckover','Ric'],
+    next:[['mbc','Behaviour change pathway links to MBC'],['couns','Family members referred to Counselling'],['risk','Same safety rules as every room']]},
   couns: { n:8,  c:'--couns', band:'Ground floor · Programs', title:'Counselling', box:[540,410,140,200],
     hook:'Two armchairs facing each other with a box of tissues on a small table between them.',
-    what:['One-to-one counselling.','Client consumables receipts reconciled into Expense Pro.','The same safety and risk rules apply as in every room.'],
-    who:['Counsellors','Clients'],
-    fill:'Add who the counselling service is for.',
+    what:['Therapeutic interventions.','Internal referrals from MBC and SAB.','Client consumables receipts reconciled into Expense Pro.'],
+    who:['Georgia','Candy','Lorena'],
     next:[['risk','Risk is checked here too'],['admin','Notes and receipts go to the back office']]},
   cw:    { n:9,  c:'--cw',    band:'Ground floor · Programs', title:'Child Witness', box:[660,410,150,200],
     hook:'A small chair, a teddy bear and a box of crayons. The smallest room holds the most important people.',
@@ -445,7 +442,7 @@ toggle('recallBtn','recall', on=>{ recall=on; revealed=false; render(); });
 
 const R = [
   ['Every day', [['risk','Read escalations and risk emails first'],['door','Triage the inbox: collateral checks, referrals'],['admin','Case notes written the same day'],['role','Check in with the team']]],
-  ['Every week', [['door','HRT RFI progress email to HRT Cap, Tennille and Corin'],['part','HRT meeting'],['door','Completed RFIs reply, and FYI to the MBC team'],['admin','Court support roster checked*'],['admin','Receipts into Expense Pro*']]],
+  ['Every week', [['mbc','MBC groups in Rockhampton, Wednesday and Thursday'],['mbc','MBC group in Emerald, every second Tuesday'],['door','HRT RFI progress email to HRT Cap, Tennille and Corin'],['part','HRT meeting'],['door','Completed RFIs reply, and FYI to the MBC team'],['admin','Court support roster checked*'],['admin','Receipts into Expense Pro*']]],
   ['Every month or so', [['role','Line management meetings, recorded on HR 029*'],['role','Supervision with Brea and the CQU check-ins*'],['role','Practitioner supervision*']]],
   ['Each quarter', [['gov','Steering Committee meeting and KPI update*'],['gov','Program reporting to funders*'],['found','Look back over the house: what changed?']]]
 ];
