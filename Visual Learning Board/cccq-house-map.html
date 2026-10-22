@@ -1,0 +1,456 @@
+<title>The CatholicCare House</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap">
+<style>
+/* Layout: a memory-palace house drawn as one big clickable picture, zooming like Prezi, with a study panel beside it. Top of the house = top of the hierarchy. */
+:root {
+  --bg: #eef1f6; --surface: #ffffff; --ink: #172030; --muted: #536079; --line: #cdd4e0; --focus: #ff9f1c;
+  --sky: #d9e4f1; --grass: #c7d7c3; --road: #8e9a96; --wall: #f7f8fb;
+  --gov: #3b4ca6; --risk: #c4362c; --role: #17807a; --admin: #7d6146; --door: #874090;
+  --mbc: #2d68ad; --sab: #3a8448; --couns: #b9466f; --cw: #a37612; --found: #626875; --part: #4f6d61;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111722; --surface: #1a2232; --ink: #e8ecf4; --muted: #9da9bf; --line: #2e3a50; --focus: #ffb347;
+  --sky: #18233a; --grass: #1f2e29; --road: #3a4542; --wall: #232c3e; color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #111722; --surface: #1a2232; --ink: #e8ecf4; --muted: #9da9bf; --line: #2e3a50; --focus: #ffb347;
+  --sky: #18233a; --grass: #1f2e29; --road: #3a4542; --wall: #232c3e; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 40px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(30px, 4.4vw, 46px); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: 26px; font-weight: 700; }
+h3 { font-size: 18px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+header { display: grid; gap: 10px; max-width: 70ch; }
+header p { color: var(--muted); }
+
+/* Board */
+.board { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .board { grid-template-columns: 1fr; } }
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px; border-bottom: 1px solid var(--line); align-items: center; }
+.toolbar .spacer { flex: 1; }
+button { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+button:hover { border-color: var(--muted); }
+button:focus-visible, .zone:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.stopcount { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+svg.map { width: 100%; height: auto; display: block; aspect-ratio: 1000 / 780; max-width: 100%; }
+.zone { cursor: pointer; outline: none; }
+.zone .shape { transition: filter .2s; stroke: var(--ink); stroke-width: 2.5; }
+.zone:hover .shape { filter: brightness(1.12); }
+.zone.on .shape { stroke: var(--focus); stroke-width: 6; }
+.lbl { font-family: var(--display); font-weight: 700; fill: #fff; pointer-events: none; transition: opacity .25s; }
+.lbl.small { font-family: var(--body); font-weight: 400; }
+.lbl.dark { fill: var(--ink); }
+.recall .lbl { opacity: 0; }
+.badge circle { fill: var(--surface); stroke: var(--ink); stroke-width: 2; }
+.badge text { font-family: var(--display); font-weight: 800; font-size: 15px; fill: var(--ink); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+.glyph { fill: none; stroke: rgba(255,255,255,.85); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+.glyph.fill { fill: rgba(255,255,255,.85); stroke: none; }
+.flow { pointer-events: none; opacity: 0; transition: opacity .3s; }
+.showflow .flow { opacity: 1; }
+.flow path { fill: none; stroke: var(--focus); stroke-width: 5; stroke-dasharray: 12 10; stroke-linecap: round; animation: march 1.2s linear infinite; }
+.flow path.alarm { stroke: var(--risk); }
+@keyframes march { to { stroke-dashoffset: -22; } }
+@media (prefers-reduced-motion: reduce) { .flow path { animation: none; } }
+
+/* Panel */
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 18px; min-width: 0; border-top: 8px solid var(--zc, var(--ink)); }
+.panel .head { display: grid; gap: 6px; }
+.hook { background: color-mix(in srgb, var(--zc, var(--ink)) 12%, var(--surface)); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; }
+.hook strong { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--zc, var(--ink)); }
+:root[data-theme="dark"] .hook strong { color: var(--ink); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hook strong { color: var(--ink); } }
+.panel ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.sec { display: grid; gap: 8px; }
+.links { display: flex; flex-wrap: wrap; gap: 8px; }
+.links button { display: inline-flex; gap: 8px; align-items: center; font-weight: 400; text-align: left; }
+.links button .dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+.links button b { font-weight: 700; }
+.fillme { color: var(--muted); font-style: italic; }
+.reveal { display: grid; gap: 12px; justify-items: start; }
+
+/* Rhythm */
+.rhythm { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 900px) { .rhythm { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .rhythm { grid-template-columns: 1fr; } }
+.beat { border-top: 4px solid var(--ink); padding-top: 12px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.beat ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.beat li { display: grid; grid-template-columns: 12px 1fr; gap: 10px; align-items: baseline; }
+.beat li .dot { width: 10px; height: 10px; border-radius: 50%; transform: translateY(1px); }
+.section { display: grid; gap: 16px; }
+.section > p { color: var(--muted); max-width: 70ch; }
+.note { font-size: 14px; color: var(--muted); }
+
+/* Prezi + learning */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; }
+@media (max-width: 900px) { .two { grid-template-columns: 1fr; } }
+ol.steps { margin: 0; padding-left: 22px; display: grid; gap: 10px; }
+ol.steps li::marker { font-family: var(--display); font-weight: 800; }
+.why { display: grid; gap: 12px; }
+.why div { display: grid; gap: 2px; }
+.why b { font-family: var(--display); }
+table.spaced { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+table.spaced td, table.spaced th { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.spaced th { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Visual learning board · CatholicCare CQ DFV services</span>
+    <h1>The CatholicCare House</h1>
+    <p>Everything you lead lives somewhere in this house. The higher up the house, the higher up the hierarchy. Click any part of the picture to zoom in, or use the arrow keys to walk the 11 stops in order, the way a Prezi path works.</p>
+  </header>
+
+  <section class="board" aria-label="Interactive house map">
+    <div class="stage">
+      <div class="toolbar">
+        <button id="prev" type="button" aria-label="Previous stop">◀ Prev</button>
+        <button id="next" type="button" aria-label="Next stop">Next ▶</button>
+        <button id="overview" type="button">Whole house</button>
+        <span class="stopcount" id="stopcount">Overview</span>
+        <span class="spacer"></span>
+        <button id="flowBtn" type="button" aria-pressed="false">Show where it goes</button>
+        <button id="recallBtn" type="button" aria-pressed="false">Recall mode</button>
+      </div>
+      <svg class="map" id="map" viewBox="0 0 1000 780" role="img" aria-label="A house with labelled rooms for each part of CatholicCare CQ DFV work">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--focus)"/></marker>
+        </defs>
+        <rect x="0" y="0" width="1000" height="650" fill="var(--sky)"/>
+        <rect x="0" y="440" width="1000" height="210" fill="var(--grass)"/>
+
+        <!-- 11 Street / partners -->
+        <g class="zone" data-z="part" tabindex="0" role="button" aria-label="Stop 11, the street, partner agencies">
+          <rect class="shape" x="-4" y="650" width="1008" height="134" fill="var(--road)" />
+          <g class="shape" fill="var(--part)">
+            <rect x="22" y="470" width="78" height="180"/><rect x="108" y="530" width="66" height="120"/>
+            <rect x="826" y="520" width="70" height="130"/><rect x="904" y="470" width="76" height="180"/>
+          </g>
+          <polygon points="18,470 61,438 104,470" fill="var(--part)" stroke="var(--ink)" stroke-width="2.5"/>
+          <g class="glyph"><line x1="38" y1="490" x2="38" y2="640"/><line x1="61" y1="490" x2="61" y2="640"/><line x1="84" y1="490" x2="84" y2="640"/></g>
+          <rect x="640" y="690" width="140" height="44" rx="22" fill="var(--part)" stroke="var(--ink)" stroke-width="2.5"/>
+          <text class="lbl" x="61" y="465" font-size="11" text-anchor="middle" dy="-8">COURT</text>
+          <text class="lbl" x="141" y="560" font-size="13" text-anchor="middle">QPS</text>
+          <text class="lbl" x="861" y="550" font-size="12" text-anchor="middle">Child</text>
+          <text class="lbl" x="861" y="566" font-size="12" text-anchor="middle">Safety</text>
+          <text class="lbl" x="942" y="500" font-size="12" text-anchor="middle">Correc-</text>
+          <text class="lbl" x="942" y="516" font-size="12" text-anchor="middle">tions</text>
+          <text class="lbl" x="710" y="718" font-size="17" text-anchor="middle">HRT table</text>
+          <text class="lbl" x="230" y="728" font-size="22">The street · Partners</text>
+          <text class="lbl small" x="230" y="752" font-size="14">Who we share information with</text>
+          <g class="badge" transform="translate(200,722)"><circle r="15"/><text>11</text></g>
+        </g>
+
+        <!-- 2 Chimney / risk (drawn before roof so roof overlaps) -->
+        <g class="zone" data-z="risk" tabindex="0" role="button" aria-label="Stop 2, the chimney, risk and safety">
+          <rect class="shape" x="640" y="84" width="62" height="130" fill="var(--risk)"/>
+          <circle cx="671" cy="112" r="11" fill="#ffd6d1" stroke="var(--ink)" stroke-width="2"/>
+          <text class="lbl" x="720" y="86" font-size="16" fill="var(--risk)" style="fill:var(--risk)">Safety alarm</text>
+          <g class="badge" transform="translate(640,72)"><circle r="15"/><text>2</text></g>
+        </g>
+
+        <!-- 1 Roof / governance -->
+        <g class="zone" data-z="gov" tabindex="0" role="button" aria-label="Stop 1, the roof, governance and direction">
+          <polygon class="shape" points="176,262 500,58 824,262" fill="var(--gov)"/>
+          <text class="lbl" x="500" y="196" font-size="26" text-anchor="middle">Governance &amp; direction</text>
+          <text class="lbl small" x="500" y="224" font-size="15" text-anchor="middle">Steering Committee · policy · KPIs</text>
+          <g class="badge" transform="translate(500,112)"><circle r="15"/><text>1</text></g>
+        </g>
+
+        <!-- 3 Office / my role -->
+        <g class="zone" data-z="role" tabindex="0" role="button" aria-label="Stop 3, your office, your role">
+          <rect class="shape" x="200" y="262" width="340" height="158" fill="var(--role)"/>
+          <g class="glyph"><rect x="440" y="372" width="84" height="9"/><line x1="450" y1="381" x2="450" y2="410"/><line x1="514" y1="381" x2="514" y2="410"/><rect x="462" y="344" width="40" height="28"/></g>
+          <text class="lbl" x="226" y="318" font-size="24">Your office</text>
+          <text class="lbl small" x="226" y="344" font-size="14">Leading the team</text>
+          <text class="lbl small" x="226" y="364" font-size="14">Line management</text>
+          <text class="lbl small" x="226" y="384" font-size="14">Supervision</text>
+          <g class="badge" transform="translate(220,282)"><circle r="15"/><text>3</text></g>
+        </g>
+
+        <!-- 4 Back office / admin -->
+        <g class="zone" data-z="admin" tabindex="0" role="button" aria-label="Stop 4, back office, records and admin">
+          <rect class="shape" x="540" y="262" width="260" height="158" fill="var(--admin)"/>
+          <g class="glyph"><rect x="722" y="300" width="50" height="100"/><line x1="722" y1="333" x2="772" y2="333"/><line x1="722" y1="366" x2="772" y2="366"/><line x1="740" y1="316" x2="754" y2="316"/><line x1="740" y1="349" x2="754" y2="349"/><line x1="740" y1="382" x2="754" y2="382"/></g>
+          <text class="lbl" x="562" y="318" font-size="22">Back office</text>
+          <text class="lbl small" x="562" y="344" font-size="14">Notes · receipts</text>
+          <text class="lbl small" x="562" y="364" font-size="14">HR · rosters</text>
+          <g class="badge" transform="translate(560,282)"><circle r="15"/><text>4</text></g>
+        </g>
+
+        <!-- 6 MBC -->
+        <g class="zone" data-z="mbc" tabindex="0" role="button" aria-label="Stop 6, Men's Behaviour Change room">
+          <rect class="shape" x="200" y="420" width="150" height="180" fill="var(--mbc)"/>
+          <g class="glyph fill"><circle cx="275" cy="514" r="7"/><circle cx="301" cy="529" r="7"/><circle cx="301" cy="559" r="7"/><circle cx="275" cy="574" r="7"/><circle cx="249" cy="559" r="7"/><circle cx="249" cy="529" r="7"/></g>
+          <text class="lbl" x="216" y="462" font-size="26">MBC</text>
+          <text class="lbl small" x="216" y="484" font-size="12">Men's Behaviour</text>
+          <text class="lbl small" x="216" y="499" font-size="12">Change</text>
+          <g class="badge" transform="translate(330,440)"><circle r="15"/><text>6</text></g>
+        </g>
+
+        <!-- 7 SAB -->
+        <g class="zone" data-z="sab" tabindex="0" role="button" aria-label="Stop 7, SAB room">
+          <rect class="shape" x="350" y="420" width="120" height="180" fill="var(--sab)"/>
+          <g class="glyph"><rect x="380" y="510" width="60" height="60" stroke-dasharray="6 6"/><line x1="410" y1="525" x2="410" y2="555"/><line x1="395" y1="540" x2="425" y2="540"/></g>
+          <text class="lbl" x="364" y="462" font-size="26">SAB</text>
+          <text class="lbl small" x="364" y="484" font-size="12">Add your own</text>
+          <text class="lbl small" x="364" y="499" font-size="12">object here</text>
+          <g class="badge" transform="translate(452,440)"><circle r="15"/><text>7</text></g>
+        </g>
+
+        <!-- 5 Front door -->
+        <g class="zone" data-z="door" tabindex="0" role="button" aria-label="Stop 5, the front door, requests coming in">
+          <rect class="shape" x="470" y="420" width="80" height="180" fill="var(--wall)"/>
+          <rect x="482" y="456" width="56" height="144" fill="var(--door)" stroke="var(--ink)" stroke-width="2.5" pointer-events="none"/>
+          <rect x="494" y="500" width="32" height="7" rx="2" fill="#fff" pointer-events="none"/>
+          <circle cx="528" cy="540" r="4" fill="#fff" pointer-events="none"/>
+          <text class="lbl dark" x="510" y="446" font-size="13" text-anchor="middle">Front door</text>
+          <g class="badge" transform="translate(510,622)"><circle r="15"/><text>5</text></g>
+        </g>
+
+        <!-- 8 Counselling -->
+        <g class="zone" data-z="couns" tabindex="0" role="button" aria-label="Stop 8, Counselling room">
+          <rect class="shape" x="550" y="420" width="120" height="180" fill="var(--couns)"/>
+          <g class="glyph"><path d="M566 560 v-26 h26 v26 M566 548 h26"/><path d="M628 560 v-26 h26 v26 M628 548 h26"/><rect x="600" y="550" width="20" height="14"/></g>
+          <text class="lbl" x="564" y="462" font-size="18">Counsel-</text>
+          <text class="lbl" x="564" y="482" font-size="18">ling</text>
+          <g class="badge" transform="translate(652,440)"><circle r="15"/><text>8</text></g>
+        </g>
+
+        <!-- 9 Child Witness -->
+        <g class="zone" data-z="cw" tabindex="0" role="button" aria-label="Stop 9, Child Witness room">
+          <rect class="shape" x="670" y="420" width="130" height="180" fill="var(--cw)"/>
+          <g class="glyph fill"><circle cx="735" cy="526" r="13"/><circle cx="724" cy="512" r="6"/><circle cx="746" cy="512" r="6"/><ellipse cx="735" cy="560" rx="17" ry="21"/></g>
+          <text class="lbl" x="684" y="462" font-size="20">Child</text>
+          <text class="lbl" x="684" y="484" font-size="20">Witness</text>
+          <g class="badge" transform="translate(782,440)"><circle r="15"/><text>9</text></g>
+        </g>
+
+        <!-- 10 Foundation -->
+        <g class="zone" data-z="found" tabindex="0" role="button" aria-label="Stop 10, the foundation, values and standards">
+          <rect class="shape" x="176" y="600" width="648" height="50" fill="var(--found)"/>
+          <text class="lbl" x="590" y="631" font-size="17" text-anchor="middle">Foundation · values &amp; standards</text>
+          <g class="badge" transform="translate(196,625)"><circle r="15"/><text>10</text></g>
+        </g>
+
+        <!-- Flow lines: where a piece of work travels -->
+        <g class="flow" aria-hidden="true">
+          <path d="M660 692 C 600 650, 520 640, 510 570" marker-end="url(#arrow)"/>
+          <path d="M486 520 C 420 520, 330 520, 300 500" marker-end="url(#arrow)"/>
+          <path d="M275 470 C 275 430, 300 400, 330 380" marker-end="url(#arrow)"/>
+          <path d="M440 300 C 460 270, 480 250, 492 236" marker-end="url(#arrow)"/>
+          <path class="alarm" d="M671 128 C 660 200, 560 260, 470 330"/>
+        </g>
+      </svg>
+    </div>
+
+    <aside class="panel" id="panel" aria-live="polite"></aside>
+  </section>
+
+  <section class="section" aria-labelledby="rh">
+    <span class="eyebrow">The rhythm of the house</span>
+    <h2 id="rh">What happens when</h2>
+    <p>The house shows where things live. This board shows when they happen. Each dot uses its room's colour, so you can link the task back to the picture.</p>
+    <div class="rhythm" id="rhythm"></div>
+    <p class="note">Items marked * are my best guess at the timing. Change them to match your real calendar.</p>
+  </section>
+
+  <section class="two">
+    <div class="section" aria-labelledby="pz">
+      <span class="eyebrow">Rebuild it in Prezi</span>
+      <h2 id="pz">Six steps to your Prezi</h2>
+      <ol class="steps">
+        <li><b>Use the house as your canvas.</b> Upload the house picture (labelled version) as the background image of a new Prezi.</li>
+        <li><b>One topic per room.</b> Draw a topic frame over each of the 11 parts. Name each one exactly as it appears here, so the words and the picture match.</li>
+        <li><b>Set the path top to bottom.</b> Order the path 1 to 11, the same as the numbered badges. Roof first, street last. Same route every time.</li>
+        <li><b>Three subtopics inside each room, no more.</b> Memory hook, What happens here, Where it goes next. Three is easy for working memory to hold.</li>
+        <li><b>Keep the colours.</b> Give each topic the same colour as its room. Colour becomes a shortcut your brain will use without trying.</li>
+        <li><b>Make a blank copy.</b> Duplicate the Prezi and swap in the unlabelled picture. Use it to test yourself: zoom to a room, say what lives there, then check.</li>
+      </ol>
+    </div>
+    <div class="section" aria-labelledby="wy">
+      <span class="eyebrow">Why this works for an ADHD brain</span>
+      <h2 id="wy">The learning science</h2>
+      <div class="why">
+        <div><b>Memory palace</b><p>Your brain remembers places far better than lists. Putting each task in a room gives it an address.</p></div>
+        <div><b>Picture plus words</b><p>Seeing an image and reading a label at the same time stores the idea twice, so there are two ways back to it.</p></div>
+        <div><b>Small chunks</b><p>Four floors, never more than five things per floor. That stays inside what working memory can juggle at once.</p></div>
+        <div><b>Hierarchy you can see</b><p>Up the house means up the chain. You don't have to remember the structure, you look at it.</p></div>
+        <div><b>Testing beats rereading</b><p>Recall mode makes you pull the answer out before you see it. That effort is what makes it stick.</p></div>
+        <div><b>Your brain, outside your head</b><p>The board holds the plan so your executive function doesn't have to. Glance at it instead of keeping it all in mind.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="sp">
+    <span class="eyebrow">Five minutes at a time</span>
+    <h2 id="sp">A practice plan that spaces it out</h2>
+    <div style="overflow-x:auto">
+      <table class="spaced">
+        <thead><tr><th>When</th><th>What to do</th><th>Time</th></tr></thead>
+        <tbody>
+          <tr><td>Day 1</td><td>Walk all 11 stops with labels on. Say each memory hook out loud.</td><td>5 min</td></tr>
+          <tr><td>Day 2</td><td>Recall mode. Click each room and name 3 things before revealing.</td><td>5 min</td></tr>
+          <tr><td>Day 4</td><td>Recall mode, then turn on “Show where it goes” and trace a referral from the street to the roof.</td><td>5 min</td></tr>
+          <tr><td>Day 7</td><td>Close your eyes and walk the house from memory. Open the board and check what you missed.</td><td>5 min</td></tr>
+          <tr><td>Day 14, then monthly</td><td>Recall mode only. Update any room where your work has changed.</td><td>5 min</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script>
+const Z = {
+  gov:   { n:1,  c:'--gov',   band:'Roof · Top of the hierarchy', title:'Governance & direction', box:[160,40,680,240],
+    hook:'The roof keeps everything under it dry. Picture the Steering Committee sitting along the ridge, looking down over the whole house.',
+    what:['The DFV Steering Committee sets priorities and KPIs. Its most recent meeting was 15 October 2026.','CatholicCare CQ policies, procedures and the funding agreements your programs report against.','This is where your team’s work gets measured and reported.'],
+    who:['CatholicCare CQ senior leadership','DFV Steering Committee members','Funding bodies'],
+    fill:'Add your manager’s name and who sits on steer co.',
+    next:[['role','Direction comes down to your office'],['found','The roof rests on the foundation’s values']]},
+  risk:  { n:2,  c:'--risk',  band:'Roof · Always on', title:'Risk & safety alarm', box:[600,50,200,180],
+    hook:'The chimney has a red light that never switches off. Safety of women and children runs in the background of every room.',
+    what:['Risk assessment and safety planning at every contact with a person using violence (PUV).','Incident and risk responses, written up as a recap for the team.','Practitioner escalations, including clients who disclose suicidal ideation.','Sharing information with HRT when risk is high.'],
+    who:['Every practitioner','You, as the escalation point','HRT Capricornia'],
+    next:[['role','Escalations come to your office'],['part','High risk goes to the HRT table'],['mbc','Risk is assessed in every program room']]},
+  role:  { n:3,  c:'--role',  band:'Upper floor · Leading', title:'Your office', box:[190,250,370,180],
+    hook:'Your desk is in the middle of the upper floor. There’s a window down into every room and a ladder up to the roof.',
+    what:['Line management for your team, recorded on the HR 029 Census Line Management Record.','Supervising practitioners and the social work student placement (Brea, CQU).','Being the escalation point when risk rises.','Turning steer co direction into what the team does this week.'],
+    who:['You','Your team of practitioners','Brea, CQU social work student'],
+    fill:'Add your title, your team members and who you report to.',
+    next:[['gov','Report up to the roof'],['risk','Take escalations from the alarm'],['admin','Check records next door']]},
+  admin: { n:4,  c:'--admin', band:'Upper floor · Records', title:'Back office', box:[530,250,280,180],
+    hook:'A filing cabinet and a spike full of receipts. Nothing leaves this house without a record.',
+    what:['Case notes and contact records, with real dates and what actually happened.','Client consumables receipts (SAB, MBC, Counselling, Child Witness) reconciled into Expense Pro.','Leave, compliance and HR records in Employment Hero.','The Rockhampton court support roster.'],
+    who:['You','Practitioners writing notes','Finance and HR'],
+    next:[['role','Records back up your decisions'],['gov','Data feeds the KPIs on the roof']]},
+  door:  { n:5,  c:'--door',  band:'Ground floor · Coming in', title:'Front door', box:[440,400,140,240],
+    hook:'A letterbox stuffed with envelopes. Referrals, RFIs and collateral checks all come in through this one door.',
+    what:['New referrals into the programs.','Collateral checks from Child Safety, Corrective Services, police and other agencies. You search CSNet and reply Known or Not Known.','Weekly HRT RFIs. A progress email goes to HRT Capricornia, Tennille and Corin before the meeting, and a completed reply after.','Court support requests.'],
+    who:['External agencies','HRT Capricornia, Tennille and Corin'],
+    next:[['mbc','Referrals go into a program room'],['admin','Every request is logged'],['part','Replies go back out to the street']]},
+  mbc:   { n:6,  c:'--mbc',   band:'Ground floor · Programs', title:'Men’s Behaviour Change (MBC)', box:[190,410,170,200],
+    hook:'A circle of six chairs and a whiteboard. Behind the men, on the wall, are photos of the women and children the work is really for.',
+    what:['Group program for men using violence (PUVs).','Intake, assessment and group sessions.','Attendance and participation reported out through collateral checks and RFIs.','Every session keeps the focus on the safety of women and children.'],
+    who:['MBC facilitators','Program participants'],
+    next:[['risk','Risk is checked every session'],['door','Collateral checks ask about MBC participation'],['admin','Session notes go to the back office']]},
+  sab:   { n:7,  c:'--sab',   band:'Ground floor · Programs', title:'SAB', box:[340,410,140,200],
+    hook:'This room is waiting for your own picture. Choose one object that means SAB to you and imagine it sitting in the middle of the floor.',
+    what:['SAB is one of the DFV programs, alongside MBC.','Client consumables receipts from SAB are reconciled into Expense Pro.'],
+    who:['SAB practitioners'],
+    fill:'Add what SAB stands for, who it’s for, and your memory object.',
+    next:[['risk','Same safety rules as every room'],['admin','Receipts go to the back office']]},
+  couns: { n:8,  c:'--couns', band:'Ground floor · Programs', title:'Counselling', box:[540,410,140,200],
+    hook:'Two armchairs facing each other with a box of tissues on a small table between them.',
+    what:['One-to-one counselling.','Client consumables receipts reconciled into Expense Pro.','The same safety and risk rules apply as in every room.'],
+    who:['Counsellors','Clients'],
+    fill:'Add who the counselling service is for.',
+    next:[['risk','Risk is checked here too'],['admin','Notes and receipts go to the back office']]},
+  cw:    { n:9,  c:'--cw',    band:'Ground floor · Programs', title:'Child Witness', box:[660,410,150,200],
+    hook:'A small chair, a teddy bear and a box of crayons. The smallest room holds the most important people.',
+    what:['Support for children who have seen or lived through domestic and family violence.','Child-focused and trauma-informed.','Client consumables receipts reconciled into Expense Pro.'],
+    who:['Child Witness practitioners','Children and their safe carers'],
+    fill:'Add age range and how referrals come in.',
+    next:[['risk','Child safety is part of the alarm'],['part','Child Safety lives on the street']]},
+  found: { n:10, c:'--found', band:'Foundation · Holds it all up', title:'Values & standards', box:[160,580,680,90],
+    hook:'The concrete slab under the house has words pressed into it. Everything above stands on them.',
+    what:['CatholicCare CQ mission and values.','Safety of women and children first, in every decision.','AASW Practice Standards (2023).','Privacy, consent and de-identification when sharing information.','Write it down with real dates: what happened and why.'],
+    who:['Everyone in the house'],
+    next:[['gov','The roof rests on these values'],['risk','The alarm runs on them']]},
+  part:  { n:11, c:'--part',  band:'Outside · The street', title:'Partners', box:[0,420,1000,360],
+    hook:'Neighbours along the street. The courthouse with columns, the police station, Child Safety and Corrections, and the HRT table on the footpath out front.',
+    what:['HRT Capricornia, the High Risk Team, meets weekly. RFIs go to them.','Rockhampton court, staffed through the court support roster.','Child Safety, Corrective Services and Queensland Police send collateral checks.','CQUniversity places social work students with your team.'],
+    who:['HRT Capricornia, Tennille and Corin','Child Safety','Corrective Services','Queensland Police Service','CQUniversity'],
+    next:[['door','Requests walk up to the front door'],['risk','High risk cases go to HRT']]}
+};
+const ORDER = Object.keys(Z).sort((a,b)=>Z[a].n-Z[b].n);
+const svg = document.getElementById('map'), panel = document.getElementById('panel');
+const FULL = [0,0,1000,780];
+let cur = null, vb = FULL.slice(), recall = false, revealed = false, anim = null;
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function zoomTo(t){
+  if (anim) cancelAnimationFrame(anim);
+  const from = vb.slice(), t0 = performance.now(), dur = reduce ? 0 : 650;
+  const step = now => {
+    const p = dur ? Math.min(1,(now-t0)/dur) : 1, e = p<.5 ? 4*p*p*p : 1-Math.pow(-2*p+2,3)/2;
+    vb = from.map((v,i)=>v+(t[i]-v)*e);
+    svg.setAttribute('viewBox', vb.join(' '));
+    if (p<1) anim = requestAnimationFrame(step);
+  };
+  anim = requestAnimationFrame(step);
+}
+function pad(b){ const px=b[2]*.08, py=b[3]*.08; return [b[0]-px,b[1]-py,b[2]+2*px,b[3]+2*py]; }
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const list = a => '<ul>'+a.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+
+function render(){
+  if (!cur){
+    panel.style.setProperty('--zc','var(--ink)');
+    panel.innerHTML = `<div class="head"><span class="eyebrow">Start here</span><h2>Walk the house</h2></div>
+      <p>The house has four levels, from the top of the hierarchy down.</p>
+      <ul><li><b>Roof:</b> who sets direction, and the safety alarm that never turns off</li><li><b>Upper floor:</b> your office and the back office</li><li><b>Ground floor:</b> the front door and four program rooms</li><li><b>Foundation and street:</b> what holds it up and who’s next door</li></ul>
+      <p>Press <b>Next</b> to start at stop 1, or click any part of the picture.</p>
+      <div class="links"><button type="button" data-go="gov"><span class="dot" style="background:var(--gov)"></span><b>Start the tour</b></button></div>`;
+    return;
+  }
+  const z = Z[cur];
+  panel.style.setProperty('--zc','var('+z.c+')');
+  const head = `<div class="head"><span class="eyebrow">Stop ${z.n} of 11 · ${esc(z.band)}</span><h2>${esc(z.title)}</h2></div>`;
+  if (recall && !revealed){
+    panel.innerHTML = head + `<div class="reveal"><p>What lives in this part of the house? Say three things out loud, and where the work goes next. Then check.</p><button type="button" id="reveal">Reveal</button></div>`;
+    document.getElementById('reveal').onclick = ()=>{ revealed = true; render(); };
+    return;
+  }
+  panel.innerHTML = head +
+    `<div class="hook"><strong>Memory hook</strong><p>${esc(z.hook)}</p></div>
+     <div class="sec"><h3>What happens here</h3>${list(z.what)}</div>
+     <div class="sec"><h3>Who’s here</h3>${list(z.who)}${z.fill?'<p class="fillme">To add: '+esc(z.fill)+'</p>':''}</div>
+     <div class="sec"><h3>Where it goes next</h3><div class="links">${z.next.map(([k,why])=>`<button type="button" data-go="${k}"><span class="dot" style="background:var(${Z[k].c})"></span><span><b>${esc(Z[k].title)}</b> · ${esc(why)}</span></button>`).join('')}</div></div>`;
+}
+function go(k){
+  cur = k; revealed = false;
+  document.querySelectorAll('.zone').forEach(g=>g.classList.toggle('on', g.dataset.z===k));
+  zoomTo(k ? pad(Z[k].box) : FULL);
+  document.getElementById('stopcount').textContent = k ? `Stop ${Z[k].n} of 11` : 'Overview';
+  render();
+  try { history.replaceState(null,'', k ? '#'+k : location.pathname); } catch(e){}
+}
+panel.addEventListener('click', e=>{ const b=e.target.closest('[data-go]'); if(b) go(b.dataset.go); });
+document.querySelectorAll('.zone').forEach(g=>{
+  g.addEventListener('click', ()=>go(g.dataset.z));
+  g.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(g.dataset.z);} });
+});
+const step = d => { const i = cur ? ORDER.indexOf(cur) : -1; const j = i+d; go(j<0||j>=ORDER.length ? null : ORDER[j]); };
+document.getElementById('next').onclick = ()=>step(1);
+document.getElementById('prev').onclick = ()=>step(-1);
+document.getElementById('overview').onclick = ()=>go(null);
+document.addEventListener('keydown', e=>{
+  if (e.target.closest('input,textarea')) return;
+  if (e.key==='ArrowRight') step(1); else if (e.key==='ArrowLeft') step(-1); else if (e.key==='Escape') go(null);
+});
+const toggle = (id, cls, fn) => { const b=document.getElementById(id); b.onclick=()=>{ const on=b.getAttribute('aria-pressed')!=='true'; b.setAttribute('aria-pressed',on); svg.classList.toggle(cls,on); fn&&fn(on); }; };
+toggle('flowBtn','showflow');
+toggle('recallBtn','recall', on=>{ recall=on; revealed=false; render(); });
+
+const R = [
+  ['Every day', [['risk','Read escalations and risk emails first'],['door','Triage the inbox: collateral checks, referrals'],['admin','Case notes written the same day'],['role','Check in with the team']]],
+  ['Every week', [['door','HRT RFI progress email to HRT Cap, Tennille and Corin'],['part','HRT meeting'],['door','Completed RFIs reply, and FYI to the MBC team'],['admin','Court support roster checked*'],['admin','Receipts into Expense Pro*']]],
+  ['Every month or so', [['role','Line management meetings, recorded on HR 029*'],['role','Supervision with Brea and the CQU check-ins*'],['role','Practitioner supervision*']]],
+  ['Each quarter', [['gov','Steering Committee meeting and KPI update*'],['gov','Program reporting to funders*'],['found','Look back over the house: what changed?']]]
+];
+document.getElementById('rhythm').innerHTML = R.map(([h,items])=>`<div class="beat"><h3>${h}</h3><ul>${items.map(([k,t])=>`<li><span class="dot" style="background:var(${Z[k].c})"></span><span>${esc(t)}</span></li>`).join('')}</ul></div>`).join('');
+
+const start = (location.hash||'').slice(1);
+go(Z[start] ? start : null);
+</script>
