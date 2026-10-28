@@ -1,6 +1,6 @@
 ---
 name: program-stats-update
-description: Builds the Program Stats Update for CatholicCare CQ (MBC, SAB, Counselling and Lorena's waitlist) by pulling data out of CSNet exports, reports, screenshots or pasted lists. Use when Larissa asks for "program stats", a "stats update", "who's on the waitlist", waitlist contact counts, intake or group start dates, or SAB participant numbers.
+description: Builds the Program Stats Update for CatholicCare CQ (MBC, SAB, Counselling and Lorena's Child Counsellor waitlist for Emerald and Rockhampton) by pulling data out of CSNet exports, reports, screenshots or pasted lists. Use when Larissa asks for "program stats", a "stats update", "who's on the waitlist", waitlist contact counts, intake or group start dates, or SAB participant numbers.
 ---
 
 # Program Stats Update
@@ -107,19 +107,23 @@ only if Larissa asks for them.
 **Totals:** waitlist count; average and longest days on the waitlist; how many
 have a start date booked.
 
-### 4. Lorena's waitlist
+### 4. Child Counsellor waitlist (Lorena): Emerald and Rockhampton
 
-**For each client on Lorena's waitlist:**
+Lorena's waitlist covers two locations. Report **Emerald** and **Rockhampton**
+separately, then give a combined total.
+
+**For each client on the Child Counsellor waitlist:**
 
 | Field | Notes |
 |---|---|
 | Client name / CSNet ID | |
+| Location | Emerald or Rockhampton |
 | Referral / waitlist date | |
 | Contact attempts | Count, plus the date of each contact |
 | Support start date | When they are due to begin support |
 
-**Totals:** waitlist count; how many have been contacted; how many have a
-start date.
+**Totals:** waitlist count for Emerald, for Rockhampton and combined; how many
+have been contacted; how many have a start date.
 
 Every client on this waitlist has to be uploaded into CSNet. That is a data
 entry task and not part of this extraction, so don't check it and don't
@@ -134,7 +138,7 @@ SUMMARY
 - MBC: X on waitlist (QPS X | InfoX X); X contacted; X intakes booked
 - SAB: X on waitlist; X active participants
 - Counselling: X on waitlist; longest wait X days; X start dates booked
-- Lorena: X on waitlist; X contacted; X start dates booked
+- Child Counsellor (Lorena): X on waitlist (Emerald X | Rockhampton X); X contacted; X start dates booked
 
 MBC
   QPS referrals    [table]
@@ -147,7 +151,9 @@ SAB                [table] + active participant count
 COUNSELLING        [table]
   Flags
 
-LORENA             [table]
+CHILD COUNSELLOR (LORENA)
+  Emerald          [table]
+  Rockhampton      [table]
   Flags
 
 NEEDS CHECKING     clients with an unclear program or missing key data
@@ -170,8 +176,11 @@ Fill this in as columns are confirmed with Larissa.
 | Next group start date | | No |
 | Engagement / support start date | | No |
 | SAB active status | | No |
+| Child Counsellor location (Emerald / Rockhampton) | | No |
 
 ## Change log
 
 - 28/10/2026: First version covering MBC (QPS and InfoX waitlists), SAB,
   Counselling and Lorena's waitlist.
+- 28/10/2026: Named Lorena's waitlist as the Child Counsellor waitlist and
+  split it by location (Emerald and Rockhampton).
