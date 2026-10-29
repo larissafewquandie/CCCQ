@@ -107,6 +107,28 @@ only if Larissa asks for them.
 **Totals:** waitlist count; average and longest days on the waitlist; how many
 have a start date booked.
 
+**Counselling team numbers:** after the waitlist table, give one row per
+counselling worker and a team total row:
+
+| Worker | Site(s) | Waitlist | Waitlist contacted | Waitlist not contacted | Caseload | Total open |
+|---|---|---|---|---|---|---|
+
+- **Waitlist**: clients with status Waitlist.
+- **Waitlist contacted**: waitlisted clients with at least one contact or
+  session date recorded. **Not contacted** is the rest, including clients
+  whose contact data is missing; add "(N not recorded)" for those.
+- **Caseload**: clients with status Initial establishment or Full
+  establishment. Leave out placeholder clients, groups and admin activities.
+- **Total open** = Waitlist + Caseload.
+- **Site(s)**: from the Site column. If it isn't in the data, write "Not
+  recorded".
+- Name the source report for each worker's numbers. If a worker's caseload
+  comes from the Worker Activity List, add "(clients with an October session
+  only)" or the matching date range, because that report misses clients with
+  no session in the period.
+- Workers in the team: every worker the "Workers and programs" table lists
+  as Counselling or Counselling team.
+
 ### 4. Child Counsellor waitlist (Lorena): Emerald and Rockhampton
 
 Lorena's waitlist covers two locations. Report **Emerald** and **Rockhampton**
@@ -137,7 +159,8 @@ PROGRAM STATS UPDATE as at DD/MM/YYYY
 SUMMARY
 - MBC: X on waitlist (QPS X | InfoX X); X contacted; X intakes booked
 - SAB: X on waitlist; X active participants
-- Counselling: X on waitlist; longest wait X days; X start dates booked
+- Counselling: X on waitlist; longest wait X days; X start dates booked;
+  team caseload X; total open X
 - Child Counsellor (Lorena): X on waitlist (Emerald X | Rockhampton X); X contacted; X start dates booked
 
 MBC
@@ -148,7 +171,8 @@ MBC
 SAB                [table] + active participant count
   Flags
 
-COUNSELLING        [table]
+COUNSELLING        [waitlist table]
+  Team numbers     [table]
   Flags
 
 CHILD COUNSELLOR (LORENA)
@@ -227,7 +251,7 @@ and worker or team.
 |---|---|---|
 | Trinity Allan | Counselling | DFV - T320 DV Counselling |
 | Lorena Contreras | Child Counsellor (Emerald / Rockhampton) | DFV enhancement - T320 DV Counselling |
-| Georgia Stein | To confirm (DV clients, not funded under Counselling T320) | Not T320 |
+| Georgia Stein | Counselling team (DV clients, not funded under Counselling T320) | Not T320 |
 
 ## Change log
 
@@ -239,3 +263,6 @@ and worker or team.
   names, and the worker-to-program table, after the first run.
 - 29/10/2026: Added the CSNet Activity search screen (Commencement, Last
   session, Site) and the 28-day no-session flag.
+- 29/10/2026: Added the Counselling team numbers table (waitlist, contacted,
+  caseload, total open per worker) and listed Georgia Stein as part of the
+  Counselling team.
