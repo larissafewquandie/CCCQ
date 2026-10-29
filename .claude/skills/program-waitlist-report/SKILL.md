@@ -248,8 +248,9 @@ applies to session start time.
   Don't copy any of those into the report.
 - The T320 DV Counselling funding tag covers the whole DFV service's
   workers, not just the counselling team. Report the counselling team rows
-  under Counselling, and give the other workers as a separate "Whole T320
-  service" table only if Larissa asks.
+  under Counselling, then give every worker in a separate "Whole T320
+  service" table (worker, sites, waitlist, initial, full, caseload) with
+  a by-site total.
 - Flag Initial Establishment activities that commenced more than 90 days ago.
 
 **Activity search** (CSNet search screen, pasted as text): the columns are
