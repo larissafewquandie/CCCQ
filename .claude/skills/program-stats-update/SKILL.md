@@ -173,6 +173,9 @@ Fill this in as columns are confirmed with Larissa.
 | CSNet client ID | IDENTIFIER (Worker Activity List by Funding) | Yes |
 | Worker | PRINCIPAL WORKER (Worker Activity List by Funding) | Yes |
 | On waitlist | CURRENT ACTIVITY STATUS = "Waitlist" | Yes |
+| Referral / waitlist date | Commencement (Activity search). Activity start date, used as the waitlist date | Use, confirm |
+| Most recent contact | Last session (Activity search). One date only, not a count | Yes |
+| Location | Site (Activity search) | Yes |
 | Referral source (QPS / InfoX) | | No |
 | Referral / waitlist date | | No |
 | Contact entries | | No |
@@ -200,12 +203,31 @@ Parameters sheet holds the worker, funding tag, activity types and date range.
   PRIMARY CLIENT (admin activities, groups such as "Shark Cage - Group 5")
   and placeholder clients such as "Contact Brief". Mention them separately.
 
+**Activity search** (CSNet search screen, pasted as text): the columns are
+Identifier, Type, Client, Commencement, Last session, Worker, Site and Status.
+The filter line above the results names the activity types, sites, statuses
+and worker or team.
+
+- Commencement gives the waitlist date, so days on waitlist can be worked out.
+- Last session is the most recent contact only. It can't give an attempt
+  count or the 1st, 2nd and 3rd contacts; show it as "Last contact" and mark
+  the attempt count "Not recorded in CSNet".
+- "Worker is, or Team includes" brings in other workers' clients (for example
+  Trinity Allan's under a Georgia Stein search). Report each client under
+  their own Worker.
+- Dates come as "14 Oct 2026 (Wed)". Drop the weekday and any trailing
+  number (e.g. "28 Oct 2026 (Wed)1"), then write the date as DD/MM/YYYY.
+- Flag engaged (Full or Initial establishment) clients and waitlisted
+  clients whose last session was more than 28 days ago.
+- Flag identifiers that don't match the client's surname.
+
 **Workers and programs** (as confirmed):
 
 | Worker | Program | Funding tag seen |
 |---|---|---|
 | Trinity Allan | Counselling | DFV - T320 DV Counselling |
 | Lorena Contreras | Child Counsellor (Emerald / Rockhampton) | DFV enhancement - T320 DV Counselling |
+| Georgia Stein | To confirm (DV clients, not funded under Counselling T320) | Not T320 |
 
 ## Change log
 
@@ -215,3 +237,5 @@ Parameters sheet holds the worker, funding tag, activity types and date range.
   split it by location (Emerald and Rockhampton).
 - 29/10/2026: Added the Worker Activity List by Funding report, its column
   names, and the worker-to-program table, after the first run.
+- 29/10/2026: Added the CSNet Activity search screen (Commencement, Last
+  session, Site) and the 28-day no-session flag.
