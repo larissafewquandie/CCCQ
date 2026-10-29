@@ -169,6 +169,10 @@ Fill this in as columns are confirmed with Larissa.
 
 | Skill field | CSNet column / screen | Confirmed |
 |---|---|---|
+| Client name | PRIMARY CLIENT (Worker Activity List by Funding) | Yes |
+| CSNet client ID | IDENTIFIER (Worker Activity List by Funding) | Yes |
+| Worker | PRINCIPAL WORKER (Worker Activity List by Funding) | Yes |
+| On waitlist | CURRENT ACTIVITY STATUS = "Waitlist" | Yes |
 | Referral source (QPS / InfoX) | | No |
 | Referral / waitlist date | | No |
 | Contact entries | | No |
@@ -178,9 +182,36 @@ Fill this in as columns are confirmed with Larissa.
 | SAB active status | | No |
 | Child Counsellor location (Emerald / Rockhampton) | | No |
 
+## Known CSNet reports
+
+**Worker Activity List by Funding**: one row per activity, with the columns
+IDENTIFIER, PRIMARY CLIENT, PRINCIPAL WORKER and CURRENT ACTIVITY STATUS. The
+Parameters sheet holds the worker, funding tag, activity types and date range.
+
+- Status values seen: Waitlist, Initial Establishment, Full Establishment,
+  Closed. Count Initial and Full Establishment as engaged.
+- The report only lists activities where a session took place in the date
+  range, so a waitlisted client with no session in that period won't be on
+  it. Say so whenever this report is the only source for a waitlist.
+- It has no referral dates, contact dates, start dates or locations. Every
+  one of those fields is "Not recorded in CSNet" unless another report
+  supplies it.
+- Leave out rows that aren't a client from client counts: rows with no
+  PRIMARY CLIENT (admin activities, groups such as "Shark Cage - Group 5")
+  and placeholder clients such as "Contact Brief". Mention them separately.
+
+**Workers and programs** (as confirmed):
+
+| Worker | Program | Funding tag seen |
+|---|---|---|
+| Trinity Allan | Counselling | DFV - T320 DV Counselling |
+| Lorena Contreras | Child Counsellor (Emerald / Rockhampton) | DFV enhancement - T320 DV Counselling |
+
 ## Change log
 
 - 28/10/2026: First version covering MBC (QPS and InfoX waitlists), SAB,
   Counselling and Lorena's waitlist.
 - 28/10/2026: Named Lorena's waitlist as the Child Counsellor waitlist and
   split it by location (Emerald and Rockhampton).
+- 29/10/2026: Added the Worker Activity List by Funding report, its column
+  names, and the worker-to-program table, after the first run.
