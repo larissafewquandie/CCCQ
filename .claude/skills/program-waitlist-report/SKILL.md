@@ -131,8 +131,17 @@ counselling worker and a team total row:
 
 ### 4. Child Counsellor waitlist (Lorena): Emerald and Rockhampton
 
-Lorena's waitlist covers two locations. Report **Emerald** and **Rockhampton**
-separately, then give a combined total.
+Lorena's clients are mainly in **Rockhampton** and **Emerald**, but CSNet
+also has some at **Yeppoon** and **Blackwater**. Report each site separately,
+then give a combined total. Get the data from an Activity search with Worker
+= Lorena Contreras. Her activities are Domestic Violence type, but they don't
+appear in the T320 Client List.
+
+Most of her clients are children, with several siblings (and sometimes a
+parent) on separate activities. Count clients and also give the number of
+families. Treat a shared surname and the same commencement date as one
+family, and say that this is how it was worked out. Also give her **open
+caseload**: Initial + Full establishment, split by site.
 
 **For each client on the Child Counsellor waitlist:**
 
@@ -144,8 +153,11 @@ separately, then give a combined total.
 | Contact attempts | Count, plus the date of each contact |
 | Support start date | When they are due to begin support |
 
-**Totals:** waitlist count for Emerald, for Rockhampton and combined; how many
-have been contacted; how many have a start date.
+**Totals:** waitlist count by site and combined (clients and families); how
+many have been contacted; how many have a start date; open caseload by site.
+
+**Flags:** waitlisted clients with "No sessions" (never contacted), and any
+last contact more than 90 days ago.
 
 Every client on this waitlist has to be uploaded into CSNet. That is a data
 entry task and not part of this extraction, so don't check it and don't
@@ -303,6 +315,9 @@ and worker or team.
 - Flag engaged (Full or Initial establishment) clients and waitlisted
   clients whose last session was more than 28 days ago.
 - Flag identifiers that don't match the client's surname.
+- Results show 50 per page. Check the "N record(s) found" count against the
+  rows you have, and ask for the other pages before reporting totals.
+- "No sessions" in Last session means no contact has ever been recorded.
 
 **Worker leave** (as told by Larissa): check this before flagging a gap in
 sessions.
@@ -323,7 +338,7 @@ sessions.
 | Worker | Program | Funding tag seen |
 |---|---|---|
 | Trinity Allan | Counselling | DFV - T320 DV Counselling |
-| Lorena Contreras | Child Counsellor (Emerald / Rockhampton) | DFV enhancement - T320 DV Counselling |
+| Lorena Contreras | Child Counsellor (mainly Rockhampton and Emerald, also Yeppoon and Blackwater) | Not under DFV - T320 DV Counselling; tag to confirm |
 | Georgia Stein | Counselling team (DV clients, not funded under Counselling T320) | Not T320 |
 
 ## Change log
@@ -351,3 +366,6 @@ sessions.
   waitlist length.
 - 29/10/2026: Added the Worker leave table (Georgia Stein 06/10–02/11/2026)
   and the rule not to flag no-session gaps that fall inside leave.
+- 29/10/2026: Lorena's waitlist now comes from an Activity search for her:
+  reported by site with family counts and open caseload, plus the paging
+  check and the "No sessions" rule.
