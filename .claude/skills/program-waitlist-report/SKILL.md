@@ -200,7 +200,7 @@ Fill this in as columns are confirmed with Larissa.
 | Referral / waitlist date | Commencement (Activity search). Activity start date, used as the waitlist date | Use, confirm |
 | Most recent contact | Last session (Activity search). One date only, not a count | Yes |
 | Location | Site (Activity search) | Yes |
-| Referral source (QPS / InfoX) | | No |
+| Referral source (QPS / InfoX) | REFERRAL SOURCE (Client List). Values seen so far are agency types such as Internal or Community services agency, not QPS / InfoX | Not yet |
 | Referral / waitlist date | | No |
 | Contact entries | CSNet admin notes (team asked on 29/10/2026 to record every contact attempt there with date, method and outcome) | Yes |
 | Intake date | | No |
@@ -226,6 +226,31 @@ Parameters sheet holds the worker, funding tag, activity types and date range.
 - Leave out rows that aren't a client from client counts: rows with no
   PRIMARY CLIENT (admin activities, groups such as "Shark Cage - Group 5")
   and placeholder clients such as "Contact Brief". Mention them separately.
+
+**Client List (Excel) with contact details**: one row per client on each
+activity, so a family can take up several rows under the same ACTIVITY ID.
+The useful columns are ACTIVITY ID, ACTIVITY TYPE, REFERRAL SOURCE, LAST
+NAME, FIRST NAME, ROLE, PRINCIPAL USER, SITE, ACTIVITY STATUS, ACTIVITY
+FUNDING TAG, COMMENCEMENT DATE and ACTIVITY CLOSED DATE. The date range
+applies to session start time.
+
+- Count activities, not rows: one per ACTIVITY ID. The primary client is the
+  row with ROLE Aggrieved (or Respondent). Rows with ROLE Other are family
+  members, usually children. Rows with ROLE Participant belong to group
+  activities (ACTIVITY TYPE "DV Groups - case managed"), so report those as
+  groups.
+- Some activities are listed twice for the same person. Count them once.
+- Status values: Waitlist, Initial Establishment, Full Establishment,
+  Inactive, Not Accepted, Closed. Caseload = Initial + Full Establishment.
+- COMMENCEMENT DATE is the waitlist date. There are no contact dates, so the
+  1st, 2nd and 3rd contacts and attempt counts are "Not recorded in CSNet".
+- The report includes addresses, phone numbers, DOB and cultural details.
+  Don't copy any of those into the report.
+- The T320 DV Counselling funding tag covers the whole DFV service's
+  workers, not just the counselling team. Report the counselling team rows
+  under Counselling, and give the other workers as a separate "Whole T320
+  service" table only if Larissa asks.
+- Flag Initial Establishment activities that commenced more than 90 days ago.
 
 **Activity search** (CSNet search screen, pasted as text): the columns are
 Identifier, Type, Client, Commencement, Last session, Worker, Site and Status.
@@ -269,3 +294,6 @@ and worker or team.
 - 29/10/2026: Contact attempts now come from CSNet admin notes. Count each
   dated note of a call, SMS, email or letter as one attempt.
 - 29/10/2026: Renamed from program-stats-update to program-waitlist-report.
+- 29/10/2026: Added the Client List (Excel) with contact details report:
+  count one per activity, leave out contact details, and flag Initial
+  Establishment activities older than 90 days.
