@@ -85,10 +85,24 @@ contacted and how many haven't; how many have an intake booked.
 | Referral / waitlist date | |
 | Days on waitlist | |
 
-**Active participants:** the number currently engaged in SAB. List their names
-only if Larissa asks for them.
+**Source:** an Activity search with Activity type "Adolescent Boys" (shown
+as AB), site Rockhampton, Worker or team Ricardo Alvarado. The team's
+clients sit under Hayden Lovell, Hayden Peckover and Ricardo Alvarado.
 
-**Totals:** waitlist count and active participant count.
+**Active participants:** Full establishment clients. Give the count, split by
+worker, and the latest session date. List their names only if Larissa asks
+for them.
+
+**Initial establishment:** report in two groups:
+- **Started**: at least one session recorded
+- **Not yet started**: "No sessions". These boys are effectively waiting, so
+  count them as well as the formal Waitlist and say so.
+
+**Totals:** waitlist count; not-yet-started count; active participant count;
+total open.
+
+**Flags:** waitlisted or not-yet-started boys waiting more than 28 days with
+no session; Initial establishment boys with no session in more than 28 days.
 
 ### 3. Counselling
 
@@ -219,7 +233,7 @@ Fill this in as columns are confirmed with Larissa.
 | Intake date | | No |
 | Next group start date | | No |
 | Engagement / support start date | | No |
-| SAB active status | | No |
+| SAB active status | Status = Full establishment (Activity search, type Adolescent Boys) | Yes |
 | Child Counsellor location (Emerald / Rockhampton) | | No |
 
 ## Known CSNet reports
@@ -339,6 +353,7 @@ sessions.
 |---|---|---|
 | Trinity Allan | Counselling | DFV - T320 DV Counselling |
 | Lorena Contreras | Child Counsellor (mainly Rockhampton and Emerald, also Yeppoon and Blackwater) | Not under DFV - T320 DV Counselling; tag to confirm |
+| Ricardo Alvarado | SAB (team lead; clients under Hayden Lovell and Hayden Peckover) | Activity type Adolescent Boys |
 | Georgia Stein | Counselling team (DV clients, not funded under Counselling T320) | Not T320 |
 
 ## Change log
@@ -369,3 +384,6 @@ sessions.
 - 29/10/2026: Lorena's waitlist now comes from an Activity search for her:
   reported by site with family counts and open caseload, plus the paging
   check and the "No sessions" rule.
+- 29/10/2026: SAB now comes from an Activity search (type Adolescent Boys,
+  Ricardo Alvarado team). Active = Full establishment, and Initial
+  establishment boys with no sessions are counted as not yet started.
