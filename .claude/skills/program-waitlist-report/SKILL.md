@@ -88,6 +88,9 @@ contacted and how many haven't; how many have an intake booked.
 **Source:** an Activity search with Activity type "Adolescent Boys" (shown
 as AB), site Rockhampton, Worker or team Ricardo Alvarado. The team's
 clients sit under Hayden Lovell, Hayden Peckover and Ricardo Alvarado.
+A search on any one of them returns the whole team (same 30 records as at
+29/10/2026), so split the results by the Worker column when one worker is asked
+about.
 
 **Active participants:** Full establishment clients. Give the count, split by
 worker, and the latest session date. List their names only if Larissa asks
