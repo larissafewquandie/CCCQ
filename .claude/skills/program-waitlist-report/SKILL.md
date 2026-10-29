@@ -1,9 +1,9 @@
 ---
-name: program-stats-update
-description: Builds the Program Stats Update for CatholicCare CQ (MBC, SAB, Counselling and Lorena's Child Counsellor waitlist for Emerald and Rockhampton) by pulling data out of CSNet exports, reports, screenshots or pasted lists. Use when Larissa asks for "program stats", a "stats update", "who's on the waitlist", waitlist contact counts, intake or group start dates, or SAB participant numbers.
+name: program-waitlist-report
+description: Builds the Program Waitlist Report for CatholicCare CQ (MBC, SAB, Counselling and Lorena's Child Counsellor waitlist for Emerald and Rockhampton) by pulling data out of CSNet exports, reports, screenshots or pasted lists. Use when Larissa asks for "program stats", a "stats update", "who's on the waitlist", waitlist contact counts, intake or group start dates, or SAB participant numbers.
 ---
 
-# Program Stats Update
+# Program Waitlist Report
 
 Turns CSNet data into one waitlist and engagement update per program. This
 skill only covers **pulling the data out and reporting it**. Data entry tasks,
@@ -154,7 +154,7 @@ report on it.
 ## Output layout
 
 ```
-PROGRAM STATS UPDATE as at DD/MM/YYYY
+PROGRAM WAITLIST REPORT as at DD/MM/YYYY
 
 SUMMARY
 - MBC: X on waitlist (QPS X | InfoX X); X contacted; X intakes booked
@@ -268,3 +268,4 @@ and worker or team.
   Counselling team.
 - 29/10/2026: Contact attempts now come from CSNet admin notes. Count each
   dated note of a call, SMS, email or letter as one attempt.
+- 29/10/2026: Renamed from program-stats-update to program-waitlist-report.
