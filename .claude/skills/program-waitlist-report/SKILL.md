@@ -392,14 +392,23 @@ and worker or team.
 - "Worker is, or Team includes" brings in other workers' clients (for example
   Trinity Allan's under a Georgia Stein search). Report each client under
   their own Worker.
-- Dates come as "14 Oct 2026 (Wed)". Drop the weekday and any trailing
-  number (e.g. "28 Oct 2026 (Wed)1"), then write the date as DD/MM/YYYY.
+- Dates come as "14 Oct 2026 (Wed)". Drop the weekday, then write the date
+  as DD/MM/YYYY. A trailing number (e.g. "28 Oct 2026 (Wed)1") is an open
+  session count (see below); record it, don't just drop it.
 - Flag engaged (Full or Initial establishment) clients and waitlisted
   clients whose last session was more than 28 days ago.
 - Flag identifiers that don't match the client's surname.
 - Results show 50 per page. Check the "N record(s) found" count against the
   rows you have, and ask for the other pages before reporting totals.
 - "No sessions" in Last session means no contact has ever been recorded.
+- A small red number after the Last session date (e.g. "08 Sep 2026 (Tue)¹")
+  is the number of **open sessions**: sessions not yet closed (confirmed by
+  Larissa, 29/10/2026). In pasted text it shows as a trailing digit, e.g.
+  "28 Oct 2026 (Wed)1". Report open sessions for each worker (number of
+  sessions and number of clients) and list the clients, oldest first. Flag
+  any open session more than 7 days old.
+- An orange alert triangle (where the rest are black) marks a different alert
+  level. Flag the client so the alert is checked before contact.
 
 **Worker leave** (as told by Larissa): check this before flagging a gap in
 sessions.
@@ -464,3 +473,6 @@ sessions.
 - 29/10/2026: Added the MBC waitlist workbook (sheets, status groups,
   QP1211 = QPS referral, cross-sheet de-duplication) as the MBC waitlist
   source.
+- 29/10/2026: The red number after Last session is the open session count.
+  Report open sessions for each worker and flag any older than 7 days.
+  Orange alert triangles are flagged too.
