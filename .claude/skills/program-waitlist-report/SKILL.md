@@ -135,6 +135,30 @@ program". From each group's Quick View, report:
   - Say that the workbook may not hold every contact, since some may only be
     in CSNet sessions, so "no contact recorded" means not recorded, not
     definitely not contacted.
+- **QPS referral check** (when Larissa asks to compare the QPS export with the
+  MBC workbook): QPS referrals reach CCCQ through InfoXchange, so the QPS
+  export *is* the InfoX referral list. Build an Excel workbook with these
+  sheets:
+  1. *Summary*: referrals, men, in group, on workbook, possible match and no
+     contact recorded, for this month, since 1 July, this year and all time
+  2. *Still to contact*: one row per man referred since 1 July with no
+     workbook match, High risk first, with blank "Team to confirm" and
+     "Outcome" columns for the team to fill in
+  3. *MBC already working on*: matched men, with workbook name, CSNet ID,
+     group, sheets, contact/intake entries and latest status
+  4. *Workbook - not in QPS*: men on the workbook with no QPS referral
+     (another referral source, or a name spelt differently)
+  5. *QPS export - highlighted*: the original export with blue (in group),
+     green (on workbook) and amber (possible match) rows
+  - "Contact / intake entries" counts workbook cells about contact or intake
+    (contact dates, P/C, LVM, SMS, intake, DNA, accepted, follow up, no
+    answer). It doesn't count QP1211, Advocacy or Prep cells.
+  - "Latest status" is the last workbook entry that isn't a QP1211, Advocacy
+    or Prep cell.
+  - Leave out phone numbers and emails, but not text like "@ 3pm" in intake
+    notes.
+  - Save it in the scratchpad, never in the repository, because it holds
+    client names.
 - **QPS vs InfoX:** the QP1211 column ("Yes") marks a QPS referral (a QP 1211
   police referral). Nothing in the workbook marks InfoX, so put men without a
   QP1211 value under "Source not recorded".
@@ -508,3 +532,5 @@ sessions.
   not as data errors.
 - 29/10/2026: Added the QPS referral export (CSV). Contacted = matched to the
   MBC workbook or a group; the automatic SMS does not count as contact.
+- 29/10/2026: Added the QPS referral check workbook (still to contact, already
+  working on, highlighted export). QPS referrals arrive through InfoXchange.
