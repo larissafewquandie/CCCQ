@@ -202,7 +202,8 @@ Fill this in as columns are confirmed with Larissa.
 | Location | Site (Activity search) | Yes |
 | Referral source (QPS / InfoX) | REFERRAL SOURCE (Client List). Values seen so far are agency types such as Internal or Community services agency, not QPS / InfoX | Not yet |
 | Referral / waitlist date | | No |
-| Contact entries | CSNet admin notes (team asked on 29/10/2026 to record every contact attempt there with date, method and outcome) | Yes |
+| Contact entries | Session General notes (Activity Work > Sessions) and CSNet admin notes. The team was asked on 29/10/2026 to record every contact attempt with date, method and outcome | Yes |
+| Waitlist decision date | Session General notes: the session recording the referral received and the client to be waitlisted | Yes |
 | Intake date | | No |
 | Next group start date | | No |
 | Engagement / support start date | | No |
@@ -253,6 +254,38 @@ applies to session start time.
   a by-site total.
 - Flag Initial Establishment activities that commenced more than 90 days ago.
 
+**Activity > Activity Work > Sessions** (screenshots of a client's session
+list and Session Quick View): this is the best source for waitlist dates and
+contacts. Each session shows its date, time, funding tag, session type,
+contact method and **General notes**. Read the notes, not the session type,
+because every session here is logged as "Case Management".
+
+- **Waitlist date**: the date of the session whose notes record the referral
+  being received and the decision to put the client on the waitlist (e.g.
+  "received referral ... will be placed on a short waitlist"). This is a
+  referral or admin session, not a contact. Check it against Commencement;
+  if they differ, report the session date and flag the difference.
+- **Contact attempts**: each session whose notes record the worker trying to
+  reach the client (PC = phone call, SMS, email, letter). Number them 1st,
+  2nd, 3rd in date order and give the outcome of each:
+  - "nil answer", "unable to LVM" (leave voicemail), "LVM" → attempt, not
+    successful
+  - "made PC to client advising ..." with the client responding → successful
+- **Client advised of waitlist**: the date of the first successful contact
+  where the client is told they're on the waitlist. Report it separately.
+- **Expected start**: if the notes give a waitlist length (e.g. "4-week
+  waitlist"), show "about N weeks from DD/MM/YYYY (approx. week of
+  DD/MM/YYYY)". It is an estimate, not a booked start date, so keep "Start
+  date booked" as "Not recorded in CSNet" until a session or appointment
+  sets one.
+- Also note any preferred day or time, and safe contact limits (e.g. unable
+  to leave voicemail), because they affect when contact can happen.
+- Contacts may sit in session General notes, Admin notes, or both. Read both
+  and count each dated contact once.
+- The Quick View shows the client's DOB and phone number. Don't copy them.
+- Flag document names or IDs in the notes that don't match the activity
+  (e.g. a different client number).
+
 **Activity search** (CSNet search screen, pasted as text): the columns are
 Identifier, Type, Client, Commencement, Last session, Worker, Site and Status.
 The filter line above the results names the activity types, sites, statuses
@@ -298,3 +331,7 @@ and worker or team.
 - 29/10/2026: Added the Client List (Excel) with contact details report:
   count one per activity, leave out contact details, and flag Initial
   Establishment activities older than 90 days.
+- 29/10/2026: Added reading the Sessions screen: waitlist date from the
+  referral/waitlist session note, numbered contact attempts with outcomes,
+  the date the client was advised, and the estimated start from the advised
+  waitlist length.
