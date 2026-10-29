@@ -89,6 +89,41 @@ program". From each group's Quick View, report:
 - Active MBC participants = participants across every open group, plus a
   total.
 - Flag open sessions more than 2 days old (not yet closed).
+- **MBC waitlist workbook** (Excel, kept by the MBC team, outside CSNet). It
+  is the main waitlist source. Sheets seen so far:
+  - *Rockhampton Wait list*: the current working list. The Status column is
+    free text, e.g. "Intake appointment 03.11.26", "DNA 06.10.26",
+    "accepted to MBC. Date TBC.", "to be referred to START", "Waitlist 2027".
+  - *Intake Wait List*: the older intake list (Date of contact, Prep
+    Sessions, Area, Status, Advocacy, Action, QP1211, Notes). "Accepted" with
+    Action 19/08/2026 = started Rockhampton Wednesday Group 10.
+  - *Emerald Wait list*, *Mt Morgan Waitlist*, *October Wait List*,
+    *FIFO waitlist*, *Alternative day requests*.
+  - *Rockhampton May List*: the May 2026 intake (group started 28/05/2026).
+    It's historical, so leave it out of the current waitlist.
+  - *MBC On-Track Rockhampton*: a separate list of names. Confirm what it is
+    before counting it.
+  - *Wait List Summary*: built from the Intake Wait List only, and goes out
+    of date as men start groups. Don't use its totals; recount.
+- Sort each man on the current waitlist into one of these groups, based on his
+  latest Status or Notes:
+  - Intake booked (with date)
+  - Intake done, awaiting acceptance
+  - Accepted, start date TBC
+  - Deferred (e.g. 2027)
+  - Did not attend (DNA), needs follow-up
+  - Not proceeding (unsuitable, referred to START or BIS, declined, closed)
+  - Follow-up date passed
+  Leave out men already in a group. Match them against the group Quick View
+  participant lists.
+- **QPS vs InfoX:** the QP1211 column ("Yes") marks a QPS referral (a QP 1211
+  police referral). Nothing in the workbook marks InfoX, so put men without a
+  QP1211 value under "Source not recorded".
+- The same man can be on more than one sheet. Match on CSNet ID first, then
+  name, and count him once under his latest status.
+- Flag a CSNet ID used for two different names, and the same name with two
+  different IDs.
+- Never copy phone numbers or emails from the workbook.
 - A group Quick View doesn't show the waitlist. For the waitlist, use a Client
   List (Excel) report filtered to the funding tag "DFV - T328 Perpetrator
   Intervention program" (all activity types). Its REFERRAL SOURCE and
@@ -258,7 +293,8 @@ Fill this in as columns are confirmed with Larissa.
 | Referral / waitlist date | Commencement (Activity search). Activity start date, used as the waitlist date | Use, confirm |
 | Most recent contact | Last session (Activity search). One date only, not a count | Yes |
 | Location | Site (Activity search) | Yes |
-| Referral source (QPS / InfoX) | REFERRAL SOURCE (Client List). Values seen so far are agency types such as Internal or Community services agency, not QPS / InfoX | Not yet |
+| Referral source (QPS / InfoX) | MBC waitlist workbook: QP1211 = Yes means a QPS referral. InfoX isn't marked anywhere yet. The CSNet Client List REFERRAL SOURCE only gives agency types | Partly |
+| Intake date (MBC) | MBC waitlist workbook, Status column (free text) | Yes |
 | Referral / waitlist date | | No |
 | Contact entries | Session General notes (Activity Work > Sessions) and CSNet admin notes. The team was asked on 29/10/2026 to record every contact attempt with date, method and outcome | Yes |
 | Waitlist decision date | Session General notes: the session recording the referral received and the client to be waitlisted | Yes |
@@ -424,4 +460,7 @@ sessions.
   the Activity search.
 - 29/10/2026: Added MBC active participants from group Quick Views (DV
   Groups - case managed, T328) and the T328 Client List as the waitlist
+  source.
+- 29/10/2026: Added the MBC waitlist workbook (sheets, status groups,
+  QP1211 = QPS referral, cross-sheet de-duplication) as the MBC waitlist
   source.
