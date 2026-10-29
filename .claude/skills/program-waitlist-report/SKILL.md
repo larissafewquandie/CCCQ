@@ -92,6 +92,16 @@ A search on any one of them returns the whole team (same 30 records as at
 29/10/2026), so split the results by the Worker column when one worker is asked
 about.
 
+**A worker's real SAB caseload:** the Activity search Worker column only shows
+the *principal* worker. Ricardo Alvarado delivers the counselling sessions for
+boys whose principal worker is a Hayden, so the search undercounts him (1
+client as at 29/10/2026). To count the boys a worker actually works with, use
+the **Worker Activity List by Funding** for that worker, with Activity type
+Adolescent Boys and the date range wanted (e.g. this term). It lists every
+activity where a session involving that worker took place. A client's Sessions
+screen shows who delivered each session (worker, session type, contact,
+date), so use it to check one boy, not to count a caseload.
+
 **Active participants:** Full establishment clients. Give the count, split by
 worker, and the latest session date. List their names only if Larissa asks
 for them.
@@ -390,3 +400,6 @@ sessions.
 - 29/10/2026: SAB now comes from an Activity search (type Adolescent Boys,
   Ricardo Alvarado team). Active = Full establishment, and Initial
   establishment boys with no sessions are counted as not yet started.
+- 29/10/2026: SAB worker caseloads come from the Worker Activity List by
+  Funding (sessions involving the worker), not from the principal worker in
+  the Activity search.
