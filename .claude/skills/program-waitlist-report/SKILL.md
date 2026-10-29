@@ -218,8 +218,16 @@ then give a combined total. Get the data from an Activity search with Worker
 = Lorena Contreras. Her activities are Domestic Violence type, but they don't
 appear in the T320 Client List.
 
-Most of her clients are children, with several siblings (and sometimes a
-parent) on separate activities. Count clients and also give the number of
+Lorena sees the **children**. The adult counsellors (Trinity Allan, Georgia
+Stein, Candee Rackham) see the **parent**. So a parent's name can appear both
+in an adult counsellor's caseload and on one of Lorena's activities. That is
+expected and not a data error, so don't flag it. Keep the row in Lorena's
+count as her work with that family, and use the match to report "families
+also open in adult counselling" (Lorena's family, the adult counsellor and
+the parent's CSNet ID).
+
+Most of her clients are children, with several siblings on separate
+activities. Count clients and also give the number of
 families. Treat a shared surname and the same commencement date as one
 family, and say that this is how it was worked out. Also give her **open
 caseload**: Initial + Full establishment, split by site.
@@ -476,3 +484,6 @@ sessions.
 - 29/10/2026: The red number after Last session is the open session count.
   Report open sessions for each worker and flag any older than 7 days.
   Orange alert triangles are flagged too.
+- 29/10/2026: Adult counsellors see the parent and Lorena sees the child, so
+  names that appear in both are expected. Report them as linked families,
+  not as data errors.
