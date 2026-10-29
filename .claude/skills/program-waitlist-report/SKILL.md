@@ -304,6 +304,20 @@ and worker or team.
   clients whose last session was more than 28 days ago.
 - Flag identifiers that don't match the client's surname.
 
+**Worker leave** (as told by Larissa): check this before flagging a gap in
+sessions.
+
+| Worker | Leave from | Back |
+|---|---|---|
+| Georgia Stein | Tue 06/10/2026 | Tue 03/11/2026 (leave ends Mon 02/11/2026) |
+
+- Don't apply the 28-day no-session flag to a gap that falls inside the
+  worker's leave. Instead show "On leave" and how many days before the leave
+  the last session was.
+- Flag waitlisted clients with no contact from anyone during the worker's
+  leave as "No cover contact during leave", and ask who is covering.
+- Drop leave entries once they are more than a month in the past.
+
 **Workers and programs** (as confirmed):
 
 | Worker | Program | Funding tag seen |
@@ -335,3 +349,5 @@ and worker or team.
   referral/waitlist session note, numbered contact attempts with outcomes,
   the date the client was advised, and the estimated start from the advised
   waitlist length.
+- 29/10/2026: Added the Worker leave table (Georgia Stein 06/10–02/11/2026)
+  and the rule not to flag no-session gaps that fall inside leave.
