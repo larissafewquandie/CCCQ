@@ -116,6 +116,25 @@ program". From each group's Quick View, report:
   - Follow-up date passed
   Leave out men already in a group. Match them against the group Quick View
   participant lists.
+- **QPS referral export** (CSV with a "Referrals" title row, then columns
+  Record Id, Id, Send Date, Status, Sent From, Sent By, Client,
+  Vulnerability Assessment). Each row is one QPS referral. Client holds the
+  name plus DOB, gender and postcode on separate lines; take only the first
+  line (the name) and never copy DOB or postcode. Status is "Accepted",
+  sometimes followed by a code and "SMS Sent" or "SMS Failed". That's the
+  referral system's automatic SMS, **not** a worker contact. Sent From is the
+  police station.
+  - Report referrals and unique men for the period asked (default: this
+    calendar year, plus the current month), Routine vs High vulnerability,
+    and SMS sent / failed / none.
+  - **Contacted** = the man appears in the MBC waitlist workbook or an MBC
+    group with a recorded contact, intake or status. Match on first and last
+    name (ignore case, punctuation and bracketed names), then check close
+    spellings by hand (e.g. two letters swapped in a surname) and list them
+    as "possible match".
+  - Say that the workbook may not hold every contact, since some may only be
+    in CSNet sessions, so "no contact recorded" means not recorded, not
+    definitely not contacted.
 - **QPS vs InfoX:** the QP1211 column ("Yes") marks a QPS referral (a QP 1211
   police referral). Nothing in the workbook marks InfoX, so put men without a
   QP1211 value under "Source not recorded".
@@ -487,3 +506,5 @@ sessions.
 - 29/10/2026: Adult counsellors see the parent and Lorena sees the child, so
   names that appear in both are expected. Report them as linked families,
   not as data errors.
+- 29/10/2026: Added the QPS referral export (CSV). Contacted = matched to the
+  MBC workbook or a group; the automatic SMS does not count as contact.
