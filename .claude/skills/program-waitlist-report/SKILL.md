@@ -75,6 +75,25 @@ combined total.
 **Totals:** waitlist count for QPS, for InfoX and combined; how many have been
 contacted and how many haven't; how many have an intake booked.
 
+**Active participants (groups):** MBC groups are CSNet activities named
+"MBCP <site> ... Group N" (e.g. "MBCP Rockhampton Wednesday Group 10 - 444704",
+"MBCP Emerald Group 4 - 442327"). Their Activity type is "DV Groups - case
+managed" and their funding tag is "DFV - T328 Perpetrator Intervention
+program". From each group's Quick View, report:
+
+| Group | Activity ID | Site | Principal worker | Commenced | Status | Participants | Sessions (closed / open) | Last or open session |
+|---|---|---|---|---|---|---|---|---|
+
+- Participants are listed with ROLE Participant or Respondent. Count them all,
+  and list names only if Larissa asks. Never copy their DOB or phone number.
+- Active MBC participants = participants across every open group, plus a
+  total.
+- Flag open sessions more than 2 days old (not yet closed).
+- A group Quick View doesn't show the waitlist. For the waitlist, use a Client
+  List (Excel) report filtered to the funding tag "DFV - T328 Perpetrator
+  Intervention program" (all activity types). Its REFERRAL SOURCE and
+  ACTIVITY STATUS columns give the QPS / InfoX split and who is waiting.
+
 ### 2. SAB (Supporting Adolescent Boys)
 
 **For each client on the waitlist:**
@@ -403,3 +422,6 @@ sessions.
 - 29/10/2026: SAB worker caseloads come from the Worker Activity List by
   Funding (sessions involving the worker), not from the principal worker in
   the Activity search.
+- 29/10/2026: Added MBC active participants from group Quick Views (DV
+  Groups - case managed, T328) and the T328 Client List as the waitlist
+  source.
