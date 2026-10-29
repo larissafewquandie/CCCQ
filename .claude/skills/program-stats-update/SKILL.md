@@ -202,7 +202,7 @@ Fill this in as columns are confirmed with Larissa.
 | Location | Site (Activity search) | Yes |
 | Referral source (QPS / InfoX) | | No |
 | Referral / waitlist date | | No |
-| Contact entries | | No |
+| Contact entries | CSNet admin notes (team asked on 29/10/2026 to record every contact attempt there with date, method and outcome) | Yes |
 | Intake date | | No |
 | Next group start date | | No |
 | Engagement / support start date | | No |
@@ -266,3 +266,5 @@ and worker or team.
 - 29/10/2026: Added the Counselling team numbers table (waitlist, contacted,
   caseload, total open per worker) and listed Georgia Stein as part of the
   Counselling team.
+- 29/10/2026: Contact attempts now come from CSNet admin notes. Count each
+  dated note of a call, SMS, email or letter as one attempt.
